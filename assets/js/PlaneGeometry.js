@@ -1,7 +1,6 @@
 import {meshes} from "./main.js";
 
 export default function(w, d, position = [0, 0, 0], rotation = [0, 0]) {
-	this.type = "plane";
 	this.size = {
 		x: w,
 		y: 0,

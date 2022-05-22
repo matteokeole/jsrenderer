@@ -15,21 +15,21 @@ export default () => {
 
 	// Render meshes
 	for (let mesh of meshes) {
+		debug2.innerText = mesh.position.map(p => p.toFixed(2)).join(" / ");
 		// Mesh rotation animation
-		// mesh.rotation[0] = performance.now() / 3000;
-		// mesh.rotation[1] = performance.now() / 2000;
+		// mesh.rotate(performance.now() / 3000, performance.now() / 2000, 0);
 
 		for (let triangle of mesh.triangles) {
 			const
-				p0 = convert3d(mesh, mesh.vertices[triangle[0]]),
-				p1 = convert3d(mesh, mesh.vertices[triangle[1]]),
-				p2 = convert3d(mesh, mesh.vertices[triangle[2]]),
-				facing = facing_side(p0, p1, p2);
+				p0		= convert3d(mesh, mesh.vertices[triangle[0]]),
+				p1		= convert3d(mesh, mesh.vertices[triangle[1]]),
+				p2		= convert3d(mesh, mesh.vertices[triangle[2]]),
+				facing	= facing_side(p0, p1, p2);
 
 			if (triangle[3]) ctx.fillStyle = triangle[3];
 
-			// Only the visible faces are drawn
-			if (facing > 0) {
+			// Back-face culling
+			if (facing < 0) {
 				ctx.beginPath();
 				ctx.moveTo(...p0);
 				ctx.lineTo(...p1);

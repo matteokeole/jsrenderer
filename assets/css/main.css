@@ -14,7 +14,10 @@ canvas {background-color: #000}
 	padding: 5px 10px;
 	border-radius: 3px;
 	background-color: rgba(255, 255, 255, .1);
-	color: #fff;
+	color: #ddd;
 	font-size: 16px;
 	font-family: Consolas, monospace;
 }
+
+#debug1::before {content: "Position: "}
+#debug2::before {content: "Cube position: "}

@@ -3,6 +3,6 @@ import BoxGeometry from "./BoxGeometry.js";
 import {SCREEN} from "./vars.js";
 
 export default () => {
-	const cube = new BoxGeometry(1, 2, 2, [-1, 0, -6]);
-	const cube2 = new BoxGeometry(1, 2, 2, [1, 0, -6]);
+	const cube = new BoxGeometry(2, 2, 2);
+	cube.place(1, 0, -5);
 };
