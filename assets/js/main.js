@@ -9,9 +9,9 @@ export const
 	meshes = new Set(),
 	rotateCamera = e => {
 		cameraX += e.movementX / SCREEN.WIDTH;
-		cameraY -= e.movementY / SCREEN.HEIGHT;
+		cameraY += e.movementY / SCREEN.HEIGHT;
 
-		camera.rotate(cameraX, cameraY);
+		camera.rotate(cameraX, cameraY, 0);
 	},
 	pointerLockChange = () => {
 		document.pointerLockElement === canvas || document.mozPointerLockElement === canvas ?

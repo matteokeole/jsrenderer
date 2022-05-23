@@ -4,8 +4,8 @@ export default function() {
 	this.position = [0, 0, 0];
 	this.place = (x, y, z) => this.position = [x, y, z];
 
-	this.rotation = [0, 0];
-	this.rotate = (x, y) => this.rotation = [x, y];
+	this.rotation = [0, 0, 0];
+	this.rotate = (x, y, z) => this.rotation = [x, y, z];
 
 	// Attached meshes
 	this.meshes = new Set();

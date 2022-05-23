@@ -1,4 +1,5 @@
 import {meshes} from "./main.js";
+import {camera} from "./init.js";
 
 // A mesh is a set of vertices that define a 3D shape
 export default function(w, h, d) {
@@ -22,7 +23,6 @@ export default function(w, h, d) {
 	};
 
 	this.rotation = [0, 0, 0]; // In radians
-	this.rotate = (x, y, z) => this.rotation = [x, y, z];
 
 	this.triangles = [
 		[0, 1, 2],
@@ -50,6 +50,46 @@ export default function(w, h, d) {
 			[this.position[0] - this.size2[0], this.position[1] + this.size2[1], this.position[2] + this.size2[2]],
 			[this.position[0] + this.size2[0], this.position[1] + this.size2[1], this.position[2] + this.size2[2]],
 		];
+	};
+
+	this.rotate = function(xAxis, yAxis, zAxis, O = this) {
+		// X rotation
+		let cos = Math.cos(xAxis),
+			sin = Math.sin(xAxis);
+
+		for (let v of this.vertices) {
+			let y = (v[1] - O.position[1]) * cos - (v[2] - O.position[2]) * sin,
+				z = (v[1] - O.position[1]) * sin + (v[2] - O.position[2]) * cos;
+
+			v[1] = y + O.position[1];
+			v[2] = z + O.position[2];
+		}
+
+		// Y rotation
+		cos = Math.cos(yAxis);
+		sin = Math.sin(yAxis);
+
+		for (let v of this.vertices) {
+			let x = (v[2] - O.position[2]) * sin + (v[0] - O.position[0]) * cos,
+				z = (v[2] - O.position[2]) * cos - (v[0] - O.position[0]) * sin;
+
+			v[0] = x + O.position[0];
+			v[2] = z + O.position[2];
+		}
+
+		// Z rotation
+		cos = Math.cos(zAxis);
+		sin = Math.sin(zAxis);
+
+		for (let v of this.vertices) {
+			let x = (v[0] - O.position[0]) * cos - (v[1] - O.position[1]) * sin,
+				y = (v[0] - O.position[0]) * sin + (v[1] - O.position[1]) * cos;
+
+			v[0] = x + O.position[0];
+			v[1] = y + O.position[1];
+		}
+
+		this.rotation = [...arguments];
 	};
 
 	meshes.add(this);

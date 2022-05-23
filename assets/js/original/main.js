@@ -74,7 +74,7 @@ const
 	Mesh = {rot: [0, 0]},
 	Camera = {pos: [0, 0, 5]},
 	fov = innerWidth / 2,
-	fps = 60;
+	fps = 30;
 
 frame();
 setInterval(frame, 1000 / fps);
