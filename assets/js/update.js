@@ -14,8 +14,10 @@ export default () => {
 	if (keys.has(Keybind.walk_right))		camera.move_right(VELOCITY);
 
 	// Render meshes
+	debug1.innerText = camera.position.map(p => p.toFixed(2)).join(" / ");
 	for (let mesh of meshes) {
 		debug2.innerText = mesh.position.map(p => p.toFixed(2)).join(" / ");
+
 		// Mesh rotation animation
 		// mesh.rotate(performance.now() / 3000, performance.now() / 2000, 0);
 
@@ -24,12 +26,12 @@ export default () => {
 				p0		= convert3d(mesh, mesh.vertices[triangle[0]]),
 				p1		= convert3d(mesh, mesh.vertices[triangle[1]]),
 				p2		= convert3d(mesh, mesh.vertices[triangle[2]]),
-				facing	= facing_side(p0, p1, p2);
+				culling	= facing_side(p0, p1, p2);
 
 			if (triangle[3]) ctx.fillStyle = triangle[3];
 
 			// Back-face culling
-			if (facing < 0) {
+			if (culling > 0) {
 				ctx.beginPath();
 				ctx.moveTo(...p0);
 				ctx.lineTo(...p1);

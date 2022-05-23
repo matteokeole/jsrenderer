@@ -19,5 +19,5 @@ canvas {background-color: #000}
 	font-family: Consolas, monospace;
 }
 
-#debug1::before {content: "Position: "}
-#debug2::before {content: "Cube position: "}
+#debug1::before {content: "Camera: "}
+#debug2::before {content: "Cube: "}
