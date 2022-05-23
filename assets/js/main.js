@@ -1,33 +1,23 @@
 import {SCREEN} from "./vars.js";
-import init from "./init.js";
+import {camera, default as init} from "./init.js";
 import loop from "./loop.js";
 import {resize} from "./resize.js";
 import {key_press, key_release} from "./input-handler.js";
-import Camera from "./Camera.js";
 
 export const
 	ctx = canvas.getContext("2d"),
 	meshes = new Set(),
-	camera = new Camera(),
-	rotate = e => {
-		pointerX += e.movementX;
-		pointerY += e.movementY;
+	rotateCamera = e => {
+		cameraX += e.movementX / SCREEN.WIDTH;
+		cameraY -= e.movementY / SCREEN.HEIGHT;
 
-		camera.rotate(
-			pointerX / SCREEN.WIDTH,
-			pointerY / SCREEN.HEIGHT,
-			0,
-		);
+		camera.rotate(cameraX, cameraY);
 	},
 	pointerLockChange = () => {
 		document.pointerLockElement === canvas || document.mozPointerLockElement === canvas ?
-			addEventListener("mousemove", rotate) :
-			removeEventListener("mousemove", rotate);
+			addEventListener("mousemove", rotateCamera) :
+			removeEventListener("mousemove", rotateCamera);
 	};
-let pointerX = 0,
-	pointerY = 0;
-
-camera.place(0, 0, 0); // todo: Invert Y and Z
 
 // Stretch the canvas to the screen size
 canvas.width = SCREEN.MAX_WIDTH;
@@ -36,6 +26,10 @@ canvas.height = SCREEN.MAX_HEIGHT;
 ctx.strokeStyle = "#fef953";
 
 init();
+
+let cameraX = camera.rotation[0],
+	cameraY = camera.rotation[1];
+
 loop();
 
 addEventListener("resize", resize);

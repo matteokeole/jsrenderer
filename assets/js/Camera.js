@@ -4,14 +4,8 @@ export default function() {
 	this.position = [0, 0, 0];
 	this.place = (x, y, z) => this.position = [x, y, z];
 
-	this.rotation = [0, 0, 0];
-	this.rotate = (x, y, z) => {
-		this.rotation = [x, y, z];
-
-		for (let mesh of meshes) {
-			mesh.rotate(this.rotation[0], this.rotation[1], 0);
-		}
-	};
+	this.rotation = [0, 0];
+	this.rotate = (x, y) => this.rotation = [x, y];
 
 	// Attached meshes
 	this.meshes = new Set();

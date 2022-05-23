@@ -11,8 +11,8 @@ export const
 	FRAMERATE			= 165 / FRAMES_PER_SECOND,
 	VELOCITY			= FRAMERATE / 30,
 	Keybind				= {
-		walk_forward:	"KeyW",
-		walk_backward:	"KeyS",
-		walk_left:		"KeyA",
-		walk_right:		"KeyD",
+		forward:	"KeyW",
+		backward:	"KeyS",
+		left:		"KeyA",
+		right:		"KeyD",
 	};

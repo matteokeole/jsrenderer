@@ -1,6 +1,5 @@
-import {camera} from "./main.js";
+import {camera} from "./init.js";
 import project from "./project.js";
-import {SCREEN} from "./vars.js";
 
 export const
 	/**
@@ -15,17 +14,16 @@ export const
 			// rv0 = rotate2d(vertices[0], vertices[2], mesh.rotation[0]),
 			// rv1 = rotate2d(vertices[1], rv0[1], mesh.rotation[1]),
 			rv0 = rotate2d(
-				vertices[0] - camera.position[0],
-				vertices[2] - camera.position[2],
-				mesh.rotation[0],
+				vertices[0],
+				vertices[2],
+				mesh.rotation[0] + camera.rotation[0],
 			),
 			rv1 = rotate2d(
-				vertices[1] - camera.position[1],
-				rv0[1] + camera.position[2],
-				mesh.rotation[1],
+				vertices[1],
+				rv0[1],
+				mesh.rotation[1] - camera.rotation[1],
 			),
-			// Sum the obtained vector with the camera position
-			// nv = [rv0[0], rv1[0], rv1[1]];
+			// Sum the obtained vector with the camera position to enable moving along the Z-axis
 			nv = [rv0[0], rv1[0], rv1[1]].map((p, i) => p - camera.position[i]);
 
 		// Return the projection of the new vector
