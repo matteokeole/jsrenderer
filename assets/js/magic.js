@@ -5,18 +5,28 @@ export const
 	/**
 	 * Converts 3-dimensional vertices to 2-dimensional ones.
 	 * Return the projection of the new vertices.
-	 * @todo The object rotation must be done from the camera coordinates and not the map origin
 	 */
 	convert = (mesh, vertice) => {
 		const
-			rv0 = rotate2d(mesh, vertice[0], vertice[2], mesh.rotation[0] + camera.rotation[0]),
-			rv1 = rotate2d(mesh, vertice[1], rv0[1], mesh.rotation[1] + camera.rotation[1]),
-			/* nv = [
-				rv0[0] - camera.position[0],
-				rv1[0] - camera.position[1],
-				rv1[1] - camera.position[2],
-			]; */
-			nv = [rv0[0], ...rv1];
+			// X rotation around the camera
+			rv0 = rotate2d(
+				mesh,
+				vertice[0] - camera.position[0],
+				vertice[2] - camera.position[2],
+				mesh.rotation[0] + camera.rotation[0],
+			),
+			// Y rotation around the camera
+			rv1 = rotate2d(
+				mesh,
+				vertice[1] - camera.position[1],
+				rv0[1],
+				mesh.rotation[1] + camera.rotation[1],
+			),
+			nv = [
+				rv0[0],
+				rv1[0],
+				rv1[1],
+			];
 
 		return project(nv);
 	},
