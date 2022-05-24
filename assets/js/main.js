@@ -8,10 +8,13 @@ export const
 	ctx = canvas.getContext("2d"),
 	meshes = new Set(),
 	rotateCamera = e => {
-		cameraX += e.movementX / SCREEN.WIDTH;
-		cameraY += e.movementY / SCREEN.HEIGHT;
+		cameraX += e.movementX;
 
-		camera.rotate(cameraX, cameraY, 0);
+		// if (camera.rotation[1] <= Math.PI / 2) {
+			cameraY += e.movementY;
+		// }
+
+		camera.rotate(cameraX / SCREEN.WIDTH, cameraY / SCREEN.HEIGHT, 0);
 	},
 	pointerLockChange = () => {
 		document.pointerLockElement === canvas || document.mozPointerLockElement === canvas ?

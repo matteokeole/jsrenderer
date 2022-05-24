@@ -11,11 +11,12 @@ export const
 		const
 			rv0 = rotate2d(mesh, vertice[0], vertice[2], mesh.rotation[0] + camera.rotation[0]),
 			rv1 = rotate2d(mesh, vertice[1], rv0[1], mesh.rotation[1] + camera.rotation[1]),
-			nv = [
+			/* nv = [
 				rv0[0] - camera.position[0],
 				rv1[0] - camera.position[1],
 				rv1[1] - camera.position[2],
-			];
+			]; */
+			nv = [rv0[0], ...rv1];
 
 		return project(nv);
 	},

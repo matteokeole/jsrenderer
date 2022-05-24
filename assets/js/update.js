@@ -46,4 +46,6 @@ export default () => {
 
 		debug1.innerText = camera.position.map(a => a.toFixed(2)).join(" / ");
 	}
+
+	debug2.innerText = camera.rotation.map(a => a.toFixed(2)).join(" / ");
 };
