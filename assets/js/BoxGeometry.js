@@ -17,23 +17,34 @@ export default function(w, h, d) {
 		this.calcVertices();
 	};
 
-	this.position = [0, 0, 0];
-	this.place = (x, y, z) => {
-		this.position = [x, y, z];
+	this.position = new Vertex(0, 0, 0);
+	this.place = function(x, y, z) {
+		this.position = new Vertex(...arguments);
 
 		this.calcVertices();
 	};
-	this.move = (x, y, z) => {
-		this.position[0] += x;
-		this.position[1] += y;
-		this.position[2] += z;
+	this.move = function(x, y, z) {
+		this.position.add(new Vertex(...arguments));
 
 		this.calcVertices();
 	};
 
 	this.rotation = [0, 0, 0]; // In radians
 
-	this.triangles = [
+	this.calcVertices = () => {
+		this.vertices = [
+			[this.position.x - this.size2[0], this.position.y - this.size2[1], this.position.z - this.size2[2]],
+			[this.position.x + this.size2[0], this.position.y - this.size2[1], this.position.z - this.size2[2]],
+			[this.position.x - this.size2[0], this.position.y + this.size2[1], this.position.z - this.size2[2]],
+			[this.position.x + this.size2[0], this.position.y + this.size2[1], this.position.z - this.size2[2]],
+			[this.position.x - this.size2[0], this.position.y - this.size2[1], this.position.z + this.size2[2]],
+			[this.position.x + this.size2[0], this.position.y - this.size2[1], this.position.z + this.size2[2]],
+			[this.position.x - this.size2[0], this.position.y + this.size2[1], this.position.z + this.size2[2]],
+			[this.position.x + this.size2[0], this.position.y + this.size2[1], this.position.z + this.size2[2]],
+		];
+	};
+
+	this.polygons = [
 		[0, 1, 2],
 		[0, 2, 4],
 		[0, 4, 5],
@@ -47,19 +58,6 @@ export default function(w, h, d) {
 		[5, 6, 7],
 		[6, 3, 7],
 	];
-
-	this.calcVertices = () => {
-		this.vertices = [
-			[this.position[0] - this.size2[0], this.position[1] - this.size2[1], this.position[2] - this.size2[2]],
-			[this.position[0] + this.size2[0], this.position[1] - this.size2[1], this.position[2] - this.size2[2]],
-			[this.position[0] - this.size2[0], this.position[1] + this.size2[1], this.position[2] - this.size2[2]],
-			[this.position[0] + this.size2[0], this.position[1] + this.size2[1], this.position[2] - this.size2[2]],
-			[this.position[0] - this.size2[0], this.position[1] - this.size2[1], this.position[2] + this.size2[2]],
-			[this.position[0] + this.size2[0], this.position[1] - this.size2[1], this.position[2] + this.size2[2]],
-			[this.position[0] - this.size2[0], this.position[1] + this.size2[1], this.position[2] + this.size2[2]],
-			[this.position[0] + this.size2[0], this.position[1] + this.size2[1], this.position[2] + this.size2[2]],
-		];
-	};
 
 	this.rotate = function(xAxis, yAxis, zAxis, O = this) {
 		// X rotation
@@ -105,3 +103,9 @@ export default function(w, h, d) {
 
 	return this;
 };
+
+const v1 = new Vertex(1, 2, 1);
+const v2 = new Vertex(2, 2, 2);
+const v3 = v1.substract(v2);
+
+console.log(v3);
