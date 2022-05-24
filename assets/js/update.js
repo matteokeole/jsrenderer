@@ -13,14 +13,13 @@ export default () => {
 	ctx.clearRect(0, 0, SCREEN.WIDTH, SCREEN.HEIGHT);
 
 	// Control keys
-	if (keys.has(Keybind.forward))	camera.move_forward(VELOCITY);
-	if (keys.has(Keybind.backward))	camera.move_forward(-VELOCITY);
-	if (keys.has(Keybind.left))		camera.move_right(-VELOCITY);
-	if (keys.has(Keybind.right))	camera.move_right(VELOCITY);
+	if (keys.has(Keybind.forward))	camera.move(0, 0, VELOCITY);
+	if (keys.has(Keybind.backward))	camera.move(0, 0, -VELOCITY);
+	if (keys.has(Keybind.left))		camera.move(-VELOCITY, 0, 0);
+	if (keys.has(Keybind.right))	camera.move(VELOCITY, 0, 0);
 
 	// Render meshes
 	for (let mesh of meshes) {
-		// Mesh rotation animation
 		// mesh.rotate(0, 1 * Math.PI / 180, 0);
 
 		for (let triangle of mesh.triangles) {
