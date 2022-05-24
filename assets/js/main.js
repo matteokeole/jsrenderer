@@ -8,19 +8,17 @@ export const
 	ctx = canvas.getContext("2d"),
 	meshes = new Set(),
 	rotateCamera = e => {
-		cameraX += e.movementX;
-
-		// if (camera.rotation[1] <= Math.PI / 2) {
-			cameraY += e.movementY;
-		// }
-
-		camera.rotate(cameraX / SCREEN.WIDTH, cameraY / SCREEN.HEIGHT, 0);
+		cameraX += e.movementX / SCREEN.WIDTH;
+		cameraY -= e.movementY / SCREEN.HEIGHT;
+		camera.rotate(cameraY, cameraX, 0);
 	},
 	pointerLockChange = () => {
-		document.pointerLockElement === canvas || document.mozPointerLockElement === canvas ?
+		document.pointerLockElement === canvas ||
+		document.mozPointerLockElement === canvas ?
 			addEventListener("mousemove", rotateCamera) :
 			removeEventListener("mousemove", rotateCamera);
 	};
+let cameraX, cameraY;
 
 // Stretch the canvas to the screen size
 canvas.width = SCREEN.MAX_WIDTH;
@@ -30,8 +28,8 @@ ctx.strokeStyle = "#fef953";
 
 init();
 
-let cameraX = camera.rotation[0],
-	cameraY = camera.rotation[1];
+cameraX = camera.rotation[0],
+cameraY = camera.rotation[1];
 
 loop();
 

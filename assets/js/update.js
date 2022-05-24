@@ -13,10 +13,10 @@ export default () => {
 	ctx.clearRect(0, 0, SCREEN.WIDTH, SCREEN.HEIGHT);
 
 	// Control keys
-	if (keys.has(Keybind.forward))	camera.move(0, 0, VELOCITY);
-	if (keys.has(Keybind.backward))	camera.move(0, 0, -VELOCITY);
-	if (keys.has(Keybind.left))		camera.move(-VELOCITY, 0, 0);
-	if (keys.has(Keybind.right))	camera.move(VELOCITY, 0, 0);
+	if (keys.has(Keybind.forward))	camera.moveForward(VELOCITY);
+	if (keys.has(Keybind.backward))	camera.moveForward(-VELOCITY);
+	if (keys.has(Keybind.left))		camera.moveRight(-VELOCITY);
+	if (keys.has(Keybind.right))	camera.moveRight(VELOCITY);
 
 	// Render meshes
 	for (let mesh of meshes) {
