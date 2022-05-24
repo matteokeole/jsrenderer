@@ -1,4 +1,4 @@
 export const
-	keys = new Set(),
-	key_press = e => keys.add(e.code),
-	key_release = e => keys.delete(e.code);
+	keys		= new Set(),
+	pressKeys	= e => keys.add(e.code),
+	releaseKeys	= e => keys.delete(e.code);

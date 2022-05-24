@@ -5,8 +5,16 @@ import {camera} from "./init.js";
 export default function(w, h, d) {
 	this.size = [w, h, d];
 	this.size2 = this.size.map(s => s / 2);
-	// to-do: scale()
-	// this.scale = (w, h, d) => {};
+	this.scale = (a, b, c) => {
+		this.size[0] *= a;
+		this.size[1] *= b;
+		this.size[2] *= c;
+
+		// Recalc size2
+		this.size2 = this.size.map(s => s / 2);
+
+		this.calcVertices();
+	};
 
 	this.position = [0, 0, 0];
 	this.place = (x, y, z) => {

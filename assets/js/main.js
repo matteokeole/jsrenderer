@@ -1,22 +1,31 @@
 import {SCREEN} from "./vars.js";
 import {camera, default as init} from "./init.js";
 import loop from "./loop.js";
-import {resize} from "./resize.js";
-import {key_press, key_release} from "./input-handler.js";
+import resize from "./resize.js";
+import {pressKeys, releaseKeys} from "./input-handler.js";
 
 export const
 	ctx = canvas.getContext("2d"),
 	meshes = new Set(),
 	rotateCamera = e => {
 		cameraX += e.movementX / SCREEN.WIDTH;
-		cameraY -= e.movementY / SCREEN.HEIGHT;
+		cameraY -= e.movementY / SCREEN.HEIGHT;		
+
 		camera.rotate(cameraY, cameraX, 0);
 	},
-	pointerLockChange = () => {
-		document.pointerLockElement === canvas ||
-		document.mozPointerLockElement === canvas ?
-			addEventListener("mousemove", rotateCamera) :
+	pointerLockUpdate = () => {
+		if (
+			canvas === document.pointerLockElement ||
+			canvas === document.mozPointerLockElement
+		) {
+			addEventListener("mousemove", rotateCamera);
+			addEventListener("keydown", pressKeys);
+			addEventListener("keyup", releaseKeys);
+		} else {
 			removeEventListener("mousemove", rotateCamera);
+			removeEventListener("keydown", pressKeys);
+			removeEventListener("keyup", releaseKeys);
+		}
 	};
 let cameraX, cameraY;
 
@@ -34,12 +43,11 @@ cameraY = camera.rotation[1];
 loop();
 
 addEventListener("resize", resize);
-addEventListener("keydown", key_press);
-addEventListener("keyup", key_release);
+addEventListener("pointerlockchange", pointerLockUpdate);
+addEventListener("mozpointerlockchange", pointerLockUpdate);
 
+// Pointer lock request event
 canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
 canvas.addEventListener("click", function() {
 	this.requestPointerLock();
 });
-addEventListener("pointerlockchange", pointerLockChange);
-addEventListener("mozpointerlockchange", pointerLockChange);

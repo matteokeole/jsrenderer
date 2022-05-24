@@ -17,5 +17,5 @@ body {
 	font-size: 16px;
 }
 
-#debug1::before {content: "Camera: "}
-#debug2::before {content: "Cube: "}
+#debug1::before {content: "Position: "}
+#debug2::before {content: "Rotation: "}
