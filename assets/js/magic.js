@@ -3,18 +3,18 @@ import project from "./project.js";
 
 export const
 	/**
-	 * Converts 3-dimensional vertices to 2-dimensional ones.
-	 * Return the projection of the new vertices.
+	 * Converts 3-dimensional vertex to 2-dimensional ones.
+	 * Return the projection of the new vertex.
 	 */
-	convert = (mesh, vertice) => {
+	convert = (mesh, vertex) => {
 		const
 			rv0 = rotate2d(
-				vertice[0] - camera.position[0],
-				vertice[2] - camera.position[2],
+				vertex[0] - camera.position[0],
+				vertex[2] - camera.position[2],
 				mesh.rotation[0] + camera.rotation[1],
 			),
 			rv1 = rotate2d(
-				vertice[1] - camera.position[1],
+				vertex[1] - camera.position[1],
 				rv0[1],
 				mesh.rotation[1] - camera.rotation[0],
 			),

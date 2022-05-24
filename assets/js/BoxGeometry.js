@@ -1,5 +1,6 @@
 import {meshes} from "./main.js";
 import {camera} from "./init.js";
+import Vertex from "./Vertex.js";
 
 // A mesh is a set of vertices that define a 3D shape
 export default function(w, h, d) {
@@ -34,16 +35,16 @@ export default function(w, h, d) {
 
 	this.triangles = [
 		[0, 1, 2],
-		[2, 1, 3],
-		[5, 4, 6],
-		[5, 6, 7],
-		[3, 5, 7],
-		[3, 1, 5],
-		[4, 2, 6],
 		[0, 2, 4],
 		[0, 4, 5],
 		[1, 0, 5],
+		[2, 1, 3],
 		[2, 3, 6],
+		[3, 1, 5],
+		[3, 5, 7],
+		[4, 2, 6],
+		[5, 4, 6],
+		[5, 6, 7],
 		[6, 3, 7],
 	];
 
