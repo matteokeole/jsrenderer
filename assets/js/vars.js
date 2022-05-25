@@ -8,10 +8,10 @@ export const
 		 * @constant Maximum screen height
 		 */
 		MAX_HEIGHT: screen.height,
-		WIDTH: innerWidth,						// Current page width
-		HEIGHT: innerHeight,					// Current page height
-		get WIDTH2() {return this.WIDTH / 2},	// Current page half width
-		get HEIGHT2() {return this.HEIGHT / 2},	// Current page half height
+		WIDTH: innerWidth,			// Current page width
+		HEIGHT: innerHeight,		// Current page height
+		WIDTH2: innerWidth / 2,		// Current page half width
+		HEIGHT2: innerHeight / 2,	// Current page half height
 	},
 	FIELD_OF_VIEW = 1,
 	/**
@@ -21,8 +21,9 @@ export const
 	FRAMERATE			= 165 / FRAMES_PER_SECOND,
 	VELOCITY			= FRAMERATE / 20,
 	Keybind				= {
-		forward:	"KeyW",
-		backward:	"KeyS",
-		left:		"KeyA",
-		right:		"KeyD",
+		forward:		"KeyW",
+		backward:		"KeyS",
+		left:			"KeyA",
+		right:			"KeyD",
+		nextCamera:		"F1",
 	};

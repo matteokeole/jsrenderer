@@ -1,4 +1,3 @@
-import {camera} from "./init.js";
 import {SCREEN, FIELD_OF_VIEW} from "./vars.js";
 import Vertex from "./Vertex.js";
 
@@ -7,21 +6,38 @@ export const
 	 * Converts 3-dimensional vertex to 2-dimensional ones.
 	 * Return the projection of the new vertex.
 	 */
-	project = (vertex, parentMesh) => {
-		const
+	project = (vertex, parentMesh, currentCamera) => {
+		let attachedCamera = parentMesh.attachedCamera,
+			v = vertex,
+			r = parentMesh.rotation;
+
+		if (attachedCamera) {
+			v = new Vertex(
+				v.x + attachedCamera.position.x,
+				v.y - attachedCamera.position.y,
+				v.z + attachedCamera.position.z,
+			);
+			r = [
+				parentMesh.rotation[0] - attachedCamera.rotation[1],
+				parentMesh.rotation[1] + attachedCamera.rotation[0],
+				parentMesh.rotation[2] - attachedCamera.rotation[2],
+			];
+		}
+
+		let
 			rv0 = rotate2d(
-				vertex.x - camera.position.x,
-				vertex.z - camera.position.z,
-				parentMesh.rotation[0] + camera.rotation[1],
+				v.x - currentCamera.position.x,
+				v.z - currentCamera.position.z,
+				r[0] + currentCamera.rotation[1],
 			),
 			rv1 = rotate2d(
-				(vertex.y - parentMesh.position.y * 2) + camera.position.y,
+				(v.y - parentMesh.position.y * 2) + currentCamera.position.y,
 				rv0[1],
-				parentMesh.rotation[1] - camera.rotation[0],
+				r[1] - currentCamera.rotation[0],
 			),
-			v = new Vertex(rv0[0], ...rv1);
+			newV = new Vertex(rv0[0], ...rv1);
 
-		return projectPoint(v);
+		return projectPoint(newV);
 	},
 	/**
 	 * Return in a 2-dimensional vertex the projection of the given 3-dimensional vertex.

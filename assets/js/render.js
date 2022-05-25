@@ -2,14 +2,14 @@ import {ctx, meshes} from "./main.js";
 import {project, get_culling} from "./magic.js";
 import {SCREEN} from "./vars.js";
 
-export default () => {
+export default camera => {
 	ctx.clearRect(0, 0, SCREEN.WIDTH, SCREEN.HEIGHT);
 
 	for (let mesh of meshes) {
 		// Loop through the mesh index buffer and draw the associated polygon
 		for (let polygon of mesh.indexBuffer) {
 			// Project each polygon vertex
-			let vertices = polygon.map(v => project(mesh.vertexBuffer[v], mesh)),
+			let vertices = polygon.map(v => project(mesh.vertexBuffer[v], mesh, camera)),
 				culling = get_culling(...vertices); // Back-face culling checking before drawing
 
 			if (culling > 0) {

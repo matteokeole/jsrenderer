@@ -1,5 +1,4 @@
 import {meshes} from "./main.js";
-import {camera} from "./init.js";
 import Vertex from "./Vertex.js";
 
 /**
@@ -155,6 +154,8 @@ export default function(w, h, d) {
 
 		this.rotation = [...arguments];
 	};
+
+	this.attachedCamera = null;
 
 	this.updateVertices();
 

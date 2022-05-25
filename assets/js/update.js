@@ -1,16 +1,19 @@
-import {camera} from "./init.js";
+import {switchCamera} from "./main.js";
+import {currentCamera} from "./Camera.js";
 import {keys} from "./input-handler.js";
 import {Keybind, VELOCITY} from "./vars.js";
 import render from "./render.js";
 
 export default () => {
-	keys.has(Keybind.forward)	&& camera.moveForward(VELOCITY);
-	keys.has(Keybind.backward)	&& camera.moveForward(-VELOCITY);
-	keys.has(Keybind.left)		&& camera.moveRight(-VELOCITY);
-	keys.has(Keybind.right)		&& camera.moveRight(VELOCITY);
+	if (keys.has(Keybind.nextCamera)) {
+		keys.delete(Keybind.nextCamera);
 
-	render();
+		switchCamera();
+	}
+	keys.has(Keybind.forward)		&& currentCamera.moveForward(VELOCITY);
+	keys.has(Keybind.backward)		&& currentCamera.moveForward(-VELOCITY);
+	keys.has(Keybind.left)			&& currentCamera.moveRight(-VELOCITY);
+	keys.has(Keybind.right)			&& currentCamera.moveRight(VELOCITY);
 
-	debug1.innerText = camera.position.toString();
-	debug2.innerText = camera.rotation.map(a => a.toFixed(2)).join(" / ");
+	render(currentCamera);
 };

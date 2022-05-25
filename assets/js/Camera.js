@@ -1,5 +1,11 @@
+import {cameras} from "./main.js";
 import Vertex from "./Vertex.js";
 
+/**
+ * @todo Documentation
+ * 
+ * @returns Camera
+ */
 export default function() {
 	// Camera center coordinates
 	this.position = new Vertex(0, 0, 0);
@@ -9,7 +15,11 @@ export default function() {
 	 * @param	{number}	y	Destination Y coordinate
 	 * @param	{number}	z	Destination Z coordinate
 	 */
-	this.place = function(x, y, z) {this.position = new Vertex(...arguments)};
+	this.place = function(x, y, z) {
+		this.position = new Vertex(...arguments);
+
+		debug1.innerText = currentCamera.position.toString();
+	};
 
 	/**
 	 * @param	{number}	x	Added X coordinate
@@ -20,6 +30,8 @@ export default function() {
 		let v = new Vertex(...arguments);
 
 		this.position = this.position.add(v);
+
+		debug1.innerText = currentCamera.position.toString();
 	};
 
 	this.moveForward = n => {
@@ -30,6 +42,8 @@ export default function() {
 
 		this.position.x = x;
 		this.position.z = z;
+
+		debug1.innerText = currentCamera.position.toString();
 	};
 
 	this.moveRight = n => {
@@ -38,6 +52,8 @@ export default function() {
 
 		this.position.x = x;
 		this.position.z = z;
+
+		debug1.innerText = currentCamera.position.toString();
 	};
 
 	// Rotation angle
@@ -48,5 +64,47 @@ export default function() {
 	 * @param	{number}	y	Y angle
 	 * @param	{number}	z	Z angle
 	 */
-	this.rotate = function(x, y, z) {this.rotation = [...arguments]};
+	this.rotate = function(x, y, z) {
+		this.rotation = [...arguments];
+
+		debug2.innerText = currentCamera.rotation.map(a => a.toFixed(2)).join(" / ");
+	};
+
+	/**
+	 * @param	{number}	x	X angle
+	 * @param	{number}	y	Y angle
+	 * @param	{number}	z	Z angle
+	 */
+	this.addRotation = function(x, y, z) {
+		this.rotation = this.rotation.map((a, i) => a += [...arguments][i]);
+
+		debug2.innerText = currentCamera.rotation.map(a => a.toFixed(2)).join(" / ");
+	};
+
+	/** @todo Advanced attachment methods */
+	this.attachedMeshes = new Set();
+
+	/** @todo Documentation */
+	this.attach = mesh => {
+		mesh.attachedCamera = this;
+		this.attachedMeshes.add(mesh);
+	}
+
+	/** @todo Documentation */
+	this.detach = mesh => {
+		mesh.attachedCamera = null;
+		this.attachedMeshes.remove(mesh);
+	}
+
+	this.setCurrent = () => {
+		currentCamera = this;
+
+		debug3.innerText = [...cameras].indexOf(this) + 1;
+	}
+
+	cameras.add(this);
+	currentCamera === undefined && this.setCurrent();
+
+	return this;
 };
+export let currentCamera;
