@@ -1,5 +1,7 @@
 /**
- * Create a point in the object space.
+ * Creates a point in the object space.
+ * 
+ * @constructor
  * 
  * @param	{number}	x	X coordinate
  * @param	{number}	y	Y coordinate
@@ -12,7 +14,7 @@ export default function Vertex(x, y, z) {
 	[this.x, this.y, this.z] = [...arguments];
 
 	/**
-	 * Add two vertices and return the result into a new vertex.
+	 * Adds two vertices and returns the result into a new vertex.
 	 * 
 	 * @param	{Vertex}	v	Second vertex
 	 * 
@@ -25,9 +27,9 @@ export default function Vertex(x, y, z) {
 	);
 
 	/**
-	 * Substract two vertices and return the result into a new vertex.
+	 * Substracts two vertices and returns the result into a new vertex.
 	 * Equivalent of adding two vertices with one scaled to -1.
-	 * this.substract = v => this.add(v.scale(-1));
+	 * // this.substract = v => this.add(v.scale(-1));
 	 * 
 	 * @param	{Vertex}	v	Second vertex
 	 * 
@@ -40,7 +42,7 @@ export default function Vertex(x, y, z) {
 	);
 
 	/**
-	 * Scale two vertices and return the result into a new vertex.
+	 * Scales two vertices and returns the result into a new vertex.
 	 * 
 	 * @param	{number}	f	Scale factor
 	 * 
@@ -51,6 +53,9 @@ export default function Vertex(x, y, z) {
 		this.y * f,
 		this.z * f,
 	);
+
+	/** @returns {string} */
+	this.toString = () => `${this.x.toFixed(2)} / ${this.y.toFixed(2)} / ${this.z.toFixed(2)}`;
 
 	return this;
 }

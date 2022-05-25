@@ -4,6 +4,24 @@ import loop from "./loop.js";
 import resize from "./resize.js";
 import {pressKeys, releaseKeys} from "./input-handler.js";
 
+/**
+ * A very long, verbose, wordy, long-winded, tedious, verbacious, tautological,
+ * profuse, expansive, enthusiastic, redundant, flowery, eloquent, articulate,
+ * loquacious, garrulous, chatty, extended, babbling description.
+ * 
+ * @summary Vanilla JavaScript 3D rendering engine
+ * 
+ * @version 0.0.1
+ * 
+ * @see {link https://github.com/matteokeole/3DJSEngine}
+ * @see {link https://www.youtube.com/watch?v=OVQxTNd2U3w&t=1220s}
+ * @see {link https://www.sitepoint.com/building-3d-engine-javascript/}
+ * @see {link https://www.mamboleoo.be/articles/how-to-render-3d-in-2d-canvas}
+ * 
+ * @todo Replace point arrays by vertices
+ * @todo Multiple camera & camera switching
+ * @todo Mobile controls
+ */
 export const
 	ctx = canvas.getContext("2d"),
 	meshes = new Set(),
@@ -37,7 +55,7 @@ ctx.strokeStyle = "#fef953";
 
 init();
 
-cameraX = camera.rotation[0],
+cameraX = camera.rotation[0];
 cameraY = camera.rotation[1];
 
 loop();

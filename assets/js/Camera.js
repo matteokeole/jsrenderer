@@ -1,32 +1,52 @@
+import Vertex from "./Vertex.js";
+
 export default function() {
-	this.position = [0, 0, 0];
-	this.rotation = [0, 0, 0];
+	// Camera center coordinates
+	this.position = new Vertex(0, 0, 0);
 
-	this.place = (x, y, z) => this.position = [x, y, z];
+	/**
+	 * @param	{number}	x	Destination X coordinate
+	 * @param	{number}	y	Destination Y coordinate
+	 * @param	{number}	z	Destination Z coordinate
+	 */
+	this.place = function(x, y, z) {this.position = new Vertex(...arguments)};
 
-	this.rotate = (x, y, z) => this.rotation = [x, y, z];
+	/**
+	 * @param	{number}	x	Added X coordinate
+	 * @param	{number}	y	Added Y coordinate
+	 * @param	{number}	z	Added Z coordinate
+	 */
+	this.move = function(x, y, z) {
+		let v = new Vertex(...arguments);
 
-	this.move = (x, y, z) => {
-		this.position[0] += x;
-		this.position[1] += y;
-		this.position[2] += z;
-	}
+		this.position = this.position.add(v);
+	};
 
 	this.moveForward = n => {
 		// x1 = x + n * cos(theta)
 		// (theta is the angle)
-		let x = this.position[0] + n * Math.sin(this.rotation[1]),
-			z = this.position[2] + n * Math.cos(this.rotation[1]);
+		let x = this.position.x + n * Math.sin(this.rotation[1]),
+			z = this.position.z + n * Math.cos(this.rotation[1]);
 
-		this.position[0] = x;
-		this.position[2] = z;
+		this.position.x = x;
+		this.position.z = z;
 	};
 
 	this.moveRight = n => {
-		let x = this.position[0] + n * Math.cos(this.rotation[1]),
-			z = this.position[2] - n * Math.sin(this.rotation[1]);
+		let x = this.position.x + n * Math.cos(this.rotation[1]),
+			z = this.position.z - n * Math.sin(this.rotation[1]);
 
-		this.position[0] = x;
-		this.position[2] = z;
+		this.position.x = x;
+		this.position.z = z;
 	};
+
+	// Rotation angle
+	this.rotation = [0, 0, 0];
+
+	/**
+	 * @param	{number}	x	X angle
+	 * @param	{number}	y	Y angle
+	 * @param	{number}	z	Z angle
+	 */
+	this.rotate = function(x, y, z) {this.rotation = [...arguments]};
 };

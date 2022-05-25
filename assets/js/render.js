@@ -1,27 +1,23 @@
 import {ctx, meshes} from "./main.js";
-import {convert} from "./magic.js";
-import get_culling from "./culling.js";
+import {project, get_culling} from "./magic.js";
+import {SCREEN} from "./vars.js";
 
 export default () => {
-	// Render meshes
+	ctx.clearRect(0, 0, SCREEN.WIDTH, SCREEN.HEIGHT);
+
 	for (let mesh of meshes) {
-		for (let polygon of mesh.polygons) {
-			const
-				p0		= convert(mesh, mesh.vertices[polygon[0]]),
-				p1		= convert(mesh, mesh.vertices[polygon[1]]),
-				p2		= convert(mesh, mesh.vertices[polygon[2]]),
-				culling	= get_culling(p0, p1, p2);
+		// Loop through the mesh index buffer and draw the associated polygon
+		for (let polygon of mesh.indexBuffer) {
+			// Project each polygon vertex
+			let vertices = polygon.map(v => project(mesh.vertexBuffer[v], mesh)),
+				culling = get_culling(...vertices); // Back-face culling checking before drawing
 
-			if (polygon[3]) ctx.fillStyle = polygon[3];
-
-			// Back-face culling checking before drawing
 			if (culling > 0) {
 				ctx.beginPath();
-				ctx.moveTo(...p0);
-				ctx.lineTo(...p1);
-				ctx.lineTo(...p2);
-				ctx.closePath();
-				polygon[3] && ctx.fill();
+				ctx.moveTo(...vertices[0]);
+				ctx.lineTo(...vertices[1]);
+				ctx.lineTo(...vertices[2]);
+				ctx.closePath(); // Return to the polygon first vertex
 				ctx.stroke();
 			}
 		}
