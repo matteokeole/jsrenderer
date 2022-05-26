@@ -1,41 +1,7 @@
+@import url("debugger.css");
+
 body {
+	margin: 0;
 	overflow: hidden;
 	background-color: #111;
 }
-
-#crosshair {
-	width: 20px;
-	height: 20px;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	opacity: .5;
-	background: url(../../textures/crosshair.png) center;
-	background-size: 100%;
-	image-rendering: crisp-edges;
-	mix-blend-mode: difference;
-}
-
-.debug-container {position: absolute}
-
-.debug {
-	width: fit-content;
-	margin-bottom: 10px;
-	padding: 5px 10px;
-	border-radius: 3px;
-	background-color: #00000070;
-	color: #ddd;
-	font-family: Consolas, monospace;
-	font-size: 16px;
-}
-.debug::before {
-	color: #aaa;
-	font-style: italic;
-}
-
-#debug1::before {content: "Position: "}
-#debug2::before {content: "Rotation: "}
-#debug3::before {content: "Camera: "}

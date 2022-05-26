@@ -1,4 +1,4 @@
-import {SCREEN, Keybind} from "./vars.js";
+import {SCREEN, FRAMES_PER_SECOND, FRAMERATE} from "./vars.js";
 import {default as init} from "./init.js";
 import loop from "./loop.js";
 import resize from "./resize.js";
@@ -6,14 +6,16 @@ import {pressKeys, releaseKeys} from "./input-handler.js";
 import {currentCamera} from "./Camera.js";
 
 /**
- * Vanilla JavaScript 3D rendering engine
+ * Vanilla JavaScript 3D rendering engine.
  * 
  * Controls:
- * [W]	Walk forward
- * [S]	Walk backward
- * [A]	Strafe left
- * [D]	Strafe right
- * [F1]	Toggle camera
+ * [W]			Walk forward
+ * [S]			Walk backward
+ * [A]			Strafe left
+ * [D]			Strafe right
+ * [Space]		Ascend
+ * [LeftCtrl]	Descend
+ * [F1]			Toggle camera
  * 
  * @version 0.0.1
  * 
@@ -24,6 +26,7 @@ import {currentCamera} from "./Camera.js";
  * 
  * @todo Fix multiple camera & camera switching
  * @todo Mobile controls
+ * @todo Clipping plane algorithm
  */
 export const
 	ctx = canvas.getContext("2d"),
@@ -62,6 +65,7 @@ ctx.strokeStyle = "#fef953";
 
 init();
 
+// Get the current camera index after the initialization
 let camIndex = [...cameras].indexOf(currentCamera);
 
 loop();
@@ -75,3 +79,5 @@ canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointe
 canvas.addEventListener("click", function() {
 	this.requestPointerLock();
 });
+
+debugFPS.innerText = `${FRAMES_PER_SECOND} fps, ${FRAMERATE} rate`;

@@ -21,9 +21,11 @@ export const
 	FRAMERATE			= 165 / FRAMES_PER_SECOND,
 	VELOCITY			= FRAMERATE / 20,
 	Keybind				= {
-		forward:		"KeyW",
-		backward:		"KeyS",
-		left:			"KeyA",
-		right:			"KeyD",
-		nextCamera:		"F1",
+		forward:	"KeyW",
+		backward:	"KeyS",
+		left:		"KeyA",
+		right:		"KeyD",
+		ascend:		"Space",
+		descend:	"ControlLeft",
+		nextCamera:	"F1",
 	};

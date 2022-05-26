@@ -7,9 +7,6 @@ import Vertex from "./Vertex.js";
  * @returns Camera
  */
 export default function() {
-	// Camera center coordinates
-	this.position = new Vertex(0, 0, 0);
-
 	/**
 	 * @param	{number}	x	Destination X coordinate
 	 * @param	{number}	y	Destination Y coordinate
@@ -18,7 +15,7 @@ export default function() {
 	this.place = function(x, y, z) {
 		this.position = new Vertex(...arguments);
 
-		debug1.innerText = currentCamera.position.toString();
+		debugPosition.innerText = currentCamera.position.toString();
 	};
 
 	/**
@@ -31,7 +28,7 @@ export default function() {
 
 		this.position = this.position.add(v);
 
-		debug1.innerText = currentCamera.position.toString();
+		debugPosition.innerText = currentCamera.position.toString();
 	};
 
 	this.moveForward = n => {
@@ -43,7 +40,7 @@ export default function() {
 		this.position.x = x;
 		this.position.z = z;
 
-		debug1.innerText = currentCamera.position.toString();
+		debugPosition.innerText = currentCamera.position.toString();
 	};
 
 	this.moveRight = n => {
@@ -53,11 +50,12 @@ export default function() {
 		this.position.x = x;
 		this.position.z = z;
 
-		debug1.innerText = currentCamera.position.toString();
+		debugPosition.innerText = currentCamera.position.toString();
 	};
 
-	// Rotation angle
-	this.rotation = [0, 0, 0];
+	this.ascend = n => {
+		this.position.y += n;
+	};
 
 	/**
 	 * @param	{number}	x	X angle
@@ -67,7 +65,7 @@ export default function() {
 	this.rotate = function(x, y, z) {
 		this.rotation = [...arguments];
 
-		debug2.innerText = currentCamera.rotation.map(a => a.toFixed(2)).join(" / ");
+		debugRotation.innerText = currentCamera.rotation.map(a => a.toFixed(2)).join(" / ");
 	};
 
 	/**
@@ -78,7 +76,7 @@ export default function() {
 	this.addRotation = function(x, y, z) {
 		this.rotation = this.rotation.map((a, i) => a += [...arguments][i]);
 
-		debug2.innerText = currentCamera.rotation.map(a => a.toFixed(2)).join(" / ");
+		debugRotation.innerText = currentCamera.rotation.map(a => a.toFixed(2)).join(" / ");
 	};
 
 	/** @todo Advanced attachment methods */
@@ -99,11 +97,14 @@ export default function() {
 	this.setCurrent = () => {
 		currentCamera = this;
 
-		debug3.innerText = [...cameras].indexOf(this) + 1;
+		debugCamera.innerText = [...cameras].indexOf(this) + 1;
 	}
 
 	cameras.add(this);
 	currentCamera === undefined && this.setCurrent();
+
+	this.place(0, 0, 0);
+	this.rotate(0, 0, 0);
 
 	return this;
 };

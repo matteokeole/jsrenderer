@@ -1,8 +1,10 @@
-import {ctx, meshes} from "./main.js";
+import {meshes} from "./main.js";
 import {project, get_culling} from "./magic.js";
 import {SCREEN} from "./vars.js";
 
-export default camera => {
+export default (canvas, camera) => {
+	let ctx = canvas.getContext("2d");
+
 	ctx.clearRect(0, 0, SCREEN.WIDTH, SCREEN.HEIGHT);
 
 	for (let mesh of meshes) {
