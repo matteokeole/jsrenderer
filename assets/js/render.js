@@ -1,5 +1,5 @@
 import {meshes} from "./main.js";
-import {project, get_culling} from "./magic.js";
+import {project, bfc} from "./magic.js";
 import {SCREEN} from "./vars.js";
 
 export default (canvas, camera) => {
@@ -10,16 +10,20 @@ export default (canvas, camera) => {
 	for (let mesh of meshes) {
 		// Loop through the mesh index buffer and draw the associated polygon
 		for (let polygon of mesh.indexBuffer) {
-			// Project each polygon vertex
-			let vertices = polygon.map(v => project(mesh.vertexBuffer[v], mesh, camera)),
-				culling = get_culling(...vertices); // Back-face culling checking before drawing
+			// Project each polygon vector
+			let points = [
+					project(mesh.vertexBuffer[polygon[0]], mesh, camera),
+					project(mesh.vertexBuffer[polygon[1]], mesh, camera),
+					project(mesh.vertexBuffer[polygon[2]], mesh, camera),
+				],
+				culling = bfc(...points);
 
-			if (culling > 0) {
+			if (culling) {
 				ctx.beginPath();
-				ctx.moveTo(...vertices[0]);
-				ctx.lineTo(...vertices[1]);
-				ctx.lineTo(...vertices[2]);
-				ctx.closePath(); // Return to the polygon first vertex
+				ctx.moveTo(...points[0]);
+				ctx.lineTo(...points[1]);
+				ctx.lineTo(...points[2]);
+				ctx.closePath();
 				ctx.stroke();
 			}
 		}

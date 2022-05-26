@@ -1,5 +1,5 @@
 import {meshes} from "./main.js";
-import Vertex from "./Vertex.js";
+import Vector3 from "./Vector3.js";
 
 /**
  * A mesh is a set of vertices that define a 3D shape.
@@ -9,18 +9,18 @@ import Vertex from "./Vertex.js";
 export default function(w, h, d) {
 	this.vertexBuffer = [];
 	this.indexBuffer = [
-		[0, 1, 2],
-		[0, 2, 4],
-		[0, 4, 5],
-		[1, 0, 5],
-		[2, 1, 3],
-		[2, 3, 6],
-		[3, 1, 5],
-		[3, 5, 7],
-		[4, 2, 6],
-		[5, 4, 6],
-		[5, 6, 7],
-		[6, 3, 7],
+		[0, 1, 2, "white"],
+		[0, 2, 4, "white"],
+		[0, 4, 5, "white"],
+		[1, 0, 5, "white"],
+		[2, 1, 3, "white"],
+		[2, 3, 6, "white"],
+		[3, 1, 5, "white"],
+		[3, 5, 7, "white"],
+		[4, 2, 6, "white"],
+		[5, 4, 6, "white"],
+		[5, 6, 7, "white"],
+		[6, 3, 7, "white"],
 	];
 
 	/**
@@ -31,42 +31,42 @@ export default function(w, h, d) {
 
 		// Generate vertices
 		this.vertexBuffer = [
-			new Vertex(
+			new Vector3(
 				this.position.x - s2[0],
 				this.position.y - s2[1],
 				this.position.z - s2[2],
 			),
-			new Vertex(
+			new Vector3(
 				this.position.x + s2[0],
 				this.position.y - s2[1],
 				this.position.z - s2[2],
 			),
-			new Vertex(
+			new Vector3(
 				this.position.x - s2[0],
 				this.position.y + s2[1],
 				this.position.z - s2[2],
 			),
-			new Vertex(
+			new Vector3(
 				this.position.x + s2[0],
 				this.position.y + s2[1],
 				this.position.z - s2[2],
 			),
-			new Vertex(
+			new Vector3(
 				this.position.x - s2[0],
 				this.position.y - s2[1],
 				this.position.z + s2[2],
 			),
-			new Vertex(
+			new Vector3(
 				this.position.x + s2[0],
 				this.position.y - s2[1],
 				this.position.z + s2[2],
 			),
-			new Vertex(
+			new Vector3(
 				this.position.x - s2[0],
 				this.position.y + s2[1],
 				this.position.z + s2[2],
 			),
-			new Vertex(
+			new Vector3(
 				this.position.x + s2[0],
 				this.position.y + s2[1],
 				this.position.z + s2[2],
@@ -75,7 +75,7 @@ export default function(w, h, d) {
 	};
 
 	// Mesh center coordinates
-	this.position = new Vertex(0, 0, 0);
+	this.position = new Vector3(0, 0, 0);
 
 	/**
 	 * @param	{number}	x	Destination X coordinate
@@ -85,7 +85,7 @@ export default function(w, h, d) {
 	 * @callback BoxGeometry~updateVertices
 	 */
 	this.place = function(x, y, z) {
-		this.position = new Vertex(...arguments);
+		this.position = new Vector3(...arguments);
 
 		this.updateVertices();
 	};
@@ -98,16 +98,24 @@ export default function(w, h, d) {
 	 * @callback BoxGeometry~updateVertices
 	 */
 	this.move = function(x, y, z) {
-		this.position.add(new Vertex(...arguments));
+		this.position.add(new Vector3(...arguments));
 
 		this.updateVertices();
 	};
 
 	this.size = [w, h, d];
-	this.scale = (a, b, c) => {
-		this.size[0] *= a;
-		this.size[1] *= b;
-		this.size[2] *= c;
+
+	/**
+	 * @param	{number}	w	Width multiplier
+	 * @param	{number}	h	Height multiplier
+	 * @param	{number}	d	Depth multiplier
+	 * 
+	 * @callback BoxGeometry~updateVertices
+	 */
+	this.scale = (w, h, d) => {
+		this.size[0] *= w;
+		this.size[1] *= h;
+		this.size[2] *= d;
 
 		this.updateVertices();
 	};

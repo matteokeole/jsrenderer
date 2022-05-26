@@ -1,18 +1,18 @@
-import {SCREEN, FIELD_OF_VIEW} from "./vars.js";
-import Vertex from "./Vertex.js";
+import {SCREEN, PERSPECTIVE as P} from "./vars.js";
+import Vector3 from "./Vector3.js";
 
 export const
 	/**
-	 * Converts 3-dimensional vertex to 2-dimensional ones.
-	 * Return the projection of the new vertex.
+	 * Converts 3-dimensional vector to 2-dimensional ones.
+	 * Return the projection of the new vector.
 	 */
-	project = (vertex, parentMesh, currentCamera) => {
+	project = (vector, parentMesh, currentCamera) => {
 		let attachedCamera = parentMesh.attachedCamera,
-			v = vertex,
+			v = vector,
 			r = parentMesh.rotation;
 
 		if (attachedCamera) {
-			v = new Vertex(
+			v = new Vector3(
 				v.x + attachedCamera.position.x,
 				v.y - attachedCamera.position.y,
 				v.z + attachedCamera.position.z,
@@ -35,30 +35,30 @@ export const
 				rv0[1],
 				r[1] - currentCamera.rotation[0],
 			),
-			newV = new Vertex(rv0[0], ...rv1);
+			newV = new Vector3(rv0[0], ...rv1);
 
-		return projectPoint(newV);
+		return convert2d(newV);
 	},
 	/**
-	 * Return in a 2-dimensional vertex the projection of the given 3-dimensional vertex.
+	 * Return in a 2-dimensional vector the projection of the given 3-dimensional vector.
 	 * X' = X / Z
 	 * Y' = Y / Z
-	 * @param	{Vertex}	v	Vertex to project
+	 * @param	{Vector3}	v	Vector to project
 	 */
-	projectPoint = v => [
-		(v.x / v.z) / FIELD_OF_VIEW * SCREEN.WIDTH2 + SCREEN.WIDTH2,
-		(v.y / v.z) / FIELD_OF_VIEW * SCREEN.WIDTH2 + SCREEN.HEIGHT2,
+	convert2d = v => [
+		v.x * (P / v.z) + SCREEN.WIDTH2,
+		v.y * (P / v.z) + SCREEN.HEIGHT2,
 	],
 	/**
 	 * Applies a 2-dimensional rotation on a vector.
-	 * @param	{number}	x		X coordinate
-	 * @param	{number}	z		Z or Y coordinate
-	 * @param	{number}	angle	Rotation factor, in radians
+	 * @param	{number}	x	X coordinate
+	 * @param	{number}	z	Z or Y coordinate
+	 * @param	{number}	a	Rotation angle, in radians
 	 */
-	rotate2d = (x, z, angle) => {
+	rotate2d = (x, z, a) => {
 		const
-			cos = Math.cos(angle),
-			sin = Math.sin(angle);
+			cos = Math.cos(a),
+			sin = Math.sin(a);
 
 		return [
 			x * cos - z * sin,
@@ -66,15 +66,13 @@ export const
 		];
 	},
 	/**
-	 * Basic back-face culling implementation.
+	 * Basic back-face culling implementation using cross-product.
 	 * If the return is negative or null, the face won't be drawn.
 	 * 
-	 * @param	{array}	p0	First point coordinates
-	 * @param	{array}	p1	Second point coordinates
-	 * @param	{array}	p2	Third point coordinates
+	 * @param	{array}	v0	First point coordinates
+	 * @param	{array}	v1	Second point coordinates
+	 * @param	{array}	v2	Third point coordinates
 	 * 
-	 * @returns {array}
+	 * @returns {boolean}
 	 */
-	get_culling = (p0, p1, p2) =>
-		(p1[0] - p0[0]) * (p2[1] - p0[1]) -
-		(p2[0] - p0[0]) * (p1[1] - p0[1]);
+	bfc = (v0, v1, v2) => (v1[0] - v0[0]) * (v2[1] - v0[1]) - (v2[0] - v0[0]) * (v1[1] - v0[1]) > 0;

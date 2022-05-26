@@ -1,5 +1,5 @@
 import {cameras} from "./main.js";
-import Vertex from "./Vertex.js";
+import Vector3 from "./Vector3.js";
 
 /**
  * @todo Documentation
@@ -13,7 +13,7 @@ export default function() {
 	 * @param	{number}	z	Destination Z coordinate
 	 */
 	this.place = function(x, y, z) {
-		this.position = new Vertex(...arguments);
+		this.position = new Vector3(...arguments);
 
 		debugPosition.innerText = currentCamera.position.toString();
 	};
@@ -24,7 +24,7 @@ export default function() {
 	 * @param	{number}	z	Added Z coordinate
 	 */
 	this.move = function(x, y, z) {
-		let v = new Vertex(...arguments);
+		let v = new Vector3(...arguments);
 
 		this.position = this.position.add(v);
 
