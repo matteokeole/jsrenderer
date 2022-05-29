@@ -1,9 +1,10 @@
-import Camera from "./Camera.js";
-import BoxGeometry from "./BoxGeometry.js";
+import PerspectiveCamera from "./PerspectiveCamera.js";
+import * as Geometry from "./Geometry.js";
+import Mesh from "./Mesh.js";
 
 export default () => {
-	const camera = new Camera();
+	let camera = new PerspectiveCamera(400, 1, 1);
 
-	const cube = new BoxGeometry(2, 2, 2);
-	cube.place(0, 0, 6);
+	let slab = new Mesh(new Geometry.Box(1.5, .5, 1.5));
+	slab.place(0, -1, 4);
 };

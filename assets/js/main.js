@@ -1,9 +1,9 @@
-import {SCREEN, FRAMES_PER_SECOND, FRAMERATE} from "./vars.js";
+import {Viewport, FRAMES_PER_SECOND, FRAMERATE, SENSITIVITY} from "./vars.js";
 import {default as init} from "./init.js";
 import loop from "./loop.js";
 import resize from "./resize.js";
 import {pressKeys, releaseKeys} from "./input-handler.js";
-import {currentCamera} from "./Camera.js";
+import {currentCamera} from "./PerspectiveCamera.js";
 
 /**
  * Vanilla JavaScript 3D rendering engine.
@@ -26,7 +26,8 @@ import {currentCamera} from "./Camera.js";
  * 
  * @todo Fix multiple camera & camera switching
  * @todo Mobile controls
- * @todo Clipping plane algorithm
+ * @todo Clipping
+ * @todo Z-Buffer
  */
 export const
 	ctx = canvas.getContext("2d"),
@@ -52,14 +53,14 @@ export const
 		camera.setCurrent();
 	},
 	rotateCamera = e => currentCamera.addRotation(
-		-e.movementY / SCREEN.HEIGHT,
-		e.movementX / SCREEN.WIDTH,
+		(-e.movementY * SENSITIVITY) / Viewport.height,
+		(e.movementX * SENSITIVITY) / Viewport.width,
 		0,
 	);
 
-// Stretch the canvas to the screen size
-canvas.width = SCREEN.MAX_WIDTH;
-canvas.height = SCREEN.MAX_HEIGHT;
+// Stretch the canvas to the viewport size
+canvas.width = Viewport.maxWidth;
+canvas.height = Viewport.maxHeight;
 
 ctx.strokeStyle = "#fef953";
 
@@ -81,3 +82,4 @@ canvas.addEventListener("click", function() {
 });
 
 debugFPS.innerText = `${FRAMES_PER_SECOND} fps, ${FRAMERATE} rate`;
+debugSensitivity.innerText = SENSITIVITY;

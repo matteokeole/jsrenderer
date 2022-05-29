@@ -4,9 +4,13 @@ import Vector3 from "./Vector3.js";
 /**
  * @todo Documentation
  * 
- * @returns Camera
+ * @returns PerspectiveCamera
  */
-export default function() {
+export default function(fov, near, far) {
+	this.P = fov;
+	this.near = near;
+	this.far = far;
+
 	/**
 	 * @param	{number}	x	Destination X coordinate
 	 * @param	{number}	y	Destination Y coordinate
@@ -107,5 +111,6 @@ export default function() {
 	this.rotate(0, 0, 0);
 
 	return this;
-};
+}
+
 export let currentCamera;

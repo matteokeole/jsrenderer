@@ -1,4 +1,4 @@
-import {SCREEN, PERSPECTIVE as P} from "./vars.js";
+import {Viewport} from "./vars.js";
 import Vector3 from "./Vector3.js";
 
 export const
@@ -17,27 +17,27 @@ export const
 				v.y - attachedCamera.position.y,
 				v.z + attachedCamera.position.z,
 			);
-			r = [
-				parentMesh.rotation[0] - attachedCamera.rotation[1],
-				parentMesh.rotation[1] + attachedCamera.rotation[0],
-				parentMesh.rotation[2] - attachedCamera.rotation[2],
-			];
+			r = new Vector3(
+				parentMesh.rotation.x - attachedCamera.rotation[1],
+				parentMesh.rotation.y + attachedCamera.rotation[0],
+				parentMesh.rotation.z - attachedCamera.rotation[2],
+			);
 		}
 
 		let
 			rv0 = rotate2d(
 				v.x - currentCamera.position.x,
 				v.z - currentCamera.position.z,
-				r[0] + currentCamera.rotation[1],
+				r.x + currentCamera.rotation[1],
 			),
 			rv1 = rotate2d(
 				(v.y - parentMesh.position.y * 2) + currentCamera.position.y,
 				rv0[1],
-				r[1] - currentCamera.rotation[0],
+				r.y - currentCamera.rotation[0],
 			),
 			newV = new Vector3(rv0[0], ...rv1);
 
-		return convert2d(newV);
+		return convert2d(newV, currentCamera);
 	},
 	/**
 	 * Return in a 2-dimensional vector the projection of the given 3-dimensional vector.
@@ -45,9 +45,9 @@ export const
 	 * Y' = Y / Z
 	 * @param	{Vector3}	v	Vector to project
 	 */
-	convert2d = v => [
-		v.x * (P / v.z) + SCREEN.WIDTH2,
-		v.y * (P / v.z) + SCREEN.HEIGHT2,
+	convert2d = (v, camera) => [
+		Math.floor(v.x * (camera.P / v.z) + Viewport.midWidth),
+		Math.floor(v.y * (camera.P / v.z) + Viewport.midHeight),
 	],
 	/**
 	 * Applies a 2-dimensional rotation on a vector.

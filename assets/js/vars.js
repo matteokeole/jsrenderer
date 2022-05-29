@@ -1,19 +1,19 @@
 export const
-	SCREEN = {
+	Viewport = {
 		/**
 		 * @constant Maximum screen width
 		 */
-		MAX_WIDTH: screen.width,
+		maxWidth: screen.width,
 		/**
 		 * @constant Maximum screen height
 		 */
-		MAX_HEIGHT: screen.height,
-		WIDTH: innerWidth,			// Current page width
-		HEIGHT: innerHeight,		// Current page height
-		WIDTH2: innerWidth / 2,		// Current page half width
-		HEIGHT2: innerHeight / 2,	// Current page half height
+		maxHeight: screen.height,
+		width: innerWidth,			// Current page width
+		height: innerHeight,		// Current page height
+		midWidth: innerWidth / 2,	// Current page half width
+		midHeight: innerHeight / 2,	// Current page half height
 	},
-	PERSPECTIVE = 900,
+	SENSITIVITY = 1.2,
 	/**
 	 * @constant Desired number of frames per second
 	 */

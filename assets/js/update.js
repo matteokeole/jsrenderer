@@ -1,5 +1,5 @@
 import {switchCamera, cameras} from "./main.js";
-import {currentCamera} from "./Camera.js";
+import {currentCamera} from "./PerspectiveCamera.js";
 import {keys} from "./input-handler.js";
 import {Keybind, VELOCITY} from "./vars.js";
 import render from "./render.js";
