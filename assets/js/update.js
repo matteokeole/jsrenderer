@@ -1,4 +1,4 @@
-import {switchCamera, cameras} from "./main.js";
+import {switchCamera} from "./main.js";
 import {currentCamera} from "./PerspectiveCamera.js";
 import {keys} from "./input-handler.js";
 import {Keybind, VELOCITY} from "./vars.js";
@@ -10,6 +10,7 @@ export default () => {
 
 		switchCamera();
 	}
+
 	keys.has(Keybind.forward)		&& currentCamera.moveForward(VELOCITY);
 	keys.has(Keybind.backward)		&& currentCamera.moveForward(-VELOCITY);
 	keys.has(Keybind.left)			&& currentCamera.moveRight(-VELOCITY);
