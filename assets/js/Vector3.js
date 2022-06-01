@@ -51,6 +51,22 @@ Vector3.prototype.addScaledVector = function(v, s) {
 };
 
 /**
+ * Return the angle between this vector and another vector.
+ * 
+ * @param	{Vector3}	v 
+ * @returns	{number}
+ */
+Vector3.prototype.angleTo = function(v) {
+	const d = Math.sqrt(this.lengthSquared + v.lengthSquared());
+
+	if (d === 0) return Math.PI / 2;
+
+	const theta = this.dot(v) / denominator;
+
+	return Math.acos(theta);
+};
+
+/**
  * Rounds up the position of this vector to the nearest integer value.
  * 
  * @returns	self
@@ -168,7 +184,16 @@ Vector3.prototype.invert = function() {
  * @returns	{number}
  */
 Vector3.prototype.length = function() {
-	return Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2);
+	return Math.sqrt(this.lengthSquared());
+};
+
+/**
+ * Returns the squared length of the line going from the origin to the position of this vector.
+ * 
+ * @returns	{number}
+ */
+Vector3.prototype.lengthSquared = function() {
+	return this.x ** 2 + this.y ** 2 + this.z ** 2;
 };
 
 /**
@@ -301,16 +326,10 @@ Vector3.prototype.substractScalar = function(s) {
 	return this.addScalar(-s);
 };
 
-/**
- * Returns the array copy of this vector.
- * 
- * @returns	{array}
- */
 Vector3.prototype.toArray = function() {
 	return [this.x, this.y, this.z];
 };
 
-/** @returns {string} */
 Vector3.prototype.toString = function() {
 	return `${this.x.toFixed(2)} / ${this.y.toFixed(2)} / ${this.z.toFixed(2)}`;
 };
