@@ -7,6 +7,8 @@ export const
 		midWidth:	innerWidth / 2,		// Page half width
 		midHeight:	innerHeight / 2,	// Page half height
 	},
+	FRAMES_PER_SECOND = 60,
+	FRAMERATE = 165 / FRAMES_PER_SECOND,
 	SENSITIVITY = 1.2,
 	VELOCITY = FRAMERATE / 30,
 	Keybind = {
@@ -17,6 +19,4 @@ export const
 		ascend:		"Space",
 		descend:	"ControlLeft",
 		nextCamera:	"F1",
-	},
-	FRAMES_PER_SECOND = 60,
-	FRAMERATE = 165 / FRAMES_PER_SECOND;
+	};
