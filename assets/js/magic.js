@@ -43,6 +43,7 @@ export const
 	 * Return in a 2-dimensional vector the projection of the given 3-dimensional vector.
 	 * X' = X / Z
 	 * Y' = Y / Z
+	 * 
 	 * @param	{Vector3}	v	Vector to project
 	 */
 	convert2d = (v, camera) => [
@@ -51,9 +52,10 @@ export const
 	],
 	/**
 	 * Applies a 2-dimensional rotation on a vector.
+	 * 
 	 * @param	{number}	x	X coordinate
-	 * @param	{number}	z	Z or Y coordinate
-	 * @param	{number}	a	Rotation angle, in radians
+	 * @param	{number}	z	Y/Z coordinate
+	 * @param	{number}	a	Rotation angle (in radians)
 	 */
 	rotate2d = (x, z, a) => {
 		const
@@ -69,10 +71,9 @@ export const
 	 * Basic back-face culling implementation using cross-product.
 	 * If the return is negative or null, the face won't be drawn.
 	 * 
-	 * @param	{array}	v0	First point coordinates
-	 * @param	{array}	v1	Second point coordinates
-	 * @param	{array}	v2	Third point coordinates
-	 * 
-	 * @returns {boolean}
+	 * @param	{array}	v0
+	 * @param	{array}	v1
+	 * @param	{array}	v2
+	 * @returns	{boolean}
 	 */
 	bfc = (v0, v1, v2) => (v1[0] - v0[0]) * (v2[1] - v0[1]) - (v2[0] - v0[0]) * (v1[1] - v0[1]) > 0;
