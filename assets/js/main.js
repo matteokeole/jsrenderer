@@ -20,6 +20,7 @@ import {currentCamera} from "./PerspectiveCamera.js";
  * @version 0.0.1
  * 
  * @see {link https://github.com/matteokeole/3DJSEngine}
+ * @see {link https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web/Basic_theory}
  * @see {link https://www.youtube.com/watch?v=OVQxTNd2U3w&t=1220s}
  * @see {link https://www.sitepoint.com/building-3d-engine-javascript/}
  * @see {link https://www.mamboleoo.be/articles/how-to-render-3d-in-2d-canvas}
