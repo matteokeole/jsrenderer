@@ -317,7 +317,7 @@ Vector3.prototype.substract = function(v) {
 };
 
 /**
- * Substract this vector from a given scalar value.
+ * Substracts this vector from a given scalar value.
  * 
  * @param	{number}	s
  * @returns	self
