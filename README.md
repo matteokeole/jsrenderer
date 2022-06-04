@@ -1,2 +1,2 @@
-Vanilla JavaScript 3D rendering engine.
+Vanilla JavaScript 3D rendering engine.  
 https://matteokeole.github.io/3DJSRenderer/
