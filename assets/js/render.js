@@ -24,15 +24,28 @@ export default (canvas, camera) => {
 				ctx.lineTo(...p[1]);
 				ctx.lineTo(...p[2]);
 				ctx.closePath();
+
+				if (polygon[3] !== undefined) {
+					ctx.save();
+					ctx.fillStyle = mesh.texturePattern;
+					let dz = 1 / (mesh.position.z - camera.position.z) * 3;
+					ctx.setTransform(
+						dz,
+						0, // TODO
+						0, // TODO
+						dz,
+						...p[polygon[3]],
+					);
+					ctx.rotate(camera.rotation[1] / 10);
+					ctx.fill();
+					ctx.restore();
+				}
+
 				ctx.stroke();
 			}
 		}
 	}
 };
-
-
-
-
 
 
 

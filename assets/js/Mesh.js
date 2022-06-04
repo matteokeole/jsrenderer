@@ -78,3 +78,16 @@ Mesh.prototype.place = function(x, y, z) {
 
 	this.rotation = new Vector3(xAxis, yAxis, zAxis);
 };*/
+
+// Applies a texture on the first triangle
+Mesh.prototype.applyTexture = function(source) {
+	this.texture = new Image();
+	this.texture.src = `textures/${source}`;
+	this.texture.addEventListener("load", () => {
+		this.indexBuffer[0][3] = 0;
+		this.indexBuffer[4][3] = 0;
+		this.textureBuffer = document.createElement("canvas");
+		this.textureBuffer = this.textureBuffer.getContext("2d");
+		this.texturePattern = this.textureBuffer.createPattern(this.texture, "no-repeat");
+	});
+};
