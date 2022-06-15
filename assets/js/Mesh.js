@@ -1,4 +1,4 @@
-import Vector3 from "./Vector3.js";
+import {Vector3} from "./Vector3.js";
 import {meshes} from "./main.js";
 
 export default function Mesh(geometry) {
@@ -6,7 +6,6 @@ export default function Mesh(geometry) {
 	this.updateVertices = geometry.updateVertices;
 
 	this.place(new Vector3());
-
 	this.rotation = new Vector3();
 
 	this.attachedCamera = null;

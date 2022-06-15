@@ -1,5 +1,5 @@
 import {cameras} from "./main.js";
-import Vector3 from "./Vector3.js";
+import {Vector3} from "./Vector3.js";
 
 /**
  * @todo Documentation
@@ -10,77 +10,49 @@ export default function(fov, near, far) {
 	this.P = fov;
 	this.near = near;
 	this.far = far;
+	this.position = new Vector3();
+	this.rotation = new Vector3();
 
 	/**
-	 * @param	{number}	x	Destination X coordinate
-	 * @param	{number}	y	Destination Y coordinate
-	 * @param	{number}	z	Destination Z coordinate
+	 * @param	{number}	x
+	 * @param	{number}	y
+	 * @param	{number}	z
 	 */
 	this.place = function(x, y, z) {
-		this.position = new Vector3(...arguments);
+		this.position = new Vector3(x, y, z);
 
-		debugPosition.innerText = currentCamera.position.toString();
+		debugPosition.textContent = currentCamera.position.toString();
 	};
 
 	/**
-	 * @param	{number}	x	Added X coordinate
-	 * @param	{number}	y	Added Y coordinate
-	 * @param	{number}	z	Added Z coordinate
+	 * @param	{number}	x
+	 * @param	{number}	y
+	 * @param	{number}	z
 	 */
 	this.move = function(x, y, z) {
-		let v = new Vector3(...arguments);
+		this.position = this.position.add(new Vector3(x, y, z));
 
-		this.position = this.position.add(v);
-
-		debugPosition.innerText = currentCamera.position.toString();
+		debugPosition.textContent = currentCamera.position.toString();
 	};
 
 	this.moveForward = n => {
-		// x1 = x + n * cos(theta)
-		// (theta is the angle)
-		let x = this.position.x + n * Math.sin(this.rotation[1]),
-			z = this.position.z + n * Math.cos(this.rotation[1]);
+		let x = n * Math.sin(this.rotation.y),
+			z = n * Math.cos(this.rotation.y);
 
-		this.position.x = x;
-		this.position.z = z;
+		this.position.x += x;
+		this.position.z += z;
 
-		debugPosition.innerText = currentCamera.position.toString();
+		debugPosition.textContent = currentCamera.position.toString();
 	};
 
 	this.moveRight = n => {
-		let x = this.position.x + n * Math.cos(this.rotation[1]),
-			z = this.position.z - n * Math.sin(this.rotation[1]);
+		let x = n * Math.cos(this.rotation.y),
+			z = n * Math.sin(this.rotation.y);
 
-		this.position.x = x;
-		this.position.z = z;
+		this.position.x += x;
+		this.position.z -= z;
 
-		debugPosition.innerText = currentCamera.position.toString();
-	};
-
-	this.ascend = n => {
-		this.position.y += n;
-	};
-
-	/**
-	 * @param	{number}	x	X angle
-	 * @param	{number}	y	Y angle
-	 * @param	{number}	z	Z angle
-	 */
-	this.rotate = function(x, y, z) {
-		this.rotation = [...arguments];
-
-		debugRotation.innerText = currentCamera.rotation.map(a => a.toFixed(2)).join(" / ");
-	};
-
-	/**
-	 * @param	{number}	x	X angle
-	 * @param	{number}	y	Y angle
-	 * @param	{number}	z	Z angle
-	 */
-	this.addRotation = function(x, y, z) {
-		this.rotation = this.rotation.map((a, i) => a += [...arguments][i]);
-
-		debugRotation.innerText = currentCamera.rotation.map(a => a.toFixed(2)).join(" / ");
+		debugPosition.textContent = currentCamera.position.toString();
 	};
 
 	/** @todo Advanced attachment methods */
@@ -101,14 +73,11 @@ export default function(fov, near, far) {
 	this.setCurrent = () => {
 		currentCamera = this;
 
-		debugCamera.innerText = [...cameras].indexOf(this) + 1;
+		debugCamera.textContent = [...cameras].indexOf(this) + 1;
 	}
 
 	cameras.add(this);
-	currentCamera === undefined && this.setCurrent();
-
-	this.place(0, 0, 0);
-	this.rotate(0, 0, 0);
+	if (currentCamera === undefined) this.setCurrent();
 
 	return this;
 }

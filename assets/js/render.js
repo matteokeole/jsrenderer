@@ -8,6 +8,8 @@ export default (canvas, camera) => {
 	ctx.clearRect(0, 0, Viewport.width, Viewport.height);
 
 	for (let mesh of meshes) {
+		mesh.rotation.x += .01;
+
 		// Loop through the mesh index buffer and draw the associated polygon
 		for (let polygon of mesh.indexBuffer) {
 			// Project each polygon vector
@@ -25,7 +27,8 @@ export default (canvas, camera) => {
 				ctx.lineTo(...p[2]);
 				ctx.closePath();
 
-				if (polygon[3] !== undefined) {
+				// Texturing tests
+				/*if (polygon[3] !== undefined) {
 					ctx.save();
 					ctx.fillStyle = mesh.texturePattern;
 					let dz = 1 / (mesh.position.z - camera.position.z) * 3;
@@ -36,10 +39,10 @@ export default (canvas, camera) => {
 						dz,
 						...p[polygon[3]],
 					);
-					ctx.rotate(camera.rotation[1] / 10);
+					ctx.rotate(camera.rotation.y / 10);
 					ctx.fill();
 					ctx.restore();
-				}
+				}*/
 
 				ctx.stroke();
 			}

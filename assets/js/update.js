@@ -11,12 +11,12 @@ export default () => {
 		switchCamera();
 	}
 
-	keys.has(Keybind.forward)	&& currentCamera.moveForward(VELOCITY);
-	keys.has(Keybind.backward)	&& currentCamera.moveForward(-VELOCITY);
-	keys.has(Keybind.left)		&& currentCamera.moveRight(-VELOCITY);
-	keys.has(Keybind.right)		&& currentCamera.moveRight(VELOCITY);
-	keys.has(Keybind.ascend)	&& currentCamera.ascend(VELOCITY);
-	keys.has(Keybind.descend)	&& currentCamera.ascend(-VELOCITY);
+	if (keys.has(Keybind.forward))	currentCamera.moveForward(VELOCITY);
+	if (keys.has(Keybind.backward))	currentCamera.moveForward(-VELOCITY);
+	if (keys.has(Keybind.left))		currentCamera.moveRight(-VELOCITY);
+	if (keys.has(Keybind.right))	currentCamera.moveRight(VELOCITY);
+	if (keys.has(Keybind.ascend))	currentCamera.position.y += VELOCITY;
+	if (keys.has(Keybind.descend))	currentCamera.position.y -= VELOCITY;
 
 	render(canvas, currentCamera);
 };

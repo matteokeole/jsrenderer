@@ -4,6 +4,7 @@ import loop from "./loop.js";
 import resize from "./resize.js";
 import {pressKeys, releaseKeys} from "./input-handler.js";
 import {currentCamera} from "./PerspectiveCamera.js";
+import {Vector3} from "./Vector3.js";
 
 /**
  * Vanilla JavaScript 3D rendering engine.
@@ -62,14 +63,16 @@ export const
 
 		// Prevent < -180° and > 180° rotation along the X axis
 		if (
-			x < 0 && currentCamera.rotation[0] < -Math.PI / 2 || // To the top
-			x > 0 && currentCamera.rotation[0] > Math.PI / 2 // To the bottom
+			x < 0 && currentCamera.rotation.x < -Math.PI / 2 || // To the top
+			x > 0 && currentCamera.rotation.x > Math.PI / 2 // To the bottom
 		) x = 0;
 
 		// Prevent "infinite" rotation along the Y axis
-		if (Math.abs(currentCamera.rotation[1]) > Math.PI * 2) currentCamera.rotation[1] = 0;
+		if (Math.abs(currentCamera.rotationy) > Math.PI * 2) currentCamera.rotation.y = 0;
 
-		currentCamera.addRotation(x, y, 0);
+		currentCamera.rotation = currentCamera.rotation.add(new Vector3(x, y, 0));
+
+		debugRotation.textContent = currentCamera.rotation.toString();
 	};
 
 // Stretch the canvas to the viewport size
@@ -95,4 +98,4 @@ canvas.addEventListener("click", function() {
 	this.requestPointerLock();
 });
 
-debugFPS.innerText = `${FRAMES_PER_SECOND} fps, ${FRAMERATE} rate`;
+debugFPS.textContent = `${FRAMES_PER_SECOND} fps, ${FRAMERATE} rate`;
