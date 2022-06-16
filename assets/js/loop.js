@@ -1,4 +1,4 @@
-import {FRAMERATE} from "./vars.js";
+import {FRAMERATE} from "./config.js";
 import update from "./update.js";
 
 export default function loop() {

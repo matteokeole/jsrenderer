@@ -1,22 +1,13 @@
-import {switchCamera} from "./main.js";
-import {currentCamera} from "./PerspectiveCamera.js";
-import {keys} from "./input-handler.js";
-import {Keybind, VELOCITY} from "./vars.js";
-import render from "./render.js";
+import {Keybind, VELOCITY} from "./config.js";
+import {renderer, scene, camera, keys} from "./main.js";
 
 export default () => {
-	if (keys.has(Keybind.nextCamera)) {
-		keys.delete(Keybind.nextCamera);
+	if (keys.has(Keybind.forward))	camera.moveForward(VELOCITY);
+	if (keys.has(Keybind.backward))	camera.moveForward(-VELOCITY);
+	if (keys.has(Keybind.left))		camera.moveRight(-VELOCITY);
+	if (keys.has(Keybind.right))	camera.moveRight(VELOCITY);
+	if (keys.has(Keybind.ascend))	camera.position.y += VELOCITY;
+	if (keys.has(Keybind.descend))	camera.position.y -= VELOCITY;
 
-		switchCamera();
-	}
-
-	if (keys.has(Keybind.forward))	currentCamera.moveForward(VELOCITY);
-	if (keys.has(Keybind.backward))	currentCamera.moveForward(-VELOCITY);
-	if (keys.has(Keybind.left))		currentCamera.moveRight(-VELOCITY);
-	if (keys.has(Keybind.right))	currentCamera.moveRight(VELOCITY);
-	if (keys.has(Keybind.ascend))	currentCamera.position.y += VELOCITY;
-	if (keys.has(Keybind.descend))	currentCamera.position.y -= VELOCITY;
-
-	render(canvas, currentCamera);
+	renderer.render(scene, camera);
 };

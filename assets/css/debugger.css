@@ -13,6 +13,7 @@
 	font-style: italic;
 }
 
-#debugCamera::before {content: "Cam "}
-#debugPosition::before {content: "Pos "}
-#debugRotation::before {content: "Rot "}
+#debugPosition::before {content: "CP "}
+#debugRotation::before {content: "CR "}
+#debugMPosition::before {content: "MP "}
+#debugMRotation::before {content: "MR "}
