@@ -42,18 +42,14 @@ Renderer.prototype.render = function(scene, camera) {
 		let geometry = mesh.geometry,
 			vertices = [...geometry.vertices];
 
-		// Transform vertices
+		// Transform the vertices, project them and adapt them to the viewport
 		for (let v in vertices) {
-			vertices[v] = Utils.transform(vertices[v], mesh, camera);
+			vertices[v] = Utils.viewport(Utils.project(Utils.transform(vertices[v], mesh, camera), camera.fov), this);
 		}
 
 		// Loop through the mesh indices and draw the associated transformed polygon
 		for (let i of geometry.indices) {
-			let polygon = [
-				Utils.viewport(Utils.project(vertices[i[0]], camera), this),
-				Utils.viewport(Utils.project(vertices[i[1]], camera), this),
-				Utils.viewport(Utils.project(vertices[i[2]], camera), this),
-			];
+			let polygon = [vertices[i[0]], vertices[i[1]], vertices[i[2]]];
 
 			if (Utils.bfc(...polygon)) {
 				this.ctx.beginPath();

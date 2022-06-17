@@ -8,6 +8,7 @@ export const Mesh = function(geometry) {
 
 	this.position = new Vector3();
 	this.rotation = new Vector3();
+	this.scale = new Vector3(1);
 
 	this.attachedCamera = null;
 

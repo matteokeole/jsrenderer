@@ -42,9 +42,9 @@ export const
 			v.z,
 		);
 	},
-	project = (v, camera) => [
-		Math.floor(v.x * camera.fov / v.z),
-		Math.floor(v.y * camera.fov / v.z),
+	project = (v, fov) => [
+		Math.floor(v.x * fov / v.z),
+		Math.floor(v.y * fov / v.z),
 	],
 	viewport = (p, renderer) => [
 		p[0] + renderer.halfWidth,
