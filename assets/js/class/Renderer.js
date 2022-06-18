@@ -1,16 +1,22 @@
-import * as Utils from "../utils.js";
+import {BACKFACE_CULLING, WIREFRAME_COLOR} from "../config.js";
 import {Vector3} from "./Vector3.js";
+import * as Utils from "../utils.js";
 
 export const Renderer = function(width, height) {
+	this.width = null;
+	this.height = null;
+	this.halfWidth = null;
+	this.halfHeight = null;
+
 	this.canvas = document.createElement("canvas");
-	this.canvas.style.display = "block";
 	this.canvas.textContent = "This browser does not support Canvas API.";
+	this.canvas.style.display = "block";
 	this.canvas.requestPointerLock ||= this.canvas.mozRequestPointerLock;
+
+	this.ctx = this.canvas.getContext("2d");
 
 	// Set canvas size
 	this.stretch(width, height);
-
-	this.ctx = this.canvas.getContext("2d");
 
 	document.body.appendChild(this.canvas);
 
@@ -33,10 +39,14 @@ Renderer.prototype.stretch = function(width = innerWidth, height = innerHeight) 
 
 	this.canvas.width = this.width;
 	this.canvas.height = this.height;
+
+	// Reset context stroke color
+	this.ctx.strokeStyle = WIREFRAME_COLOR;
 };
 
 Renderer.prototype.render = function(scene, camera) {
-	this.ctx.clearRect(0, 0, this.width, this.height);
+	this.ctx.fillStyle = scene.background;
+	this.ctx.fillRect(0, 0, this.width, this.height);
 
 	for (let mesh of scene.meshes) {
 		let geometry = mesh.geometry,
@@ -49,9 +59,10 @@ Renderer.prototype.render = function(scene, camera) {
 
 		// Loop through the mesh indices and draw the associated transformed polygon
 		for (let i of geometry.indices) {
-			let polygon = [vertices[i[0]], vertices[i[1]], vertices[i[2]]];
+			let polygon = [vertices[i[0]], vertices[i[1]], vertices[i[2]]],
+				bfc = BACKFACE_CULLING ? Utils.bfc(...polygon) : true;
 
-			if (Utils.bfc(...polygon)) {
+			if (bfc) {
 				this.ctx.beginPath();
 				this.ctx.moveTo(...polygon[0]);
 				this.ctx.lineTo(...polygon[1]);
@@ -77,9 +88,6 @@ Renderer.prototype.render = function(scene, camera) {
 				}*/
 			}
 		}
-
-		debugMPosition.textContent = mesh.position;
-		debugMRotation.textContent = mesh.rotation;
 	}
 
 	debugPosition.textContent = camera.position;

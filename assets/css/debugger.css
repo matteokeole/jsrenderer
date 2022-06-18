@@ -13,7 +13,5 @@
 	font-style: italic;
 }
 
-#debugPosition::before {content: "CP "}
-#debugRotation::before {content: "CR "}
-#debugMPosition::before {content: "MP "}
-#debugMRotation::before {content: "MR "}
+#debugPosition::before {content: "Position: "}
+#debugRotation::before {content: "Rotation: "}

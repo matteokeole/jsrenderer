@@ -1,6 +1,8 @@
 export const Scene = function() {
 	this.meshes = new Set();
 
+	this.background = null;
+
 	return this;
 };
 

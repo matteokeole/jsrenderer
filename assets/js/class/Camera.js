@@ -1,9 +1,8 @@
 import {Vector3} from "./Vector3.js";
 
-export const Camera = function(fov, near, far) {
+export const Camera = function(fov) {
 	this.fov = fov;
-	this.near = near;
-	this.far = far;
+
 	this.position = new Vector3();
 	this.rotation = new Vector3();
 

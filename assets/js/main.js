@@ -1,10 +1,10 @@
-import {SENSITIVITY} from "./config.js";
+import {VELOCITY, SENSITIVITY} from "./config.js";
+import {Vector3} from "./class/Vector3.js";
 import {Renderer} from "./class/Renderer.js";
 import {Scene} from "./class/Scene.js";
 import {Camera} from "./class/Camera.js";
 import {BoxGeometry} from "./class/BoxGeometry.js";
 import {Mesh} from "./class/Mesh.js";
-import {Vector3} from "./class/Vector3.js";
 import "./events.js";
 import loop from "./loop.js";
 
@@ -15,10 +15,10 @@ import loop from "./loop.js";
  * [S]			Walk backward
  * [A]			Strafe left
  * [D]			Strafe right
- * [Space]		Ascend
- * [LeftCtrl]	Descend
+ * [Space]		Fly up
+ * [LeftCtrl]	Fly down
  * 
- * @see {link https://github.com/matteokeole/3DJSEngine}
+ * @see {link https://github.com/matteokeole/jsrenderer}
  * @see {link https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web/Basic_theory}
  * @see {link https://www.youtube.com/watch?v=OVQxTNd2U3w&t=1220s}
  * @see {link https://www.sitepoint.com/building-3d-engine-javascript}
@@ -41,25 +41,34 @@ export const
 
 		camera.rotation.x += x;
 		camera.rotation.y += y;
-		// camera.rotation.z = e.movementX * Math.PI / 360;
+		camera.rotation.z = e.movementX * Math.PI / 1500;
 	},
 	keys = new Set(),
 	pressKeys = e => keys.add(e.code),
-	releaseKeys = e => keys.delete(e.code);
-
-export const
+	releaseKeys = e => keys.delete(e.code),
 	renderer = new Renderer(),
 	scene = new Scene(),
 	camera = new Camera(800);
 
-renderer.ctx.strokeStyle = "#fef953";
+scene.background = "#151515";
 
-camera.position.set(0, 0, 0);
+let mesh = new Mesh(new BoxGeometry(2, 2, 3));
+mesh.position.set(2.5, 0, 6);
+mesh.rotation.y = Math.PI / 5;
 
-let box = new BoxGeometry(2, 2, 2);
-let mesh = new Mesh(box);
-mesh.position.set(0, 0, 5);
-mesh.scale.set(2, 1, 1);
-scene.add(mesh);
+let mesh2 = new Mesh(new BoxGeometry(.7, 3, .7));
+mesh2.position.set(-2, .5, 3.5);
+mesh2.rotation.y = Math.PI / 3;
+
+let mesh3 = new Mesh(new BoxGeometry(.4, 2.5, .4));
+mesh3.position.set(-2.66, .25, 3.1);
+mesh3.rotation.y = Math.PI / 4;
+mesh3.rotation.z = Math.PI / 19;
+
+let mesh4 = new Mesh(new BoxGeometry(3, .4, 1.2));
+mesh4.position.set(-1.5, -.8, 6);
+mesh4.rotation.y = -Math.PI / 7;
+
+scene.add(mesh, mesh2, mesh3, mesh4);
 
 loop();

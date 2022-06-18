@@ -15,7 +15,6 @@ const pointerLockUpdate = () => {
 
 addEventListener("resize", () => {
 	renderer.stretch();
-	renderer.ctx.strokeStyle = "#fef953";
 });
 
 addEventListener("click", e => {

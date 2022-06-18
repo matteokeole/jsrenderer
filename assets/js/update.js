@@ -1,5 +1,5 @@
 import {Keybind, VELOCITY} from "./config.js";
-import {renderer, scene, camera, keys} from "./main.js";
+import {keys, renderer, scene, camera} from "./main.js";
 
 export default () => {
 	if (keys.has(Keybind.forward))	camera.moveForward(VELOCITY);

@@ -2,8 +2,18 @@ import {Vector3} from "./class/Vector3.js";
 
 export const
 	transform = (v, mesh, camera) => {
+		v = rotateX(v, mesh.rotation.x); // Rotate along the X axis
+		v = rotateY(v, -mesh.rotation.y); // Rotate along the Y axis
+		v = rotateZ(v, -mesh.rotation.z); // Rotate along the Z axis
+
+		v = v.multiply(mesh.scale); // Scale the mesh
+
 		v = v.add(mesh.position); // Translate from mesh origin
+
 		v = v.add(camera.position.invert()); // Translate from camera
+
+		v.y *= -1; // Invert Y for the remaining rotations
+
 		v = rotateY(v, camera.rotation.y); // Rotate along the Y axis
 		v = rotateX(v, -camera.rotation.x); // Rotate along the X axis
 		v = rotateZ(v, camera.rotation.z); // Rotate along the Z axis
@@ -13,8 +23,6 @@ export const
 	rotateX = (v, a) => {
 		let c = Math.cos(a),
 			s = Math.sin(a);
-
-		v.y *= -1; // Invert 
 
 		return new Vector3(
 			v.x,
