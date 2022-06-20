@@ -6,7 +6,9 @@ export const
 		v = rotateY(v, -mesh.rotation.y); // Rotate along the Y axis
 		v = rotateZ(v, -mesh.rotation.z); // Rotate along the Z axis
 
-		v = v.multiply(mesh.scale); // Scale the mesh
+		let scale = mesh.geometry.type === "plane" ? new Vector3(mesh.scale.x, 1, mesh.scale.y) : mesh.scale;
+
+		v = v.multiply(scale); // Scale the mesh
 
 		v = v.add(mesh.position); // Translate from mesh origin
 

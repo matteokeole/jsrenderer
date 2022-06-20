@@ -1,4 +1,4 @@
-import {BACKFACE_CULLING, WIREFRAME_COLOR} from "../config.js";
+import {BACKFACE_CULLING, DRAW_MODE, WIREFRAME_COLOR} from "../config.js";
 import {Vector3} from "./Vector3.js";
 import * as Utils from "../utils.js";
 
@@ -67,7 +67,7 @@ Renderer.prototype.render = function(scene, camera) {
 				this.ctx.moveTo(...polygon[0]);
 				this.ctx.lineTo(...polygon[1]);
 				this.ctx.lineTo(...polygon[2]);
-				this.ctx.closePath();
+				if (DRAW_MODE === "lines") this.ctx.closePath();
 				this.ctx.stroke();
 
 				// Texturing tests

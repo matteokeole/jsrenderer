@@ -1,18 +1,25 @@
+import {Vector2} from "./Vector2.js";
 import {Vector3} from "./Vector3.js";
 
 export const Mesh = function(geometry) {
-	this.geometry = {
-		vertices: geometry.vertices,
-		indices: geometry.indices,
-	};
+	this.geometry = geometry;
 
 	this.position = new Vector3();
 	this.rotation = new Vector3();
-	this.scale = new Vector3(1);
 
-	this.attachedCamera = null;
+	this.scale = this.geometry.type === "plane" ? new Vector2(1) : new Vector3(1);
 
 	return this;
+};
+
+Mesh.prototype.clone = function() {
+	const mesh = new Mesh(this.geometry);
+
+	mesh.position = this.position.clone();
+	mesh.rotation = this.rotation.clone();
+	mesh.scale = this.scale.clone();
+
+	return mesh;
 };
 
 /** @todo */

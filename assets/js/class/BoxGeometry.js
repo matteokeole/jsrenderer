@@ -1,6 +1,8 @@
 import {Vector3} from "./Vector3.js";
 
 export const BoxGeometry = function(width, height, depth) {
+	this.type = "box";
+
 	this.width = width;
 	this.height = height;
 	this.depth = depth;
@@ -21,18 +23,18 @@ export const BoxGeometry = function(width, height, depth) {
 	];
 
 	this.indices = [
-		[0, 1, 3, "red"],
-		[3, 1, 2, "red"],
-		[4, 5, 7, "red"],
-		[7, 5, 6, "red"],
-		[5, 0, 6, "green"],
-		[6, 0, 3, "green"],
-		[1, 4, 2, "green"],
-		[2, 4, 7, "green"],
-		[5, 4, 0, "blue"],
-		[0, 4, 1, "blue"],
-		[3, 2, 6, "blue"],
-		[6, 2, 7, "blue"],
+		[0, 1, 2],
+		[2, 3, 0],
+		[4, 5, 6],
+		[6, 7, 4],
+		[5, 0, 3],
+		[3, 6, 5],
+		[1, 4, 7],
+		[7, 2, 1],
+		[5, 4, 1],
+		[1, 0, 5],
+		[3, 2, 7],
+		[7, 6, 3],
 	];
 
 	return this;

@@ -21,5 +21,4 @@ addEventListener("click", e => {
 	if (e.target === renderer.canvas) renderer.lock();
 });
 
-addEventListener("pointerlockchange", pointerLockUpdate);
-addEventListener("mozpointerlockchange", pointerLockUpdate);
+document.addEventListener("pointerlockchange", pointerLockUpdate);
