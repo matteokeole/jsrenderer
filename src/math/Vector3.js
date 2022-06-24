@@ -2,10 +2,10 @@
  * Creates a 3-dimensional vector.
  * 
  * @constructor
- * @param   {number}    x
- * @param   {number}    y
- * @param   {number}    z
- * @returns {Vector3}
+ * @param	{number}	x
+ * @param	{number}	y
+ * @param	{number}	z
+ * @returns	{Vector3}
  */
 export const Vector3 = function(x, y, z) {
 	return this.set(x, y, z);
@@ -14,8 +14,8 @@ export const Vector3 = function(x, y, z) {
 /**
  * Adds another vector to this vector.
  * 
- * @param   {Vector3}   v
- * @returns {Vector3}
+ * @param	{Vector3}	v
+ * @returns	{Vector3}
  */
 Vector3.prototype.add = function(v) {
 	return new Vector3(
@@ -28,8 +28,8 @@ Vector3.prototype.add = function(v) {
 /**
  * Adds a given scalar value to this vector's coordinates.
  * 
- * @param   {number}    n
- * @returns {Vector3}
+ * @param	{number}	n
+ * @returns	{Vector3}
  */
 Vector3.prototype.addScalar = function(n) {
 	return new Vector3(
@@ -42,9 +42,9 @@ Vector3.prototype.addScalar = function(n) {
 /**
  * Adds the multiple of a given scalar value and a given vector to this vector.
  * 
- * @param   {Vector3}   v
- * @param   {number}    n
- * @returns {Vector3}
+ * @param	{Vector3}	v
+ * @param	{number}	n
+ * @returns	{Vector3}
  */
 Vector3.prototype.addScaledVector = function(v, n) {
 	return this.add(v.multiplyScalar(n));
@@ -53,8 +53,8 @@ Vector3.prototype.addScaledVector = function(v, n) {
 /**
  * Return the angle between this vector and another vector.
  * 
- * @param   {Vector3}   v 
- * @returns {number}
+ * @param	{Vector3}	v 
+ * @returns	{number}
  */
 Vector3.prototype.angleTo = function(v) {
 	const d = Math.sqrt(this.lengthSquared + v.lengthSquared());
@@ -69,7 +69,7 @@ Vector3.prototype.angleTo = function(v) {
 /**
  * Rounds up the position of this vector to the nearest integer value.
  * 
- * @returns {Vector3}
+ * @returns	{Vector3}
  */
 Vector3.prototype.ceil = function() {
 	return new Vector3(
@@ -82,7 +82,7 @@ Vector3.prototype.ceil = function() {
 /**
  * Returns a copy of this vector.
  * 
- * @returns {Vector3}
+ * @returns	{Vector3}
  */
 Vector3.prototype.clone = function() {
 	return new Vector3(this.x, this.y, this.z);
@@ -91,8 +91,8 @@ Vector3.prototype.clone = function() {
 /**
  * Calculates the cross product of this vector and another vector.
  * 
- * @param   {Vector3}   v
- * @returns {Vector3}
+ * @param	{Vector3}	v
+ * @returns	{Vector3}
  */
 Vector3.prototype.cross = function(v) {
 	return new Vector3(
@@ -105,8 +105,8 @@ Vector3.prototype.cross = function(v) {
 /**
  * Returns the distance between this vector and another vector.
  * 
- * @param   {Vector3}   v
- * @returns {number}
+ * @param	{Vector3}	v
+ * @returns	{number}
  */
 Vector3.prototype.distanceTo = function(v) {
 	return Math.sqrt((v.x - this.x) ** 2 + (v.y - this.y) ** 2 + (v.z - this.z) ** 2);
@@ -115,8 +115,8 @@ Vector3.prototype.distanceTo = function(v) {
 /**
  * Divides this vector by another vector.
  * 
- * @param   {Vector3}   v
- * @returns {Vector3}
+ * @param	{Vector3}	v
+ * @returns	{Vector3}
  */
 Vector3.prototype.divide = function(v) {
 	return new Vector3(
@@ -129,8 +129,8 @@ Vector3.prototype.divide = function(v) {
 /**
  * Divides this vector by a given scalar value.
  * 
- * @param   {number}    n
- * @returns {Vector3}
+ * @param	{number}	n
+ * @returns	{Vector3}
  */
 Vector3.prototype.divideScalar = function(n) {
 	return this.multiplyScalar(1 / n);
@@ -139,8 +139,8 @@ Vector3.prototype.divideScalar = function(n) {
 /**
  * Calculates the dot product of this vector and another vector.
  * 
- * @param   {Vector3}   v
- * @returns {number}
+ * @param	{Vector3}	v
+ * @returns	{number}
  */
 Vector3.prototype.dot = function(v) {
 	return this.x * v.x + this.y * v.y + this.z * v.z;
@@ -149,8 +149,8 @@ Vector3.prototype.dot = function(v) {
 /**
  * Returns the boolean value of the comparison of this vector and another vector.
  * 
- * @param   {Vector3}   v
- * @returns {boolean}
+ * @param	{Vector3}	v
+ * @returns	{boolean}
  */
 Vector3.prototype.equals = function(v) {
 	return this.x === v.x && this.y === v.y && this.z === v.z;
@@ -159,7 +159,7 @@ Vector3.prototype.equals = function(v) {
 /**
  * Rounds down the position of this vector to the nearest integer value.
  * 
- * @returns {Vector3}
+ * @returns	{Vector3}
  */
 Vector3.prototype.floor = function() {
 	return new Vector3(
@@ -172,7 +172,7 @@ Vector3.prototype.floor = function() {
 /**
  * Inverts the coordinate signs of this vector.
  * 
- * @returns {Vector3}
+ * @returns	{Vector3}
  */
 Vector3.prototype.invert = function() {
 	return this.multiplyScalar(-1);
@@ -181,7 +181,7 @@ Vector3.prototype.invert = function() {
 /**
  * Returns the length of the line going from the origin to the position of this vector.
  * 
- * @returns {number}
+ * @returns	{number}
  */
 Vector3.prototype.length = function() {
 	return Math.sqrt(this.lengthSquared());
@@ -190,7 +190,7 @@ Vector3.prototype.length = function() {
 /**
  * Returns the squared length of the line going from the origin to the position of this vector.
  * 
- * @returns {number}
+ * @returns	{number}
  */
 Vector3.prototype.lengthSquared = function() {
 	return this.x ** 2 + this.y ** 2 + this.z ** 2;
@@ -199,8 +199,8 @@ Vector3.prototype.lengthSquared = function() {
 /**
  * Multiplies this vector by another vector.
  * 
- * @param   {Vector3}   v
- * @returns {Vector3}
+ * @param	{Vector3}	v
+ * @returns	{Vector3}
  */
 Vector3.prototype.multiply = function(v) {
 	return new Vector3(
@@ -213,8 +213,8 @@ Vector3.prototype.multiply = function(v) {
 /**
  * Multiplies this vector by a given scalar value.
  * 
- * @param   {number}    n
- * @returns {Vector3}
+ * @param	{number}	n
+ * @returns	{Vector3}
  */
 Vector3.prototype.multiplyScalar = function(n) {
 	return new Vector3(
@@ -244,7 +244,7 @@ Vector3.prototype.normalize = function() {
 /**
  * Sets pseudo-random coordinates between 0 and 1 (excluded) to this vector.
  * 
- * @returns {Vector3}
+ * @returns	{Vector3}
  */
 Vector3.prototype.randomize = function() {
 	return new Vector3(
@@ -257,7 +257,7 @@ Vector3.prototype.randomize = function() {
 /**
  * Rounds the position of this vector to the nearest integer value.
  * 
- * @returns {Vector3}
+ * @returns	{Vector3}
  */
 Vector3.prototype.round = function() {
 	return new Vector3(
@@ -270,10 +270,10 @@ Vector3.prototype.round = function() {
 /**
  * Sets the coordinates of this vector.
  * 
- * @param   {number}    [x=0]
- * @param   {number}    [y=x]
- * @param   {number}    [z=x]
- * @returns self
+ * @param	{number}	[x=0]
+ * @param	{number}	[y=x]
+ * @param	{number}	[z=x]
+ * @returns	self
  */
 Vector3.prototype.set = function(x = 0, y, z) {
 	if (x instanceof Vector3) {
@@ -302,8 +302,8 @@ Vector3.prototype.set = function(x = 0, y, z) {
 /**
  * Sets the X coordinate of this vector.
  * 
- * @param   {number}    x
- * @returns self
+ * @param	{number}	x
+ * @returns	self
  */
 Vector3.prototype.setX = function(x) {
 	this.x = x;
@@ -314,8 +314,8 @@ Vector3.prototype.setX = function(x) {
 /**
  * Sets the Y coordinate of this vector.
  * 
- * @param   {number}    y
- * @returns self
+ * @param	{number}	y
+ * @returns	self
  */
 Vector3.prototype.setY = function(y) {
 	this.y = y;
@@ -326,8 +326,8 @@ Vector3.prototype.setY = function(y) {
 /**
  * Sets the Z coordinate of this vector.
  * 
- * @param   {number}    z
- * @returns self
+ * @param	{number}	z
+ * @returns	self
  */
 Vector3.prototype.setZ = function(z) {
 	this.z = z;
@@ -338,8 +338,8 @@ Vector3.prototype.setZ = function(z) {
 /**
  * Substracts this vector from another vector.
  * 
- * @param   {Vector3}   v
- * @returns {Vector3}
+ * @param	{Vector3}	v
+ * @returns	{Vector3}
  */
 Vector3.prototype.substract = function(v) {
 	return new Vector3(
@@ -352,8 +352,8 @@ Vector3.prototype.substract = function(v) {
 /**
  * Substracts this vector from a given scalar value.
  * 
- * @param   {number}    n
- * @returns {Vector3}
+ * @param	{number}	n
+ * @returns	{Vector3}
  */
 Vector3.prototype.substractScalar = function(n) {
 	return this.addScalar(-n);
@@ -362,7 +362,7 @@ Vector3.prototype.substractScalar = function(n) {
 /**
  * Returns the coordinates of this vector in an array.
  * 
- * @returns {array}
+ * @returns	{array}
  */
 Vector3.prototype.toArray = function() {
 	return [this.x, this.y, this.z];
@@ -371,9 +371,18 @@ Vector3.prototype.toArray = function() {
 /**
  * Returns the coordinates of this vector in a string.
  * 
- * @param   {number}    n   Decimal rounding number
- * @returns {string}
+ * @param	{number}	n	Decimal rounding
+ * @returns	{string}
  */
 Vector3.prototype.toString = function(n = 2) {
 	return `${this.x.toFixed(n)} ${this.y.toFixed(n)} ${this.z.toFixed(n)}`;
+};
+
+/**
+ * Returns the spreaded vector.
+ * 
+ * @returns	{...number}
+ */
+ Vector3.prototype.xyz = function() {
+	return [this.x, this.y, this.z];
 };
