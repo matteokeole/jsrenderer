@@ -1,4 +1,3 @@
-import {SCALE_MULTIPLIER} from "../../public/config.js";
 import {Vector3, Matrix4, loadShader, parseShader} from "../module.js";
 
 export const Renderer = function(width, height) {
@@ -69,12 +68,12 @@ Renderer.prototype.loadProgram = async function(folder) {
 	}
 };
 
-Renderer.prototype.isLocked = function() {
-	return this.canvas === document.pointerLockElement;
-};
-
 Renderer.prototype.lock = function() {
 	this.canvas.requestPointerLock();
+};
+
+Renderer.prototype.isLocked = function() {
+	return this.canvas === document.pointerLockElement;
 };
 
 Renderer.prototype.render = function(scene, camera) {
@@ -112,7 +111,6 @@ Renderer.prototype.render = function(scene, camera) {
 		// to a valid WebGL right-hand coordinate system (decrease forward, increase backward)
 		position.set(position
 			.multiply(camera.lhcs)
-			.multiplyScalar(SCALE_MULTIPLIER)
 			.invert()
 		);
 
@@ -121,7 +119,7 @@ Renderer.prototype.render = function(scene, camera) {
 			.multiplyMatrix4(Matrix4.createRotationMatrix(rotation.x, "x"))
 			.multiplyMatrix4(Matrix4.createRotationMatrix(rotation.y, "y"))
 			.multiplyMatrix4(Matrix4.createRotationMatrix(rotation.z, "z"))
-			.multiplyMatrix4(Matrix4.createScaleMatrix(scale.multiplyScalar(SCALE_MULTIPLIER)));
+			.multiplyMatrix4(Matrix4.createScaleMatrix(scale));
 
 		this.gl.uniformMatrix4fv(this.gl.uniform.transform, false, transform.data);
 		this.gl.drawElements(this.primitiveType, geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);

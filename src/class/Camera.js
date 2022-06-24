@@ -1,3 +1,4 @@
+import {SENSITIVITY} from "../../public/config.js";
 import {Vector3, Matrix4} from "../module.js";
 
 export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near = 1, far = 1000) {
@@ -11,8 +12,8 @@ export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near
 	this.matrix = Matrix4.identity();
 
 	this.lookAround = e => {
-		let x = e.movementY * 1.2 / 1000,
-			y = e.movementX * 1.2 / 1000;
+		let x = e.movementY * SENSITIVITY / 1000,
+			y = e.movementX * SENSITIVITY / 1000;
 
 		// Prevent < -180° or > 180° rotation along the X axis
 		if (

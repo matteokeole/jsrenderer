@@ -1,5 +1,6 @@
 import {Keybind, VELOCITY} from "./config.js";
-import {camera, keys, scene} from "./main.js";
+import {keys} from "./events.js";
+import {camera, animatedCube} from "./main.js";
 
 export default () => {
 	if (keys.has(Keybind.forward))	camera.moveForward(VELOCITY);
@@ -9,6 +10,6 @@ export default () => {
 	if (keys.has(Keybind.up))		camera.position.y += VELOCITY;
 	if (keys.has(Keybind.down))		camera.position.y -= VELOCITY;
 
-	[...scene.meshes][2].rotation.x -= .01;
-	[...scene.meshes][2].rotation.y -= .01;
+	animatedCube.rotation.x -= .01;
+	animatedCube.rotation.y -= .02;
 };

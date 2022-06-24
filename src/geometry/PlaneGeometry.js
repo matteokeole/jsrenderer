@@ -1,6 +1,6 @@
 import {Vector3} from "../module.js";
 
-export const PlaneGeometry = function(width, height) {
+export const PlaneGeometry = function(width = 1, height = width) {
 	this.type = "plane";
 
 	this.width = width;

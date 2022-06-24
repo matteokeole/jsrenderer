@@ -66,6 +66,5 @@ export const
 			}
 		}
 
-		gl.attribute = attribute;
-		gl.uniform = uniform;
+		Object.assign(gl, {attribute, uniform});
 	};

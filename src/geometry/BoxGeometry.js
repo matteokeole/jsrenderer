@@ -11,17 +11,6 @@ export const BoxGeometry = function(width = 1, height = width, depth = width) {
 		h2 = this.height / 2,
 		d2 = this.depth / 2;
 
-	// this.vertices = new Float32Array([
-	// 	-w2,  h2, -d2,
-	// 	 w2,  h2, -d2,
-	// 	 w2, -h2, -d2,
-	// 	-w2, -h2, -d2,
-	// 	 w2,  h2,  d2,
-	// 	-w2,  h2,  d2,
-	// 	-w2, -h2,  d2,
-	// 	 w2, -h2,  d2,
-	// ]);
-
 	this.vertices = new Float32Array([
 		-w2,  h2,  d2,
 		 w2,  h2,  d2,
