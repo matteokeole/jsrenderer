@@ -24,8 +24,8 @@ import loop from "./loop.js";
 export let
 	renderer = new Module.Renderer(),
 	scene = new Module.Scene(),
-	camera = new Module.Camera(62, renderer.width / renderer.height, .1, 3000),
-	plane1, cube1, animatedCube, pillar1, pillar2, plate1;
+	camera = new Module.Camera(90, renderer.width / renderer.height, .1, 3000),
+	plane1, cube1, pillar1, pillar2, plate1, attachedCube;
 
 // Load shader program in the renderer
 await renderer.loadProgram("assets/shaders");
@@ -48,11 +48,6 @@ cube1 = new Module.Mesh(
 cube1.position.set(0, 0, 4);
 cube1.position.set(2.5, 0, 6);
 cube1.rotation.y = Math.PI / 5;
-
-
-animatedCube = cube1.clone();
-animatedCube.position.set(0, 0, 5);
-animatedCube.scale = animatedCube.scale.divideScalar(2);
 
 
 pillar1 = new Module.Mesh(
@@ -80,8 +75,14 @@ plate1.position.set(-1.5, -.8, 6);
 plate1.rotation.y = -Math.PI / 7;
 
 
+attachedCube = new Module.Mesh(
+	new Module.BoxGeometry(.3),
+	new Module.Color(0xff9800),
+);
 
-scene.add(plane1, cube1, animatedCube, pillar1, pillar2, plate1);
+
+
+scene.add(plane1, cube1, pillar1, pillar2, plate1, attachedCube);
 
 fov.value = camera.fov;
 fov.nextElementSibling.textContent = camera.fov;

@@ -82,10 +82,12 @@ Renderer.prototype.render = function(scene, camera) {
 	this.gl.clearColor(...scene.background.hex1);
 	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-	let cameraTranslation = Matrix4.createTranslationMatrix(camera.position.multiply(camera.lhcs)),
+	let cameraPivot = Matrix4.createTranslationMatrix(camera.distance.invert()),
+		cameraTranslation = Matrix4.createTranslationMatrix(camera.position.multiply(camera.lhcs)),
 		cameraRotationX = Matrix4.createRotationMatrix(camera.rotation.x, "x"),
 		cameraRotationY = Matrix4.createRotationMatrix(camera.rotation.y, "y"),
 		viewProjectionMatrix = camera.projectionMatrix
+			.multiplyMatrix4(cameraPivot)
 			.multiplyMatrix4(cameraRotationX)
 			.multiplyMatrix4(cameraRotationY)
 			.multiplyMatrix4(cameraTranslation);

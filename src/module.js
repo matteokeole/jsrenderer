@@ -13,4 +13,5 @@ export {Color} from "./class/Color.js";
 export {Renderer} from "./class/Renderer.js";
 export {Scene} from "./class/Scene.js";
 export {Camera} from "./class/Camera.js";
+export {OrthographicCamera} from "./class/OrthographicCamera.js";
 export {Mesh} from "./class/Mesh.js";
