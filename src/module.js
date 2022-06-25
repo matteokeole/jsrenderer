@@ -9,6 +9,7 @@ export {Matrix4} from "./math/Matrix4.js";
 export {BoxGeometry} from "./geometry/BoxGeometry.js";
 export {PlaneGeometry} from "./geometry/PlaneGeometry.js";
 
+export {AmbientLight} from "./class/AmbientLight.js";
 export {Camera} from "./class/Camera.js";
 export {Color} from "./class/Color.js";
 export {DirectionalLight} from "./class/DirectionalLight.js";

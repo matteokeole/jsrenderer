@@ -4,8 +4,9 @@ precision highp float;
 
 in vec3 v_normal;
 
-uniform vec3 u_reverseLightDir;
 uniform vec4 u_color;
+uniform float u_ambientLight;
+uniform vec3 u_reverseLightDir;
 
 out vec4 color;
 

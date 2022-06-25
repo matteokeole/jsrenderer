@@ -96,11 +96,22 @@ Renderer.prototype.render = function(scene, camera) {
 		if (!object.visible) continue;
 
 		switch (object.type) {
-			case "light":
-				this.gl.uniform3fv(this.gl.uniform.reverseLightDir, object.direction.normalize().xyz());
+			case "light": {
+				switch (object.lightType) {
+					case "ambient":
+						this.gl.uniform1f(this.gl.uniform.ambientLight, object.intensity);
+
+						break;
+					case "directional":
+						this.gl.uniform3fv(this.gl.uniform.reverseLightDir, object.direction.normalize().xyz());
+
+						break;
+				}
 
 				break;
-			case "mesh":
+			}
+
+			case "mesh": {
 				const geometry = object.geometry;
 
 				this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.gl.buffer.vertex);
@@ -127,6 +138,7 @@ Renderer.prototype.render = function(scene, camera) {
 				this.gl.drawElements(this.primitiveType, geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
 
 				break;
+			}
 		}
 	}
 };

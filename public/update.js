@@ -1,6 +1,6 @@
 import {Keybind, VELOCITY} from "./config.js";
 import {keys} from "./events.js";
-import {camera, attachedCube, light} from "./main.js";
+import {camera, attachedCube, cube1} from "./main.js";
 import {GUI} from "./ui/main.js";
 
 export default () => {
@@ -24,8 +24,5 @@ export default () => {
 	attachedCube.position = camera.position;
 	attachedCube.rotation = camera.rotation.multiply(camera.up);
 
-	i++;
-	light.direction.x = Math.sin(i / 50);
+	cube1.rotation.y += .01;
 };
-
-let i = 0;

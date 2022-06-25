@@ -3,6 +3,8 @@ import {Vector3, Matrix4} from "../module.js";
 import {GUI} from "../../public/ui/main.js";
 
 export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near = 1, far = 1000) {
+	this.type = "camera";
+
 	Object.assign(this, {fov, aspect, near, far});
 
 	this.position = new Vector3();
@@ -45,10 +47,15 @@ export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near
 };
 
 Camera.prototype.moveForward = function(n) {
-	this.type = "camera";
+	let direction = new Vector3(
+		Math.sin(this.rotation.y),
+		0,
+		Math.cos(this.rotation.y),
+	);
 
-	this.position.x += n * Math.sin(this.rotation.y);
-	this.position.z += n * Math.cos(this.rotation.y);
+	if (direction.length() > 1) direction = direction.normalize();
+
+	this.position = this.position.add(direction.multiplyScalar(n));
 
 	for (let object of this.objects) {
 		object.position.set(this.position);
@@ -61,8 +68,15 @@ Camera.prototype.moveForward = function(n) {
 };
 
 Camera.prototype.moveRight = function(n) {
-	this.position.x += n * Math.cos(this.rotation.y);
-	this.position.z -= n * Math.sin(this.rotation.y);
+	let direction = new Vector3(
+		Math.cos(this.rotation.y),
+		0,
+		-Math.sin(this.rotation.y),
+	);
+
+	if (direction.length() > 1) direction = direction.normalize();
+
+	this.position = this.position.add(direction.multiplyScalar(n));
 
 	for (let object of this.objects) {
 		object.position.set(this.position);
