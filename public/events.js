@@ -42,15 +42,3 @@ addEventListener("click", e => {
 
 // addEventListener("pointerlockchange") doesn't fire in some browsers if it's not preceded by document.
 document.addEventListener("pointerlockchange", pointerLockChange);
-
-
-
-fov.addEventListener("input", function() {
-	let fov = +this.value;
-
-	this.nextElementSibling.textContent = fov;
-
-	// Update camera field of view
-	camera.fov = fov;
-	camera.updateProjectionMatrix();
-});

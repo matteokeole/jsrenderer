@@ -1,6 +1,7 @@
 import * as Module from "../src/module.js";
 import "./events.js";
 import loop from "./loop.js";
+import {initInterface} from "./ui/main.js";
 
 /**
  * Vanilla JavaScript 3D rendering engine, made with WebGL 2 and inspired by three.js.
@@ -84,7 +85,9 @@ attachedCube = new Module.Mesh(
 
 scene.add(plane1, cube1, pillar1, pillar2, plate1, attachedCube);
 
-fov.value = camera.fov;
-fov.nextElementSibling.textContent = camera.fov;
+// fov.value = camera.fov;
+// fov.nextElementSibling.textContent = camera.fov;
+
+initInterface(camera);
 
 loop();
