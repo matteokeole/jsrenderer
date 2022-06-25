@@ -9,58 +9,39 @@
 	</head>
 
 	<body>
-		<div id="camera" class="card">
+		<form name="camera" class="card">
 			<div class="header">Camera Properties</div>
 
 			<div class="body">
 				<label class="input-label">
 					Field of view
-
-					<div>
-						<input type="number" id="fov" min="0" max="180">
-					</div>
-				</label>
-
-				<!-- Position
-				<label class="input-label">
-					X
-					<div>
-						<input type="number">
-					</div>
+					<input type="number" name="fov" min="0" max="180">
 				</label>
 				<label class="input-label">
-					Y
-					<div>
-						<input type="number">
-					</div>
+					P X
+					<input type="number" name="px">
 				</label>
 				<label class="input-label">
-					Z
-					<div>
-						<input type="number">
-					</div>
-				</label>
-
-				Rotation
-				<label class="input-label">
-					X
-					<div>
-						<input type="number">
-					</div>
+					P Y
+					<input type="number" name="py">
 				</label>
 				<label class="input-label">
-					Y
-					<div>
-						<input type="number">
-					</div>
+					P Z
+					<input type="number" name="pz">
 				</label>
 				<label class="input-label">
-					Z
-					<div>
-						<input type="number">
-					</div>
-				</label> -->
+					R X
+					<input type="number" name="rx" step="0.1">
+				</label>
+				<label class="input-label">
+					R Y
+					<input type="number" name="ry" step="0.1">
+				</label>
+				<label class="input-label">
+					R Z
+					<input type="number" name="rz" step="0.1">
+				</label>
 			</div>
-		</div>
+		</form>
 	</body>
 </html>

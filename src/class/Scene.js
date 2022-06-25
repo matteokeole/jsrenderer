@@ -4,21 +4,21 @@ import {Color} from "../module.js";
 export const Scene = function() {
 	this.background = new Color(0x000000);
 
-	this.meshes = new Set();
+	this.objects = new Set();
 
 	return this;
 };
 
 /** @todo */
-Scene.prototype.add = function(...meshes) {
-	for (let mesh of meshes) this.meshes.add(mesh);
+Scene.prototype.add = function(...objects) {
+	for (let object of objects) this.objects.add(object);
 
 	return this;
 };
 
 /** @todo */
-Scene.prototype.remove = function(...meshes) {
-	for (let mesh of meshes) this.meshes.delete(mesh);
+Scene.prototype.remove = function(...objects) {
+	for (let object of objects) this.objects.delete(object);
 
 	return this;
 };

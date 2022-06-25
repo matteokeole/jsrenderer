@@ -9,9 +9,10 @@ export {Matrix4} from "./math/Matrix4.js";
 export {BoxGeometry} from "./geometry/BoxGeometry.js";
 export {PlaneGeometry} from "./geometry/PlaneGeometry.js";
 
+export {Camera} from "./class/Camera.js";
 export {Color} from "./class/Color.js";
+export {DirectionalLight} from "./class/DirectionalLight.js";
+export {Mesh} from "./class/Mesh.js";
+export {OrthographicCamera} from "./class/OrthographicCamera.js";
 export {Renderer} from "./class/Renderer.js";
 export {Scene} from "./class/Scene.js";
-export {Camera} from "./class/Camera.js";
-export {OrthographicCamera} from "./class/OrthographicCamera.js";
-export {Mesh} from "./class/Mesh.js";

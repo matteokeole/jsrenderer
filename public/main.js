@@ -1,7 +1,7 @@
 import * as Module from "../src/module.js";
 import "./events.js";
 import loop from "./loop.js";
-import {initInterface} from "./ui/main.js";
+import {GUI} from "./ui/main.js";
 
 /**
  * Vanilla JavaScript 3D rendering engine, made with WebGL 2 and inspired by three.js.
@@ -26,7 +26,7 @@ export let
 	renderer = new Module.Renderer(),
 	scene = new Module.Scene(),
 	camera = new Module.Camera(90, renderer.width / renderer.height, .1, 3000),
-	plane1, cube1, pillar1, pillar2, plate1, attachedCube;
+	plane1, cube1, pillar1, pillar2, plate1, light, attachedCube;
 
 // Load shader program in the renderer
 await renderer.loadProgram("assets/shaders");
@@ -81,13 +81,13 @@ attachedCube = new Module.Mesh(
 	new Module.Color(0xff9800),
 );
 
+light = new Module.DirectionalLight();
+light.direction.set(.3, 1, .6);
 
 
-scene.add(plane1, cube1, pillar1, pillar2, plate1, attachedCube);
 
-// fov.value = camera.fov;
-// fov.nextElementSibling.textContent = camera.fov;
+scene.add(plane1, cube1, pillar1, pillar2, plate1, attachedCube, light);
 
-initInterface(camera);
+GUI.init(camera);
 
 loop();

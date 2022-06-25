@@ -1,15 +1,15 @@
 #version 300 es
 
 in vec4 a_position;
-in vec4 a_color;
+in vec3 a_normal;
 
 uniform mat4 u_transform;
 
-out vec4 v_color;
+out vec3 v_normal;
 
 void main() {
 	gl_Position = u_transform * a_position;
 
-	// Pass the color to the fragment shader
-	v_color = a_color;
+	// Pass the normal to the fragment shader
+	v_normal = a_normal;
 }

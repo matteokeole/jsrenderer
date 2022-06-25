@@ -3,8 +3,6 @@
 	min-width: 300px;
 	max-width: fit-content;
 	height: fit-content;
-	top: 10px;
-	left: 10px;
 	position: absolute;
 	overflow: hidden;
 	border-radius: 5px;
@@ -14,13 +12,14 @@
 }
 
 .card .header {
-	padding: 4px;
-	background-color: #444;
+	padding: 4px 8px;
+	background-color: #000a;
 	cursor: move;
+	font-size: 14px;
 	user-select: none;
 }
 
 .card .body {
 	margin-top: 4px;
-	padding: 4px;
+	padding: 4px 8px;
 }

@@ -2,6 +2,8 @@ import {SENSITIVITY} from "../../public/config.js";
 import {Vector3, Matrix4} from "../module.js";
 
 export const OrthographicCamera = function(width, height, depth) {
+	this.type = "camera";
+
 	this.width = width;
 	this.height = height;
 	this.depth = depth;

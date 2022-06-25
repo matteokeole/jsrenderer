@@ -16,6 +16,13 @@ export const PlaneGeometry = function(width = 1, height = width) {
 		-w2, 0,  h2,
 	]);
 
+	this.normals = new Float32Array([
+		0, 1, 0,
+		0, 1, 0,
+		0, 1, 0,
+		0, 1, 0,
+	]);
+
 	this.indices = new Uint16Array([
 		0, 2, 1,
 		2, 0, 3,
