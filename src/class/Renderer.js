@@ -2,7 +2,6 @@ import {Vector3, Matrix4, loadShader, parseShader} from "../module.js";
 
 export const Renderer = function(width, height) {
 	this.canvas = document.createElement("canvas");
-	this.canvas.style.display = "block";
 	this.canvas.textContent = "This browser does not support Canvas API.";
 
 	// Configure WebGL context
@@ -21,8 +20,6 @@ export const Renderer = function(width, height) {
 	this.stretch(width, height);
 
 	this.locked = false;
-
-	document.body.appendChild(this.canvas);
 
 	return this;
 };

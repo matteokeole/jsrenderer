@@ -6,10 +6,93 @@
 		<link rel="icon" href="data:;base64,=">
 		<link rel="stylesheet" href="assets/css/main.css">
 		<script type="module" src="public/main.js"></script>
+		<script type="module" src="public/gui/main.js"></script>
 	</head>
 
 	<body>
-		<form name="camera" class="card">
+		<main>
+			<section id="render"></section>
+		</main>
+
+		<aside>
+			<section id="explorer">
+				<header>
+					Explorer
+				</header>
+			</section>
+
+			<section id="properties">
+				<header>
+					Properties
+				</header>
+
+				<div class="content">
+					<nav>
+						<button class="tab-transform">
+							<ion-icon name="expand-sharp"></ion-icon>
+						</button>
+					</nav>
+
+					<div class="tab">
+						<div class="obj-name">Cube</div>
+
+						<div class="accordion-menu">
+							<div class="accordion-item obj-transform">
+								<div class="accordion-item-header">
+									<ion-icon name="chevron-forward-outline"></ion-icon>
+									Transform
+								</div>
+
+								<div class="accordion-item-content">
+									<div class="accordion-item-inner-content">
+										<div class="input-group">
+											<label>
+												Position X
+												<input type="number" value="0">
+											</label>
+										</div>
+
+										<div class="input-group">
+											<label>
+												Y
+												<input type="number" value="0">
+											</label>
+										</div>
+
+										<div class="input-group">
+											<label>
+												Z
+												<input type="number" value="0">
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="accordion-item obj-visibility">
+								<div class="accordion-item-header">
+									<ion-icon name="chevron-forward-outline"></ion-icon>
+									Visibility
+								</div>
+
+								<div class="accordion-item-content">
+									<div class="accordion-item-inner-content">
+										<div class="checkbox-group">
+											<label>
+												Show in the viewport
+												<input type="checkbox">
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</aside>
+
+		<!-- <form name="camera" class="card">
 			<div class="header">Camera Properties</div>
 
 			<div class="body">
@@ -42,6 +125,9 @@
 					<input type="number" name="rz" step="0.1">
 				</label>
 			</div>
-		</form>
+		</form> -->
+
+		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-export const GUI = {
+/*export const GUI = {
 	init: object => {
 		const
 			container = document.forms["camera"],
@@ -88,4 +88,37 @@ const
 let screenWidth = innerWidth,
 	screenHeight = innerHeight;
 
-addEventListener("resize", resize);
+addEventListener("resize", resize);*/
+
+
+
+
+// Enable accordion menus
+const
+	accordions = document.querySelectorAll(".accordion-menu"),
+	toggleAccordionItem = (item, contentHeight) => {
+		item.classList.toggle("active");
+		item.children[1].style.height = `${contentHeight}px`;
+	};
+
+for (let accordion of accordions) {
+	let active;
+
+	toggleAccordionItem(accordion.children[0], accordion.children[0].children[1].scrollHeight);
+
+	for (let item of accordion.children) {
+		const
+			header = item.children[0],
+			content = item.children[1];
+
+		header.addEventListener("click", () => {
+			// Reduce the previous item
+			active && toggleAccordionItem(active, 0);
+
+			active = active !== item ? item : undefined;
+
+			// Expand the current item
+			active && toggleAccordionItem(active, content.scrollHeight);
+		});
+	}
+}

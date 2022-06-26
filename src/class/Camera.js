@@ -1,6 +1,6 @@
 import {SENSITIVITY} from "../../public/config.js";
 import {Vector3, Matrix4} from "../module.js";
-import {GUI} from "../../public/ui/main.js";
+// import {GUI} from "../../public/gui/main.js";
 
 export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near = 1, far = 1000) {
 	this.type = "camera";
@@ -32,11 +32,11 @@ export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near
 
 		this.rotation.y += y;
 
-		GUI.updateProperties({
+		/*GUI.updateProperties({
 			rx: this.rotation.x,
 			ry: this.rotation.y,
 			rz: this.rotation.z,
-		});
+		});*/
 	};
 
 	this.objects = new Set();
@@ -61,10 +61,10 @@ Camera.prototype.moveForward = function(n) {
 		object.position.set(this.position);
 	}
 
-	GUI.updateProperties({
+	/*GUI.updateProperties({
 		px: this.position.x,
 		pz: this.position.z,
-	});
+	});*/
 };
 
 Camera.prototype.moveRight = function(n) {
@@ -82,10 +82,10 @@ Camera.prototype.moveRight = function(n) {
 		object.position.set(this.position);
 	}
 
-	GUI.updateProperties({
+	/*GUI.updateProperties({
 		px: this.position.x,
 		pz: this.position.z,
-	});
+	});*/
 };
 
 Camera.prototype.updateProjectionMatrix = function() {

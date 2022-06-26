@@ -1,7 +1,7 @@
 import {Keybind, VELOCITY} from "./config.js";
 import {keys} from "./events.js";
 import {camera, attachedCube, cube1} from "./main.js";
-import {GUI} from "./ui/main.js";
+// import {GUI} from "./gui/main.js";
 
 export default () => {
 	if (keys.has(Keybind.forward))	camera.moveForward(VELOCITY);
@@ -12,13 +12,13 @@ export default () => {
 	if (keys.has(Keybind.up))		{
 		camera.position.y += VELOCITY;
 
-		GUI.updateProperties({py: camera.position.y});
+		// GUI.updateProperties({py: camera.position.y});
 	}
 
 	if (keys.has(Keybind.down))		{
 		camera.position.y -= VELOCITY;
 
-		GUI.updateProperties({py: camera.position.y});
+		// GUI.updateProperties({py: camera.position.y});
 	}
 
 	attachedCube.position = camera.position;

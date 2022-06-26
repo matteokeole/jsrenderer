@@ -1,0 +1,45 @@
+.accordion-menu {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin: 39px 8px 0 8px;
+}
+
+.accordion-item {
+	border-radius: 4px;
+	background-color: #3d3d3d;
+}
+
+/* Accoridon item header */
+.accordion-item-header {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	color: #aaa;
+	user-select: none;
+}
+.accordion-item.active .accordion-item-header, .accordion-item.active .accordion-item-header ion-icon {
+	color: #ddd;
+}
+
+/* Accordion header icon */
+.accordion-item-header ion-icon {
+	padding: 0 1px;
+	color: #aaa;
+	font-size: 15px;
+	transition: transform .2s;
+}
+.accordion-item.active .accordion-item-header ion-icon {
+	transform: rotateZ(90deg);
+}
+
+/* Accordion header content */
+.accordion-item-content {
+	height: 0;
+	overflow: hidden;
+	transition: height .2s ease-out;
+}
+
+.accordion-item-inner-content {
+	padding: 9px;
+}

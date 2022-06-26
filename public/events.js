@@ -29,7 +29,7 @@ const
 	};
 
 addEventListener("resize", () => {
-	renderer.stretch();
+	// renderer.stretch();
 
 	// Update camera aspect ratio
 	camera.aspect = renderer.width / renderer.height;

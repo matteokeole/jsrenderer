@@ -1,14 +1,25 @@
-.input-label {
+.input-group {
+	margin-bottom: 1px;
+	padding-left: 15px;
+}
+
+.input-group label {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 4px;
-	font-size: 15px;
 }
 
 input[type="number"] {
+	appearance: none;
+	width: 121px;
+	padding: 2px 0;
 	outline: none;
-	border: 1px solid #fff5;
-	background-color: transparent;
-	color: #fff5;
+	border: none;
+	background-color: #545454;
+	color: #ddd;
+	text-align: center;
+	font-size: 13px;
+}
+input[type="number"]::-webkit-inner-spin-button {
+	appearance: none;
 }

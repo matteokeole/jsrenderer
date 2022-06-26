@@ -1,7 +1,7 @@
 import * as Module from "../src/module.js";
 import "./events.js";
 import loop from "./loop.js";
-import {GUI} from "./ui/main.js";
+// import {GUI} from "./gui/main.js";
 
 /**
  * Vanilla JavaScript 3D rendering engine, made with WebGL 2 and inspired by three.js.
@@ -23,15 +23,19 @@ import {GUI} from "./ui/main.js";
  * @see {link https://www.mamboleoo.be/articles/how-to-render-3d-in-2d-canvas}
  */
 export let
-	renderer = new Module.Renderer(),
+	renderer = new Module.Renderer(render.offsetWidth, render.offsetHeight),
 	scene = new Module.Scene(),
-	camera = new Module.Camera(90, renderer.width / renderer.height, .1, 3000),
+	camera = new Module.Camera(90, 1, .1, 3000),
 	plane1, cube1, pillar1, pillar2, plate1, ambientLight, directionalLight, attachedCube;
 
 // Load shader program in the renderer
 await renderer.loadProgram("assets/shaders");
+render.appendChild(renderer.canvas);
 
-scene.background = new Module.Color(0x151515);
+scene.background = new Module.Color(0x3d3d3d);
+
+camera.aspect = render.offsetWidth / render.offsetHeight;
+camera.updateProjectionMatrix();
 
 
 
@@ -90,6 +94,6 @@ directionalLight.direction.set(0, 1, -1);
 
 scene.add(ambientLight, directionalLight, plane1, cube1, pillar1, pillar2, plate1, attachedCube);
 
-GUI.init(camera);
+// GUI.init(camera);
 
 loop();
