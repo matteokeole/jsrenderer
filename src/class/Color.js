@@ -1,16 +1,16 @@
-export const Color = function(value) {
-	this.value = value;
+export const Color = function(color) {
+	this.color = color;
 
 	this.hex = [
-		(this.value >> 16 & 255),
-		(this.value >> 8 & 255),
-		(this.value & 255),
+		(this.color >> 16 & 255),
+		(this.color >> 8 & 255),
+		(this.color & 255),
 	];
 
 	this.hex1 = [
-		(this.value >> 16 & 255) / 255,
-		(this.value >> 8 & 255) / 255,
-		(this.value & 255) / 255,
+		(this.color >> 16 & 255) / 255,
+		(this.color >> 8 & 255) / 255,
+		(this.color & 255) / 255,
 		1,
 	];
 

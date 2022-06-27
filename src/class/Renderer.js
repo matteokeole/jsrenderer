@@ -1,18 +1,23 @@
-import {Vector3, Matrix4, loadShader, parseShader} from "../module.js";
+import {loadShader, parseShader} from "../module.js";
+import {render} from "../functions/render.js";
 
-export const Renderer = function(width, height) {
+export const Renderer = function(width, height, options) {
 	this.canvas = document.createElement("canvas");
 	this.canvas.textContent = "This browser does not support Canvas API.";
 
 	// Configure WebGL context
 	this.gl = this.canvas.getContext("webgl2");
-	this.gl.enable(this.gl.CULL_FACE);
-	this.gl.enable(this.gl.DEPTH_TEST);
 	this.gl.buffer = {
 		vertex: this.gl.createBuffer(),
 		normal: this.gl.createBuffer(),
 		index: this.gl.createBuffer(),
+		uv: this.gl.createBuffer(),
 	};
+
+	options = Object.entries(options);
+	for (let option of options) {
+		if (option[1]) this.gl.enable(this.gl[option[0]]);
+	}
 
 	this.primitiveType = this.gl.TRIANGLES;
 
@@ -62,6 +67,12 @@ Renderer.prototype.loadProgram = async function(folder) {
 		gl.vertexAttribPointer(gl.attribute.normal, 3, gl.FLOAT, false, 0, 0);
 
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.buffer.index);
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.uv);
+		gl.enableVertexAttribArray(gl.attribute.uv);
+		gl.vertexAttribPointer(gl.attribute.uv, 2, gl.FLOAT, true, 0, 0);
+
+		gl.activeTexture(gl.TEXTURE0 + 0);
 	}
 };
 
@@ -74,70 +85,7 @@ Renderer.prototype.isLocked = function() {
 };
 
 Renderer.prototype.render = function(scene, camera) {
-	if (!this.gl.shader) return;
-
-	this.gl.clearColor(...scene.background.hex1);
-	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
-	let cameraPivot = Matrix4.createTranslationMatrix(camera.distance.invert()),
-		cameraTranslation = Matrix4.createTranslationMatrix(camera.position.multiply(camera.lhcs)),
-		cameraRotationX = Matrix4.createRotationMatrix(-camera.rotation.x, "x"),
-		cameraRotationY = Matrix4.createRotationMatrix(camera.rotation.y, "y"),
-		viewProjectionMatrix = camera.projectionMatrix
-			.multiplyMatrix4(cameraPivot)
-			.multiplyMatrix4(cameraRotationX)
-			.multiplyMatrix4(cameraRotationY)
-			.multiplyMatrix4(cameraTranslation);
-
-	for (let object of scene.objects) {
-		if (!object.visible) continue;
-
-		switch (object.type) {
-			case "light": {
-				switch (object.lightType) {
-					case "ambient":
-						this.gl.uniform1f(this.gl.uniform.ambientLight, object.intensity);
-
-						break;
-					case "directional":
-						this.gl.uniform3fv(this.gl.uniform.reverseLightDir, object.direction.normalize().xyz());
-
-						break;
-				}
-
-				break;
-			}
-
-			case "mesh": {
-				const geometry = object.geometry;
-
-				this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.gl.buffer.vertex);
-				this.gl.bufferData(this.gl.ARRAY_BUFFER, geometry.vertices, this.gl.STATIC_DRAW);
-
-				this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.gl.buffer.normal);
-				this.gl.bufferData(this.gl.ARRAY_BUFFER, geometry.normals, this.gl.STATIC_DRAW);
-
-				this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, geometry.indices, this.gl.STATIC_DRAW);
-
-				let p = object.position.multiply(camera.lhcs).invert(),
-					r = object.rotation.invert(),
-					s = geometry.type === "plane" ? new Vector3(object.scale.x, 0, object.scale.y) : object.scale,
-					transform = viewProjectionMatrix
-						.multiplyMatrix4(Matrix4.createTranslationMatrix(p))
-						.multiplyMatrix4(Matrix4.createRotationMatrix(r.x, "x"))
-						.multiplyMatrix4(Matrix4.createRotationMatrix(r.y, "y"))
-						.multiplyMatrix4(Matrix4.createRotationMatrix(r.z, "z"))
-						.multiplyMatrix4(Matrix4.createScaleMatrix(s));
-
-				this.gl.uniformMatrix4fv(this.gl.uniform.transform, false, transform.data);
-				this.gl.uniform4fv(this.gl.uniform.color, object.color.hex1);
-
-				this.gl.drawElements(this.primitiveType, geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
-
-				break;
-			}
-		}
-	}
+	render.call(this, scene, camera);
 };
 
 Renderer.prototype.stretch = function(width = innerWidth, height = innerHeight) {

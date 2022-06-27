@@ -1,10 +1,10 @@
 import {Vector2, Vector3} from "../module.js";
 
-export const Mesh = function(geometry, color) {
+export const Mesh = function(geometry, material) {
 	this.type = "mesh";
 
 	this.geometry = geometry;
-	this.color = color;
+	this.material = material;
 
 	this.position = new Vector3();
 	this.rotation = new Vector3();
@@ -16,7 +16,7 @@ export const Mesh = function(geometry, color) {
 };
 
 Mesh.prototype.clone = function() {
-	const mesh = new Mesh(this.geometry, this.color);
+	const mesh = new Mesh(this.geometry, this.material);
 
 	mesh.position = this.position.clone();
 	mesh.rotation = this.rotation.clone();

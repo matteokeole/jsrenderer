@@ -21,8 +21,8 @@ export default () => {
 		// GUI.updateProperties({py: camera.position.y});
 	}
 
-	attachedCube.position = camera.position;
-	attachedCube.rotation = camera.rotation.multiply(camera.up);
+	// attachedCube.position = camera.position;
+	// attachedCube.rotation = camera.rotation.multiply(camera.up);
 
-	cube1.rotation.y += .01;
+	// cube1.rotation.y += .01;
 };

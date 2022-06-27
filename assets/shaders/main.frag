@@ -2,11 +2,13 @@
 
 precision highp float;
 
+in vec2 v_uv;
 in vec3 v_normal;
 
 uniform vec4 u_color;
 uniform float u_ambientLight;
 uniform vec3 u_reverseLightDir;
+uniform sampler2D u_texture;
 
 out vec4 color;
 
@@ -15,6 +17,7 @@ void main() {
 
 	float light = dot(normal, u_reverseLightDir);
 
-	color = u_color;
-	color.rgb *= light;
+	color = texture(u_texture, v_uv);
+	// color = u_color;
+	// color.rgb *= light;
 }

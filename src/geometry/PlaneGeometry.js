@@ -28,5 +28,10 @@ export const PlaneGeometry = function(width = 1, height = width) {
 		2, 0, 3,
 	]);
 
+	this.uvs = new Float32Array([
+		1, 0, 1,
+		1, 0, 1,
+	]);
+
 	return this;
 };
