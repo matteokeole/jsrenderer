@@ -12,6 +12,8 @@
 	<body>
 		<main>
 			<section id="render"></section>
+
+			<div id="crosshair"></div>
 		</main>
 
 		<aside>
@@ -19,6 +21,8 @@
 				<header>
 					Explorer
 				</header>
+
+				<ul class="list"></ul>
 			</section>
 
 			<section id="properties">
@@ -46,24 +50,20 @@
 								<div class="accordion-item-content">
 									<div class="accordion-item-inner-content">
 										<div class="input-group">
-											<label>
-												Position X
+											<div class="input">
+												<label>Position X</label>
 												<input type="number" value="0">
-											</label>
-										</div>
+											</div>
 
-										<div class="input-group">
-											<label>
-												Y
+											<div class="input">
+												<label>Y</label>
 												<input type="number" value="0">
-											</label>
-										</div>
+											</div>
 
-										<div class="input-group">
-											<label>
-												Z
+											<div class="input">
+												<label>Z</label>
 												<input type="number" value="0">
-											</label>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -77,7 +77,7 @@
 
 								<div class="accordion-item-content">
 									<div class="accordion-item-inner-content">
-										<div class="checkbox-group">
+										<div class="checkbox">
 											<label>
 												Show in the viewport
 												<input type="checkbox">

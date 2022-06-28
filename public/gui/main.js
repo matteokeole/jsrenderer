@@ -91,6 +91,29 @@ let screenWidth = innerWidth,
 addEventListener("resize", resize);*/
 
 
+export function setGUIScene(scene) {
+	const ul = explorer.children[1];
+	let active;
+
+	for (let object of scene.objects) {
+		const li = document.createElement("li");
+
+		console.log(object);
+		li.textContent = object.type;
+
+		li.addEventListener("click", () => {
+			active && active.classList.remove("active");
+
+			active = active !== li ? li : undefined;
+
+			active && active.classList.add("active");
+		});
+
+		ul.appendChild(li);
+	}
+};
+
+
 
 
 // Enable accordion menus

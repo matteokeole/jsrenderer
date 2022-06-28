@@ -1,7 +1,7 @@
 import * as Module from "../src/module.js";
 import "./events.js";
 import loop from "./loop.js";
-// import {GUI} from "./gui/main.js";
+// import {setGUIScene} from "./gui/main.js";
 
 /**
  * Vanilla JavaScript 3D rendering engine, made with WebGL 2 and inspired by three.js.
@@ -28,7 +28,7 @@ export let
 		DEPTH_TEST: true,
 	}),
 	scene = new Module.Scene(),
-	camera = new Module.Camera(70, 1, .1, 3000),
+	camera = new Module.Camera(90, 1, .1, 3000),
 	floor, ceiling, wall1, wall2, wall3, wall4, cube1, pillar1, pillar2, plate1, ambientLight, directionalLight, attachedCube;
 
 // Load shader program in the renderer
@@ -39,7 +39,7 @@ scene.background = new Module.Color(0x3d3d3d);
 
 camera.aspect = render.offsetWidth / render.offsetHeight;
 camera.updateProjectionMatrix();
-camera.position.y = 1.8;
+camera.position.set(-1.1, 1, 1.624);
 
 
 
@@ -138,8 +138,8 @@ directionalLight.direction.set(0, 1, -1);*/
 
 
 // scene.add(ambientLight, directionalLight, floor, cube1, pillar1, pillar2, plate1);
-scene.add(floor, ceiling, wall1, wall2, wall3, wall4);
+scene.add(camera, floor, ceiling, wall1, wall2, wall3, wall4);
 
-// GUI.init(camera);
+// setGUIScene(scene);
 
 loop();

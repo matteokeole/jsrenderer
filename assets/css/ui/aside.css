@@ -14,9 +14,8 @@ aside section {
 }
 
 aside section#explorer {
-	height: 311px;
-	padding-bottom: 46px;
-	background-color: #282828;
+	height: 310px;
+	margin-top: 47px;
 }
 
 aside section#properties {
