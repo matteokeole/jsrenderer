@@ -1,6 +1,6 @@
 import {Keybind, VELOCITY} from "./config.js";
 import {keys} from "./events.js";
-import {camera, attachedCube, cube1} from "./main.js";
+import {camera} from "./main.js";
 // import {GUI} from "./gui/main.js";
 
 export default () => {
@@ -20,9 +20,4 @@ export default () => {
 
 		// GUI.updateProperties({py: camera.position.y});
 	}
-
-	// attachedCube.position = camera.position;
-	// attachedCube.rotation = camera.rotation.multiply(camera.up);
-
-	// cube1.rotation.y += .01;
 };

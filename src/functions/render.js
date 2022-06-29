@@ -3,10 +3,12 @@ import {Vector3} from "../math/Vector3.js";
 import {loadTexture} from "../module.js";
 
 export function render(scene, camera) {
-	if (!this.gl.shader) return;
+	let gl = this.gl;
 
-	this.gl.clearColor(...scene.background.hex1);
-	this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+	if (!gl.shader) return;
+
+	gl.clearColor(...scene.background.hex1);
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 	let cameraPivot				= Matrix4.createTranslationMatrix(camera.distance.invert()),
 		cameraTranslation		= Matrix4.createTranslationMatrix(camera.position.multiply(camera.lhcs)),
@@ -25,11 +27,11 @@ export function render(scene, camera) {
 			case "light": {
 				switch (object.lightType) {
 					case "ambient":
-						this.gl.uniform1f(this.gl.uniform.ambientLight, object.intensity);
+						gl.uniform1f(gl.uniform.ambientLight, object.intensity);
 
 						break;
 					case "directional":
-						this.gl.uniform3fv(this.gl.uniform.reverseLightDir, object.direction.normalize().xyz());
+						gl.uniform3fv(gl.uniform.reverseLightDir, object.direction.normalize().xyz());
 
 						break;
 				}
@@ -40,16 +42,13 @@ export function render(scene, camera) {
 			case "mesh": {
 				const geometry = object.geometry;
 
-				this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.gl.buffer.vertex);
-				this.gl.bufferData(this.gl.ARRAY_BUFFER, geometry.vertices, this.gl.STATIC_DRAW);
+				gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.vertex);
+				gl.bufferData(gl.ARRAY_BUFFER, geometry.vertices, gl.STATIC_DRAW);
 
-				this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.gl.buffer.normal);
-				this.gl.bufferData(this.gl.ARRAY_BUFFER, geometry.normals, this.gl.STATIC_DRAW);
+				gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.normal);
+				gl.bufferData(gl.ARRAY_BUFFER, geometry.normals, gl.STATIC_DRAW);
 
-				this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, geometry.indices, this.gl.STATIC_DRAW);
-
-				this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.gl.buffer.uv);
-				this.gl.bufferData(this.gl.ARRAY_BUFFER, object.geometry.uvs, this.gl.STATIC_DRAW);
+				gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, geometry.indices, gl.STATIC_DRAW);
 
 				let p = object.position.multiply(camera.lhcs).invert(),
 					r = object.rotation.invert(),
@@ -61,18 +60,24 @@ export function render(scene, camera) {
 						.multiplyMatrix4(Matrix4.createRotationMatrix(r.z, "z"))
 						.multiplyMatrix4(Matrix4.createScaleMatrix(s));
 
-				this.gl.uniformMatrix4fv(this.gl.uniform.transform, false, transform.data);
+				gl.uniformMatrix4fv(gl.uniform.transform, false, transform.data);
 
 				if (object.material.type === "texture") {
-					if (object.material.texture.loadState === 0) loadTexture(this.gl, object.material.texture);
+					if (object.material.texture.loadState === 0) loadTexture(gl, object.material.texture);
 					if (object.material.texture.loadState === 2) {
-						this.gl.bindTexture(this.gl.TEXTURE_2D, object.material.texture.texture);
+						gl.bindTexture(gl.TEXTURE_2D, object.material.texture.texture);
+						gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+						gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+						gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+
+						gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.uv);
+						gl.bufferData(gl.ARRAY_BUFFER, object.geometry.uvs, gl.STATIC_DRAW);
 					}
 				}
 
-				if (object.material.type === "color") this.gl.uniform4fv(this.gl.uniform.color, object.material.color.hex1);
+				if (object.material.type === "color") gl.uniform4fv(gl.uniform.color, object.material.color.hex1);
 
-				this.gl.drawElements(this.primitiveType, geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
+				gl.drawElements(this.primitiveType, geometry.indices.length, gl.UNSIGNED_SHORT, 0);
 
 				break;
 			}

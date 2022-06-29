@@ -71,8 +71,6 @@ Renderer.prototype.loadProgram = async function(folder) {
 		gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.uv);
 		gl.enableVertexAttribArray(gl.attribute.uv);
 		gl.vertexAttribPointer(gl.attribute.uv, 2, gl.FLOAT, true, 0, 0);
-
-		gl.activeTexture(gl.TEXTURE0 + 0);
 	}
 };
 
