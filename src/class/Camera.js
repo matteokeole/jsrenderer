@@ -1,6 +1,5 @@
 import {SENSITIVITY} from "../../public/config.js";
 import {Vector3, Matrix4} from "../module.js";
-// import {GUI} from "../../public/gui/main.js";
 
 export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near = 1, far = 1000) {
 	this.type = "camera";
@@ -10,7 +9,7 @@ export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near
 	this.position = new Vector3();
 	this.rotation = new Vector3();
 
-	this.distance = new Vector3(); // For third-person view
+	this.distance = new Vector3(0, 0, 5); // For third-person view
 
 	this.up = new Vector3(0, 1, 0);
 
@@ -31,12 +30,6 @@ export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near
 		) this.rotation.x += x;
 
 		this.rotation.y += y;
-
-		/*GUI.updateProperties({
-			rx: this.rotation.x,
-			ry: this.rotation.y,
-			rz: this.rotation.z,
-		});*/
 	};
 
 	this.objects = new Set();
@@ -60,11 +53,6 @@ Camera.prototype.moveForward = function(n) {
 	for (let object of this.objects) {
 		object.position.set(this.position);
 	}
-
-	/*GUI.updateProperties({
-		px: this.position.x,
-		pz: this.position.z,
-	});*/
 };
 
 Camera.prototype.moveRight = function(n) {
@@ -81,11 +69,6 @@ Camera.prototype.moveRight = function(n) {
 	for (let object of this.objects) {
 		object.position.set(this.position);
 	}
-
-	/*GUI.updateProperties({
-		px: this.position.x,
-		pz: this.position.z,
-	});*/
 };
 
 Camera.prototype.updateProjectionMatrix = function() {

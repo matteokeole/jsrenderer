@@ -1,11 +1,11 @@
 main {
 	flex: 1;
-	padding: 3px;
+	/*padding: 3px;*/
 	padding-right: 0;
 }
 
 main #render {
 	height: 100%;
 	overflow: hidden;
-	border-radius: 5px;
+	/*border-radius: 5px;*/
 }

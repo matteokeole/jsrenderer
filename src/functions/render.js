@@ -66,9 +66,7 @@ export function render(scene, camera) {
 					if (object.material.texture.loadState === 0) loadTexture(gl, object.material.texture);
 					if (object.material.texture.loadState === 2) {
 						gl.bindTexture(gl.TEXTURE_2D, object.material.texture.texture);
-						gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-						gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-						gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+						// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); // Pixelated
 
 						gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.uv);
 						gl.bufferData(gl.ARRAY_BUFFER, object.geometry.uvs, gl.STATIC_DRAW);

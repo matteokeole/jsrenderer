@@ -1,7 +1,7 @@
 import * as Module from "../src/module.js";
 import "./events.js";
 import loop from "./loop.js";
-// import {setGUIScene} from "./gui/main.js";
+import {setGUIScene} from "./gui/main.js";
 
 /**
  * Vanilla JavaScript 3D rendering engine, made with WebGL 2 and inspired by three.js.
@@ -29,7 +29,7 @@ export let
 	}),
 	scene = new Module.Scene(),
 	camera = new Module.Camera(90, 1, .1, 3000),
-	floor, ceiling, wall1, wall2, wall3, wall4;
+	floor, ceiling, wall, player;
 
 // Load shader program in the renderer
 await renderer.loadProgram("assets/shaders");
@@ -39,34 +39,42 @@ scene.background = new Module.Color(0x3d3d3d);
 
 camera.aspect = render.offsetWidth / render.offsetHeight;
 camera.updateProjectionMatrix();
-camera.position.set(0, 2, 0);
-
+camera.position.y = 2.003;
+// camera.position.set(1.13, 2.003, 1.625);
 
 
 floor = new Module.Mesh(
-	new Module.PlaneGeometry(4),
-	new Module.Material({texture: new Module.Texture("assets/textures/woodfloor007a.jpg")}),
+	new Module.PlaneGeometry(8, 4),
+	new Module.Material({texture: new Module.Texture("assets/textures/tilefloor018a.jpg")}),
 );
-floor.rotation.y = Math.PI / 2;
+floor.position.set(2, 0, 0);
+floor.geometry.uvs = new Float32Array([
+	1.35, 0, 1.35,
+	2.7, 0, 2.7,
+]);
 
 
-wall1 = new Module.Mesh(
-	new Module.PlaneGeometry(4),
+wall = new Module.Mesh(
+	new Module.PlaneGeometry(4, 8),
 	new Module.Material({texture: new Module.Texture("assets/textures/plasterwall030c.jpg")}),
 );
-wall1.position.set(-2, 2, 0);
-wall1.rotation.z = Math.PI / 2;
+wall.position.set(2, 2, 2);
+wall.rotation.set(0, Math.PI / 2, Math.PI / 2);
+wall.geometry.uvs = new Float32Array([
+	2, 0, 2,
+	1, 0, 1,
+]);
 
 
-wall3 = new Module.Mesh(
-	new Module.PlaneGeometry(4),
-	new Module.Material({texture: new Module.Texture("assets/textures/plasterwall030c.jpg")}),
+player = new Module.Mesh(
+	new Module.BoxGeometry(.75, 2.003, .75),
+	new Module.Material({color: 0x000000}),
 );
-wall3.position.set(2, 2, 0);
-wall3.rotation.set(Math.PI, 0, -Math.PI / 2);
+player.position.set(0, 2.003 / 2, 0);
+camera.attach(player)
 
 
-scene.add(camera, floor, wall1, wall3);
+scene.add(camera, floor, wall, player);
 
 // setGUIScene(scene);
 
