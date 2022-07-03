@@ -45,7 +45,7 @@ camera.position.y = 2.003;
 // camera.position.set(1.13, 2.003, 1.625);
 
 
-player = new Module.Mesh(
+/*player = new Module.Mesh(
 	new Module.BoxGeometry(.75, 2.003, .75),
 	new Module.Material({color: 0x000000}),
 );
@@ -72,11 +72,19 @@ floor.position.set(2, 0, 0);
 floor.geometry.uvs = new Float32Array([
 	1.35, 0, 1.35,
 	2.7, 0, 2.7,
-]);
+]);*/
 
 
-scene.add(camera, player, wall, floor);
+let test2d = new Module.Mesh(
+	new Module.PlaneGeometry(1),
+	new Module.Material({color: new Module.Color(0xff9800)}),
+);
 
+
+meshes.add(test2d);
+
+scenes.add(scene);
+scene.add(test2d);
 initGUI(scenes, meshes);
 
 // loop();

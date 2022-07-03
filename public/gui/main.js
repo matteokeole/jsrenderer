@@ -26,15 +26,34 @@ export const initGUI = (scenes, meshes) => {
 		title: "Meshes",
 		actions: {
 			new2d: "[2D]",
-			// new3d: "[3D]",
 		},
 		contentTemplate: template.content.querySelector("table.table-mesh"),
+		visible: true,
 	});
-	meshMenu.actions.new2d.addEventListener("click", () => createMesh2D(meshes, meshMenu));
+	meshMenu.actions.new2d.addEventListener("click", () => createMesh2D(meshes, meshMenu, scenes));
 
 	header.querySelector("button.toggle-renderer").addEventListener("click", () => rendererMenu.toggle());
 	header.querySelector("button.toggle-scenes").addEventListener("click", () => sceneMenu.toggle());
 	header.querySelector("button.toggle-meshes").addEventListener("click", () => meshMenu.toggle());
+
+	// Fill scene list
+	for (const scene of scenes) {
+		createScene(scenes, sceneMenu, scene);
+	}
+
+	// Fill mesh list
+	for (const mesh of meshes) {
+		let linkedScene;
+
+		for (const scene of scenes) {
+			if (scene.meshes.has(mesh)) {
+				linkedScene = scene;
+				break;
+			}
+		}
+
+		if (mesh.geometry.type === "plane") createMesh2D(meshes, meshMenu, scenes, mesh, linkedScene);
+	}
 };
 
 const
@@ -81,29 +100,38 @@ const
 		menu.remove();
 		menu = null;
 	},
-	createScene = (scenes, sceneMenu) => {
-		let scene = new Module.Scene();
-		scene.name = "Scene";
-		scenes.add(scene);
+	createScene = (scenes, sceneMenu, scene) => {
+		if (!scene) {
+			scene = new Module.Scene();
+			scene.name = "Scene";
+			scenes.add(scene);
+		}
+
+		scene.name ??= "Scene";
 
 		const sceneEditMenu = createMenu({
-			title: "Scene Properties",
+			title: scene.name + " Properties",
 			actions: {
 				close: "[Close]",
 			},
 			contentTemplate: template.content.querySelector(".scene-properties"),
 			visible: false,
 		});
+		const row = addSceneRow(sceneMenu, scenes, scene, sceneEditMenu);
 		sceneEditMenu.actions.close.addEventListener("click", () => sceneEditMenu.toggle());
 		sceneEditMenu.querySelector(".input-scene-name").addEventListener("change", function() {
 			scene.name = this.value;
 			row.querySelector(".properties").textContent = scene.name;
 			sceneEditMenu.header.firstElementChild.textContent = scene.name + " Properties";
+			updateMeshSceneSelects(scenes);
 		});
+		sceneEditMenu.querySelector(".input-scene-background").value = scene.background.hexadecimal;
 		sceneEditMenu.querySelector(".input-scene-background").addEventListener("change", function() {
 			scene.background = new Module.Color(+`0x${this.value.substring(1)}`);
 		});
-
+		updateMeshSceneSelects(scenes);
+	},
+	addSceneRow = (sceneMenu, scenes, scene, sceneEditMenu) => {
 		const row = template.content.querySelector("tr.scene").cloneNode(true);
 		row.querySelector(".properties").textContent = scene.name;
 		row.querySelector(".properties").addEventListener("click", () => sceneEditMenu.toggle());
@@ -145,6 +173,8 @@ const
 		row.querySelector("button.delete").addEventListener("click", () => deleteScene(scenes, scene, row, sceneEditMenu));
 
 		sceneMenu.table.appendChild(row);
+
+		return row;
 	},
 	deleteScene = (scenes, scene, row, sceneEditMenu) => {
 		if (renderedScene === scene) {
@@ -156,30 +186,80 @@ const
 		scene = null;
 		row.remove();
 		deleteMenu(sceneEditMenu);
+		updateMeshSceneSelects(scenes);
 	},
-	createMesh2D = (meshes, meshMenu) => {
-		let mesh = new Module.Mesh(
-			new Module.PlaneGeometry(1),
-			new Module.Color(0x555555),
-		);
-		mesh.name = "Plane";
-		meshes.add(mesh);
+	createMesh2D = (meshes, meshMenu, scenes, mesh, linkedScene) => {
+		if (!mesh) {
+			mesh = new Module.Mesh(
+				new Module.PlaneGeometry(1),
+				new Module.Color(0x555555),
+			);
+			mesh.name = "Plane";
+		}
+
+		mesh.name ??= "Plane";
 
 		const meshEditMenu = createMenu({
-			title: "Plane Properties",
+			title: mesh.name + " Properties",
 			actions: {
 				close: "[Close]",
 			},
-			// contentTemplate: template.content.querySelector(".mesh-properties"),
+			contentTemplate: template.content.querySelector(".mesh-properties"),
 			visible: false,
 		});
 		meshEditMenu.actions.close.addEventListener("click", () => meshEditMenu.toggle());
+		meshEditMenu.querySelector(".input-mesh-name").addEventListener("change", function() {
+			mesh.name = this.value;
+			row.querySelector(".properties").textContent = mesh.name;
+			meshEditMenu.header.firstElementChild.textContent = mesh.name + " Properties";
+		});
+		meshEditMenu.querySelector(".input-mesh-color").value = mesh.material.color.hexadecimal();
+		meshEditMenu.querySelector(".input-mesh-color").addEventListener("change", function() {
+			mesh.material = new Module.Material({color: new Module.Color(+`0x${this.value.substring(1)}`)});
+		});
+		updateMeshSceneSelects(scenes);
+		if (linkedScene) linkMeshToScene(scenes, mesh, linkedScene, meshEditMenu.querySelector(".input-mesh-scene"));
+		meshEditMenu.querySelector(".input-mesh-scene").addEventListener("change", function() {
+			for (const scene of scenes) scene.remove(mesh);
+			const selectedScene = [...scenes][+this.value];
+			selectedScene.add(mesh);
+		});
 
 		const row = template.content.querySelector("tr.mesh").cloneNode(true);
 		row.querySelector(".properties").textContent = mesh.name;
 		row.querySelector(".properties").addEventListener("click", () => meshEditMenu.toggle());
+		row.querySelector("button.delete").addEventListener("click", () => deleteMesh(meshes, mesh, row, meshEditMenu, scenes));
 
 		meshMenu.table.appendChild(row);
+	},
+	deleteMesh = (meshes, mesh, row, meshEditMenu, scenes) => {
+		for (const scene of scenes) scene.remove(mesh);
+
+		meshes.delete(mesh);
+		mesh = null;
+		row.remove();
+		deleteMenu(meshEditMenu);
+	},
+	updateMeshSceneSelects = scenes => {
+		const selects = document.querySelectorAll("select.input-mesh-scene");
+
+		for (const select of selects) {
+			select.innerHTML = "<option value=''></option>";
+
+			for (let i in [...scenes]) {
+				const option = document.createElement("option");
+				option.text = [...scenes][i].name;
+				option.value = i;
+				select.appendChild(option);
+			}
+		}
+	},
+	linkMeshToScene = (scenes, mesh, scene, select) => {
+		for (const option of select.options) {
+			if (option.value === "") continue;
+
+			if ([...scenes][option.value] === scene) select.value = option.value;
+		}
 	};
 
 addEventListener("keydown", e => {

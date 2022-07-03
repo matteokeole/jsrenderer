@@ -29,7 +29,7 @@ export const renderMesh = (gl, mesh, camera, viewProjectionMatrix, primitiveType
 	gl.uniformMatrix4fv(gl.uniform.transform, false, transform.data);
 
 	if (mesh.material.type === "color") gl.uniform4fv(gl.uniform.color, mesh.material.color.hex1);
-	if (mesh.material.type === "color") console.log("ok")
+	// if (mesh.material.type === "color") console.log("ok")
 
 	if (mesh.material.type === "texture") {
 		if (mesh.material.texture.loadState === 0) loadTexture(gl, mesh.material.texture);
