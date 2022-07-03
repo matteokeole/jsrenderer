@@ -183,6 +183,5 @@ const
 	};
 
 addEventListener("keydown", e => {
-	e.preventDefault();
-	e.code === "F1" && toggleInterface();
+	e.code === "F2" && toggleInterface();
 });
