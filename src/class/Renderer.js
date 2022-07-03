@@ -1,5 +1,5 @@
 import {loadShader, parseShader} from "../module.js";
-import {render} from "../functions/render.js";
+import render from "../functions/render.js";
 
 export const Renderer = function(width, height, options) {
 	this.canvas = document.createElement("canvas");
@@ -84,6 +84,10 @@ Renderer.prototype.isLocked = function() {
 
 Renderer.prototype.render = function(scene, camera) {
 	render.call(this, scene, camera);
+};
+
+Renderer.prototype.clear = function() {
+	this.gl.clear(0, 0, 0, 0);
 };
 
 Renderer.prototype.stretch = function(width = innerWidth, height = innerHeight) {

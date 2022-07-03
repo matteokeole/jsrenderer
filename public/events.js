@@ -1,6 +1,4 @@
-import {renderer, camera} from "./main.js";
-
-export const keys = new Set();
+import {keys, renderer, camera} from "./main.js";
 
 const
 	pressKeys = e => {
@@ -29,7 +27,7 @@ const
 	};
 
 addEventListener("resize", () => {
-	// renderer.stretch();
+	renderer.stretch();
 
 	// Update camera aspect ratio
 	camera.aspect = renderer.width / renderer.height;

@@ -1,6 +1,6 @@
 /* Crosshair variables */
 :root {
-	/* The thickness and the spacing must be either odd or even, but not one odd and one even */
+	/* The thickness and the spacing must be both odd or both even */
 	--crosshair-thickness: 1px;
 	--crosshair-spacing: 21px;
 	--crosshair-color: gold;

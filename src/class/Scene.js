@@ -6,6 +6,7 @@ export const Scene = function() {
 
 	this.objects = new Set();
 	this.cameras = new Set();
+	this.lights = new Set();
 	this.meshes = new Set();
 
 	return this;
@@ -13,12 +14,13 @@ export const Scene = function() {
 
 /** @todo */
 Scene.prototype.add = function(...objects) {
-	for (let object of objects) {
+	for (const object of objects) {
 		this.objects.add(object);
 
 		switch (object.type) {
-			case "camera": this.cameras.add(object); break;
-			case "mesh": this.meshes.add(object); break;
+			case "camera":	this.cameras.add(object);	break;
+			case "light":	this.lights.add(object);	break;
+			case "mesh":	this.meshes.add(object);	break;
 		}
 	}
 
@@ -27,12 +29,13 @@ Scene.prototype.add = function(...objects) {
 
 /** @todo */
 Scene.prototype.remove = function(...objects) {
-	for (let object of objects) {
+	for (const object of objects) {
 		this.objects.delete(object);
 
 		switch (object.type) {
-			case "camera": this.cameras.delete(object); break;
-			case "mesh": this.meshes.delete(object); break;
+			case "camera":	this.cameras.delete(object);	break;
+			case "light":	this.lights.delete(object);		break;
+			case "mesh":	this.meshes.delete(object);		break;
 		}
 	}
 

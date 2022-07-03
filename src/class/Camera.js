@@ -32,7 +32,7 @@ export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near
 		this.rotation.y += y;
 	};
 
-	this.objects = new Set();
+	this.meshes = new Set();
 
 	this.updateProjectionMatrix();
 
@@ -50,8 +50,8 @@ Camera.prototype.moveForward = function(n) {
 
 	this.position = this.position.add(direction.multiplyScalar(n));
 
-	for (let object of this.objects) {
-		object.position.set(this.position);
+	for (const mesh of this.meshes) {
+		mesh.position.set(this.position);
 	}
 };
 
@@ -66,9 +66,13 @@ Camera.prototype.moveRight = function(n) {
 
 	this.position = this.position.add(direction.multiplyScalar(n));
 
-	for (let object of this.objects) {
-		object.position.set(this.position);
+	for (const mesh of this.meshes) {
+		mesh.position.set(this.position);
 	}
+};
+
+Camera.prototype.moveUp = function(n) {
+	this.position.y += n;
 };
 
 Camera.prototype.updateProjectionMatrix = function() {
@@ -103,9 +107,9 @@ Camera.prototype.lookAt = function(pos, target) {
 };
 
 Camera.prototype.attach = function(...meshes) {
-	for (let object of meshes) this.objects.add(object);
+	for (const mesh of meshes) this.meshes.add(mesh);
 };
 
 Camera.prototype.detach = function(...meshes) {
-	for (let object of meshes) this.objects.delete(object);
+	for (const mesh of meshes) this.meshes.delete(mesh);
 };

@@ -1,0 +1,59 @@
+@import url(header.css);
+@import url(menu.css);
+@import url(properties.css);
+@import url(scenes.css);
+
+:root {
+	--red: #f85264;
+}
+
+#gui {
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	position: fixed;
+	pointer-events: none;
+}
+#gui.visible {display: none}
+
+#gui * {
+	pointer-events: auto;
+	color: #ddd;
+	font-size: 12px;
+	font-family: inherit;
+}
+
+#gui button {
+	appearance: none;
+	padding: 0;
+	border: none;
+	background-color: unset;
+	cursor: pointer;
+}
+#gui button.delete {color: var(--red) !important}
+#gui button:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+#gui select {
+	outline: none;
+	background-color: transparent;
+}
+
+#gui input[type="text"] {
+	width: 80px;
+	outline: none;
+	border: 1px solid #767676;
+	background-color: transparent;
+	text-align: right;
+}
+
+#gui input[type="color"] {
+	appearance: none;
+	width: 80px;
+	padding: 0;
+	outline: none;
+	border: 1px solid #767676;
+	background-color: transparent;
+}

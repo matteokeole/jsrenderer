@@ -1,19 +1,23 @@
-@import url(ui/renderer.css);
-@import url(ui/aside.css);
-@import url(ui/accordion.css);
-@import url(ui/explorer.css);
-/*@import url(ui/card.css);*/
-@import url(ui/input.css);
-@import url(ui/checkbox.css);
-@import url(ui/tab.css);
-@import url(ui/nav.css);
-/* Uncomment the line below to show the crosshair */
+@import url(gui/main.css);
 @import url(crosshair.css);
 
 body {
-	display: flex;
 	height: 100vh;
 	margin: 0;
-	background-color: #161616;
-	font-family: sans-serif;
+	background-color: #202124;
+	font-family: Consolas, monospace;
 }
+
+main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+main #loop-off {
+	position: absolute;
+	color: #aaa;
+	user-select: none;
+}
+
+canvas {display: block}

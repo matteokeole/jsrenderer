@@ -1,11 +1,9 @@
 import * as Module from "../src/module.js";
 import "./events.js";
 import loop from "./loop.js";
-import {setGUIScene} from "./gui/main.js";
+import {initGUI} from "./gui/main.js";
 
 /**
- * Vanilla JavaScript 3D rendering engine, made with WebGL 2 and inspired by three.js.
- * 
  * Controls:
  * [W]			Walk forward
  * [S]			Walk backward
@@ -23,35 +21,35 @@ import {setGUIScene} from "./gui/main.js";
  * @see {link https://www.mamboleoo.be/articles/how-to-render-3d-in-2d-canvas}
  */
 export let
-	renderer = new Module.Renderer(render.offsetWidth, render.offsetHeight, {
+	keys = new Set(),
+	renderer = new Module.Renderer(0, 0, {
 		CULL_FACE: true,
 		DEPTH_TEST: true,
 	}),
 	scene = new Module.Scene(),
 	camera = new Module.Camera(90, 1, .1, 3000),
+	scenes = new Set(),
+	meshes = new Set(),
 	floor, ceiling, wall, player;
 
 // Load shader program in the renderer
 await renderer.loadProgram("assets/shaders");
-render.appendChild(renderer.canvas);
+renderer.stretch();
+document.querySelector("main").appendChild(renderer.canvas);
 
 scene.background = new Module.Color(0x3d3d3d);
 
-camera.aspect = render.offsetWidth / render.offsetHeight;
+camera.aspect = renderer.width / renderer.height;
 camera.updateProjectionMatrix();
 camera.position.y = 2.003;
 // camera.position.set(1.13, 2.003, 1.625);
 
 
-floor = new Module.Mesh(
-	new Module.PlaneGeometry(8, 4),
-	new Module.Material({texture: new Module.Texture("assets/textures/tilefloor018a.jpg")}),
+player = new Module.Mesh(
+	new Module.BoxGeometry(.75, 2.003, .75),
+	new Module.Material({color: 0x000000}),
 );
-floor.position.set(2, 0, 0);
-floor.geometry.uvs = new Float32Array([
-	1.35, 0, 1.35,
-	2.7, 0, 2.7,
-]);
+camera.attach(player);
 
 
 wall = new Module.Mesh(
@@ -66,16 +64,19 @@ wall.geometry.uvs = new Float32Array([
 ]);
 
 
-player = new Module.Mesh(
-	new Module.BoxGeometry(.75, 2.003, .75),
-	new Module.Material({color: 0x000000}),
+floor = new Module.Mesh(
+	new Module.PlaneGeometry(8, 4),
+	new Module.Material({texture: new Module.Texture("assets/textures/tilefloor018a.jpg")}),
 );
-player.position.set(0, 2.003 / 2, 0);
-camera.attach(player)
+floor.position.set(2, 0, 0);
+floor.geometry.uvs = new Float32Array([
+	1.35, 0, 1.35,
+	2.7, 0, 2.7,
+]);
 
 
-scene.add(camera, floor, wall, player);
+scene.add(camera, player, wall, floor);
 
-// setGUIScene(scene);
+initGUI(scenes, meshes);
 
-loop();
+// loop();

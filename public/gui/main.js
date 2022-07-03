@@ -1,147 +1,188 @@
-/*export const GUI = {
-	init: object => {
-		const
-			container = document.forms["camera"],
-			fov = container.elements["fov"],
-			px = container.elements["px"],
-			py = container.elements["py"],
-			pz = container.elements["pz"],
-			rx = container.elements["rx"],
-			ry = container.elements["ry"],
-			rz = container.elements["rz"];
+import * as Module from "../../src/module.js";
+import {unfreeze, freeze} from "../loop.js";
 
-		fov.value = object.fov;
-		fov.addEventListener("input", () => {
-			object.fov = +fov.value;
-			object.updateProjectionMatrix();
-		});
+export let renderedScene;
 
-		px.value = object.position.x;
-		px.addEventListener("input", () => object.position.x = +px.value);
-		py.value = object.position.y;
-		py.addEventListener("input", () => object.position.y = +py.value);
-		pz.value = object.position.z;
-		pz.addEventListener("input", () => object.position.z = +pz.value);
+export const initGUI = (scenes, meshes) => {
+	const header = gui.firstElementChild;
 
-		rx.value = object.rotation.x;
-		rx.addEventListener("input", () => object.rotation.x = +rx.value);
-		ry.value = object.rotation.y;
-		ry.addEventListener("input", () => object.rotation.y = +ry.value);
-		rz.value = object.rotation.z;
-		rz.addEventListener("input", () => object.rotation.z = +rz.value);
+	const rendererMenu = createMenu({
+		title: "Renderer",
+		contentTemplate: template.content.querySelector(".renderer-properties"),
+		visible: false,
+	});
 
-		enableDragAndDrop(container);
-	},
-	updateProperties: properties => {
-		let container = document.forms["camera"],
-			keys = Object.keys(properties);
+	const sceneMenu = createMenu({
+		title: "Scenes",
+		actions: {
+			new: "[New]",
+		},
+		contentTemplate: template.content.querySelector("table.table-scene"),
+		visible: false,
+	});
+	sceneMenu.actions.new.addEventListener("click", () => createScene(scenes, sceneMenu));
 
-		for (let i in properties) {
-			const input = container.elements[i];
+	const meshMenu = createMenu({
+		title: "Meshes",
+		actions: {
+			new2d: "[2D]",
+			// new3d: "[3D]",
+		},
+		contentTemplate: template.content.querySelector("table.table-mesh"),
+	});
+	meshMenu.actions.new2d.addEventListener("click", () => createMesh2D(meshes, meshMenu));
 
-			input.value = properties[i].toFixed(3);
+	header.querySelector("button.toggle-renderer").addEventListener("click", () => rendererMenu.toggle());
+	header.querySelector("button.toggle-scenes").addEventListener("click", () => sceneMenu.toggle());
+	header.querySelector("button.toggle-meshes").addEventListener("click", () => meshMenu.toggle());
+};
+
+const
+	toggleInterface = () => gui.classList.toggle("visible"),
+	createMenu = options => {
+		const menu = template.content.querySelector(".gui-menu").cloneNode(true);
+		menu.header = menu.firstElementChild;
+		menu.content = menu.lastElementChild;
+
+		menu.header.firstElementChild.textContent = options.title;
+
+		menu.actions = [];
+		if (options.actions) {
+			for (const action of Object.entries(options.actions)) {
+				const button = document.createElement("button");
+				button.style.margin = "0 2px";
+				button.textContent = action[1];
+
+				menu.actions[action[0]] = button;
+				menu.header.lastElementChild.appendChild(button);
+			}
 		}
+
+		if (options.contentTemplate) {
+			let content = options.contentTemplate.cloneNode(true);
+			if (content.tagName === "TABLE") {
+				content.firstElementChild.firstElementChild.remove(); // Remove the base row
+				menu.table = content.firstElementChild;
+			}
+
+			menu.content.appendChild(content);
+		}
+
+		menu.toggle = (state = menu.style.display !== "block") => {
+			menu.style.display = state ? "block" : "none";
+		};
+		menu.toggle(options.visible ?? true);
+
+		gui.appendChild(menu);
+
+		return menu;
 	},
-};
-
-const
-	enableDragAndDrop = element => {
-		const
-			header = element.firstElementChild,
-			rect = element.getBoundingClientRect(),
-			w = rect.right,
-			h = rect.bottom,
-			grab = e => {
-				prevX = e.clientX;
-				prevY = e.clientY;
-
-				addEventListener("mousemove", move);
-				addEventListener("mouseup", release);
-			},
-			move = e => {
-				nextX = prevX - e.clientX;
-				nextY = prevY - e.clientY;
-
-				prevX = e.clientX;
-				prevY = e.clientY;
-
-				let x = element.offsetLeft - nextX,
-					y = element.offsetTop - nextY;
-
-				if (x >= 0 && x + w <= screenWidth) element.style.left = `${element.offsetLeft - nextX}px`;
-				if (y >= 0 && y + h <= screenHeight) element.style.top = `${element.offsetTop - nextY}px`;
-			},
-			release = e => {
-				removeEventListener("mousemove", move);
-				removeEventListener("mouseup", release);
-			};
-		let prevX, prevY, nextX, nextY;
-
-		header ?
-			header.addEventListener("mousedown", grab) :
-			element.addEventListener("mousedown", grab);
+	deleteMenu = menu => {
+		menu.remove();
+		menu = null;
 	},
-	resize = () => {
-		screenWidth = innerWidth;
-		screenHeight = innerHeight;
-	};
-let screenWidth = innerWidth,
-	screenHeight = innerHeight;
+	createScene = (scenes, sceneMenu) => {
+		let scene = new Module.Scene();
+		scene.name = "Scene";
+		scenes.add(scene);
 
-addEventListener("resize", resize);*/
-
-
-export function setGUIScene(scene) {
-	const ul = explorer.children[1];
-	let active;
-
-	for (let object of scene.objects) {
-		const li = document.createElement("li");
-
-		console.log(object);
-		li.textContent = object.type;
-
-		li.addEventListener("click", () => {
-			active && active.classList.remove("active");
-
-			active = active !== li ? li : undefined;
-
-			active && active.classList.add("active");
+		const sceneEditMenu = createMenu({
+			title: "Scene Properties",
+			actions: {
+				close: "[Close]",
+			},
+			contentTemplate: template.content.querySelector(".scene-properties"),
+			visible: false,
+		});
+		sceneEditMenu.actions.close.addEventListener("click", () => sceneEditMenu.toggle());
+		sceneEditMenu.querySelector(".input-scene-name").addEventListener("change", function() {
+			scene.name = this.value;
+			row.querySelector(".properties").textContent = scene.name;
+			sceneEditMenu.header.firstElementChild.textContent = scene.name + " Properties";
+		});
+		sceneEditMenu.querySelector(".input-scene-background").addEventListener("change", function() {
+			scene.background = new Module.Color(+`0x${this.value.substring(1)}`);
 		});
 
-		ul.appendChild(li);
-	}
-};
+		const row = template.content.querySelector("tr.scene").cloneNode(true);
+		row.querySelector(".properties").textContent = scene.name;
+		row.querySelector(".properties").addEventListener("click", () => sceneEditMenu.toggle());
+		row.querySelector("button.render").addEventListener("click", function() {
+			if (this.classList.contains("stopped")) {
+				if (renderedScene) {
+					// Another scene is being rendered, just change it
+					renderedScene = scene;
 
+					document.querySelectorAll("tr button.render").forEach(button => {
+						button.textContent = "Render";
+						button.classList.add("stopped");
+						button.classList.remove("rendering");
+					});
 
+					this.textContent = "Stop";
+					this.classList.remove("stopped");
+					this.classList.add("rendering");
 
+					return console.info("Switched scene:", scene.name);
+				}
 
-// Enable accordion menus
-const
-	accordions = document.querySelectorAll(".accordion-menu"),
-	toggleAccordionItem = (item, contentHeight) => {
-		item.classList.toggle("active");
-		item.children[1].style.height = `${contentHeight}px`;
+				this.textContent = "Stop";
+				this.classList.remove("stopped");
+				this.classList.add("rendering");
+
+				renderedScene = scene;
+				console.info("Started rendering scene", scene.name);
+				unfreeze();
+			} else {
+				this.textContent = "Render";
+				this.classList.remove("rendering");
+				this.classList.add("stopped");
+
+				freeze();
+				renderedScene = null;
+			}
+		});
+		row.querySelector("button.delete").addEventListener("click", () => deleteScene(scenes, scene, row, sceneEditMenu));
+
+		sceneMenu.table.appendChild(row);
+	},
+	deleteScene = (scenes, scene, row, sceneEditMenu) => {
+		if (renderedScene === scene) {
+			renderedScene = null;
+			freeze();
+		}
+
+		scenes.delete(scene);
+		scene = null;
+		row.remove();
+		deleteMenu(sceneEditMenu);
+	},
+	createMesh2D = (meshes, meshMenu) => {
+		let mesh = new Module.Mesh(
+			new Module.PlaneGeometry(1),
+			new Module.Color(0x555555),
+		);
+		mesh.name = "Plane";
+		meshes.add(mesh);
+
+		const meshEditMenu = createMenu({
+			title: "Plane Properties",
+			actions: {
+				close: "[Close]",
+			},
+			// contentTemplate: template.content.querySelector(".mesh-properties"),
+			visible: false,
+		});
+		meshEditMenu.actions.close.addEventListener("click", () => meshEditMenu.toggle());
+
+		const row = template.content.querySelector("tr.mesh").cloneNode(true);
+		row.querySelector(".properties").textContent = mesh.name;
+		row.querySelector(".properties").addEventListener("click", () => meshEditMenu.toggle());
+
+		meshMenu.table.appendChild(row);
 	};
 
-for (let accordion of accordions) {
-	let active;
-
-	toggleAccordionItem(accordion.children[0], accordion.children[0].children[1].scrollHeight);
-
-	for (let item of accordion.children) {
-		const
-			header = item.children[0],
-			content = item.children[1];
-
-		header.addEventListener("click", () => {
-			// Reduce the previous item
-			active && toggleAccordionItem(active, 0);
-
-			active = active !== item ? item : undefined;
-
-			// Expand the current item
-			active && toggleAccordionItem(active, content.scrollHeight);
-		});
-	}
-}
+addEventListener("keydown", e => {
+	e.preventDefault();
+	e.code === "F1" && toggleInterface();
+});
