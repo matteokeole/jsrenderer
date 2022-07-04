@@ -37,7 +37,7 @@ await renderer.loadProgram("assets/shaders");
 renderer.stretch();
 document.querySelector("main").appendChild(renderer.canvas);
 
-scene.background = new Module.Color(0x3d3d3d);
+scene.background = new Module.Color(0x482f4c);
 
 camera.aspect = renderer.width / renderer.height;
 camera.updateProjectionMatrix();
@@ -77,7 +77,7 @@ floor.geometry.uvs = new Float32Array([
 
 let test2d = new Module.Mesh(
 	new Module.PlaneGeometry(1),
-	new Module.Material({color: new Module.Color(0xff9800)}),
+	new Module.Material({color: new Module.Color(0xfbcbef)}),
 );
 
 

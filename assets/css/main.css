@@ -1,11 +1,29 @@
 @import url(gui/main.css);
 @import url(crosshair.css);
 
+@font-face {
+	src: url(../fonts/RadioGroteskBlack.otf) format("opentype");
+	font-family: "Radio Grotesk";
+	font-weight: 100;
+}
+
+@font-face {
+	src: url(../fonts/RadioGroteskRegular.otf) format("opentype");
+	font-family: "Radio Grotesk";
+	font-weight: 500;
+}
+
+@font-face {
+	src: url(../fonts/RadioGroteskUltralight.otf) format("opentype");
+	font-family: "Radio Grotesk";
+	font-weight: 800;
+}
+
 body {
 	height: 100vh;
 	margin: 0;
 	background-color: #202124;
-	font-family: Consolas, monospace;
+	font-family: "Radio Grotesk", sans-serif;
 }
 
 main {

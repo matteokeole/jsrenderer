@@ -20,6 +20,7 @@
 				<button class="toggle-renderer">Renderer</button>
 				<button class="toggle-scenes">Scenes</button>
 				<button class="toggle-meshes">Meshes</button>
+				<button class="toggle-settings">Settings</button>
 			</div>
 		</div>
 
@@ -92,7 +93,7 @@
 				</div>
 			</div>
 
-			<div class="properties mesh-properties">
+			<div class="properties mesh2d-properties">
 				<div class="option-container">
 					<span>Name</span>
 
@@ -143,6 +144,16 @@
 					<span>Z</span>
 
 					<input type="range" class="input-mesh-rz" min="0" max="360">
+				</div>
+			</div>
+
+			<div class="properties settings">
+				<div class="option-container">
+					<span>
+						FPS: <output id="fpsout">-</output>
+					</span>
+
+					<input type="range" id="setting-fps" min="0" max="60" oninput="fpsout.value = value">
 				</div>
 			</div>
 		</template>

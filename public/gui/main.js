@@ -2,6 +2,8 @@ import * as Module from "../../src/module.js";
 import {unfreeze, freeze} from "../loop.js";
 
 export let renderedScene;
+export let FRAMES_PER_SECOND = 60; // Number of frames per second (0 = no frame loop)
+let isRendering = false;
 
 export const initGUI = (scenes, meshes) => {
 	const header = gui.firstElementChild;
@@ -18,7 +20,7 @@ export const initGUI = (scenes, meshes) => {
 			new: "[New]",
 		},
 		contentTemplate: template.content.querySelector("table.table-scene"),
-		visible: false,
+		visible: true,
 	});
 	sceneMenu.actions.new.addEventListener("click", () => createScene(scenes, sceneMenu));
 
@@ -32,9 +34,21 @@ export const initGUI = (scenes, meshes) => {
 	});
 	meshMenu.actions.new2d.addEventListener("click", () => createMesh2D(meshes, meshMenu, scenes));
 
+	const settingMenu = createMenu({
+		title: "Settings",
+		actions: {
+			close: "[Close]",
+		},
+		contentTemplate: template.content.querySelector(".properties.settings"),
+		visible: false,
+	});
+	settingMenu.actions.close.addEventListener("click", () => settingMenu.toggle());
+	initSettings(settingMenu);
+
 	header.querySelector("button.toggle-renderer").addEventListener("click", () => rendererMenu.toggle());
 	header.querySelector("button.toggle-scenes").addEventListener("click", () => sceneMenu.toggle());
 	header.querySelector("button.toggle-meshes").addEventListener("click", () => meshMenu.toggle());
+	header.querySelector("button.toggle-settings").addEventListener("click", () => settingMenu.toggle());
 
 	// Fill scene list
 	for (const scene of scenes) {
@@ -137,6 +151,8 @@ const
 		row.querySelector(".properties").addEventListener("click", () => sceneEditMenu.toggle());
 		row.querySelector("button.render").addEventListener("click", function() {
 			if (this.classList.contains("stopped")) {
+				isRendering = true;
+
 				if (renderedScene) {
 					// Another scene is being rendered, just change it
 					renderedScene = scene;
@@ -159,9 +175,11 @@ const
 				this.classList.add("rendering");
 
 				renderedScene = scene;
-				console.info("Started rendering scene", scene.name);
+				console.info("Started rendering scene", scene.name, `(${FRAMES_PER_SECOND} FPS)`);
 				unfreeze();
 			} else {
+				isRendering = false;
+
 				this.textContent = "Render";
 				this.classList.remove("rendering");
 				this.classList.add("stopped");
@@ -192,7 +210,7 @@ const
 		if (!mesh) {
 			mesh = new Module.Mesh(
 				new Module.PlaneGeometry(1),
-				new Module.Color(0x555555),
+				new Module.Material({color: new Module.Color(0x555555)}),
 			);
 			mesh.name = "Plane";
 		}
@@ -204,7 +222,7 @@ const
 			actions: {
 				close: "[Close]",
 			},
-			contentTemplate: template.content.querySelector(".mesh-properties"),
+			contentTemplate: template.content.querySelector(".mesh2d-properties"),
 			visible: false,
 		});
 		meshEditMenu.actions.close.addEventListener("click", () => meshEditMenu.toggle());
@@ -221,9 +239,18 @@ const
 		if (linkedScene) linkMeshToScene(scenes, mesh, linkedScene, meshEditMenu.querySelector(".input-mesh-scene"));
 		meshEditMenu.querySelector(".input-mesh-scene").addEventListener("change", function() {
 			for (const scene of scenes) scene.remove(mesh);
+
+			if (!this.value) return;
+
 			const selectedScene = [...scenes][+this.value];
 			selectedScene.add(mesh);
 		});
+		meshEditMenu.querySelector(".input-mesh-px").oninput = function() {mesh.position.x = +this.value};
+		meshEditMenu.querySelector(".input-mesh-py").oninput = function() {mesh.position.y = +this.value};
+		meshEditMenu.querySelector(".input-mesh-pz").oninput = function() {mesh.position.z = +this.value};
+		meshEditMenu.querySelector(".input-mesh-rx").oninput = function() {mesh.rotation.x = rad(+this.value)};
+		meshEditMenu.querySelector(".input-mesh-ry").oninput = function() {mesh.rotation.y = rad(+this.value)};
+		meshEditMenu.querySelector(".input-mesh-rz").oninput = function() {mesh.rotation.z = rad(+this.value)};
 
 		const row = template.content.querySelector("tr.mesh").cloneNode(true);
 		row.querySelector(".properties").textContent = mesh.name;
@@ -260,7 +287,19 @@ const
 
 			if ([...scenes][option.value] === scene) select.value = option.value;
 		}
-	};
+	},
+	initSettings = settingMenu => {
+		settingMenu.querySelector("#setting-fps").addEventListener("change", function() {
+			FRAMES_PER_SECOND = +this.value;
+
+			if (isRendering) {
+				// Re-render with the new FPS value
+				freeze();
+				unfreeze();
+			}
+		});
+	},
+	rad = deg => deg * Math.PI / 180;
 
 addEventListener("keydown", e => {
 	e.code === "F2" && toggleInterface();
