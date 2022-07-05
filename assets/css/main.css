@@ -1,0 +1,59 @@
+@import url(header.css);
+@import url(status.css);
+@import url(fullscreen.css);
+
+@font-face {
+	src: url(../fonts/RadioGroteskBlack.otf) format("opentype");
+	font-family: "Radio Grotesk";
+	font-weight: 100;
+}
+
+@font-face {
+	src: url(../fonts/RadioGroteskRegular.otf) format("opentype");
+	font-family: "Radio Grotesk";
+	font-weight: 500;
+}
+
+@font-face {
+	src: url(../fonts/RadioGroteskUltralight.otf) format("opentype");
+	font-family: "Radio Grotesk";
+	font-weight: 800;
+}
+
+:root {
+	--background: #202124;
+	--bg: #292a2d;
+	--txt: #fff;
+	--txt2: #aaa;
+	--red: #de1818;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	margin: 0;
+	background-color: var(--background);
+}
+
+body, button, input {
+	font-family: "Radio Grotesk", sans-serif;
+}
+
+main {
+	flex-grow: 1;
+	padding: 3px;
+	top: 0;
+	position: relative;
+	transition: all .2s;
+}
+
+canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 4px;
+	box-shadow: 0 0 5px #000a;
+	background: url(../background.png);
+	transition-duration: .2s;
+}
