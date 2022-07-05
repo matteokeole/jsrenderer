@@ -19,11 +19,9 @@
 #gui * {
 	pointer-events: auto;
 	color: #ddd;
-	font-size: 12px;
-	font-family: inherit;
 }
 
-#gui button {
+/*#gui button {
 	appearance: none;
 	padding: 0;
 	border: none;
@@ -56,4 +54,4 @@
 	outline: none;
 	border: 1px solid #767676;
 	background-color: transparent;
-}
+}*/

@@ -7,7 +7,7 @@
 	background-color: #000a;
 }
 
-.gui-menu .gui-header {
+.gui-menu-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;

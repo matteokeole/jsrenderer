@@ -1,6 +1,23 @@
-#gui > .gui-header {
-	width: 100%;
-	padding: 5px;
+#gui-switch-menu {
+	display: flex;
+	gap: 3px;
+	margin: 5px;/*!*/
+	padding: 3px;
+	float: right;
+	border-radius: 5px;
+	background-color: #fff2;
 	backdrop-filter: blur(20px);
-	background-color: #000a;
+}
+
+#gui-switch-menu button {
+	padding: 3px 7px;/*!*/
+	border-radius: 4px;
+	background-color: transparent;
+	color: #fff5;
+	transition-duration: .6s;
+}
+#gui-switch-menu button:hover {
+	background-color: #fff2;
+	color: #fffd;
+	transition-duration: .2s;
 }

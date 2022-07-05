@@ -23,7 +23,17 @@ body {
 	height: 100vh;
 	margin: 0;
 	background-color: #202124;
+}
+
+body, button, input {
 	font-family: "Radio Grotesk", sans-serif;
+}
+
+button {
+	/*appearance: none;*/
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
 }
 
 main {
