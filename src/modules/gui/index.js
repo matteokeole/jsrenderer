@@ -1,4 +1,4 @@
-export default {
+export const GUI = {
 	init: () => {
 		initCSSVars();
 		initButtons();

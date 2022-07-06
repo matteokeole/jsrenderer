@@ -1,7 +1,7 @@
 /**
  * Return the FPS count.
  */
-export default function counter() {
+export function counter() {
 	let now = performance.now(),
 		difference = now - start;
 
