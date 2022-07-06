@@ -1,0 +1,12 @@
+#no-output {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	color: var(--text-dark);
+	user-select: none;
+}
+
+#no-output svg {
+	height: 48px;
+	margin-bottom: 8px;
+}

@@ -1,0 +1,17 @@
+button {
+	border: unset;
+	background-color: unset;
+	cursor: pointer;
+	font-weight: 800;
+	letter-spacing: .5px;
+}
+
+button.switch span {
+	padding: 2px 6px;
+	border-radius: 3px;
+	transition: background-color .2s;
+}
+button.switch.switched span {
+	background-color: var(--switched);
+	color: var(--text-white);
+}

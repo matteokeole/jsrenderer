@@ -12,8 +12,8 @@ body.fullscreen main {
 	padding: 0;
 }
 
-body.fullscreen canvas {
-	border-radius: 0;
+body.fullscreen .canvas {
+	border-radius: 0 !important;
 	box-shadow: none;
 }
 

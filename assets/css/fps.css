@@ -1,0 +1,7 @@
+section#status #fps {
+	display: flex;
+	gap: 16px;
+	color: var(--text-gray);
+}
+
+section#status #fps-current {color: var(--text-gray)}

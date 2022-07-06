@@ -1,6 +1,10 @@
-@import url(header.css);
-@import url(status.css);
+@import url(defaults.css);
 @import url(fullscreen.css);
+@import url(header.css);
+@import url(canvas.css);
+@import url(no-output.css);
+@import url(status.css);
+@import url(fps.css);
 
 @font-face {
 	src: url(../fonts/RadioGroteskBlack.otf) format("opentype");
@@ -22,10 +26,13 @@
 
 :root {
 	--background: #202124;
-	--bg: #292a2d;
-	--txt: #fff;
-	--txt2: #aaa;
-	--red: #de1818;
+	--background-light: #292a2d;
+	--switched: #323439;
+	--text-danger: #f85264;
+	--text-dark: #61646d;
+	--text-gray: #a6a9b0;
+	--text-warning: #ff781f;
+	--text-white: #fff;
 }
 
 body {
@@ -37,7 +44,7 @@ body {
 }
 
 body, button, input {
-	font-family: "Radio Grotesk", sans-serif;
+	font-family: "Radio Grotesk", Arial, sans-serif;
 }
 
 main {
@@ -45,15 +52,5 @@ main {
 	padding: 3px;
 	top: 0;
 	position: relative;
-	transition: all .2s;
-}
-
-canvas {
-	display: block;
-	width: 100%;
-	height: 100%;
-	border-radius: 4px;
-	box-shadow: 0 0 5px #000a;
-	background: url(../background.png);
-	transition-duration: .2s;
+	transition: padding .2s;
 }

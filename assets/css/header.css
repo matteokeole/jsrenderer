@@ -1,25 +1,22 @@
 header {
 	display: flex;
-	padding: 7px;
 	top: 0;
 	position: relative;
 	overflow: hidden;
-	color: #aaa;
-	font-size: 14px;
-	font-weight: 800;
-	letter-spacing: .5px;
+	color: var(--text-gray);
 	transition: top .4s linear;
 }
-header.visible {
-	top: 0 !important;
-}
-
-header span {
-	padding: 0 8px;
-	color: #aaa;
-}
-header span:nth-child(3) {color: #fff}
+header.visible {top: 0 !important}
 
 header #logo {
 	height: 16px;
+	padding: 7px 0 7px 7px;
 }
+
+header button {
+	padding: 7px 8px;
+	color: var(--text-gray);
+	font-size: 14px;
+	transition: color .2s;
+}
+header button:hover {color: var(--text-white)}
