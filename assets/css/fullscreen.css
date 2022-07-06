@@ -5,16 +5,24 @@ body.fullscreen header {
 	position: absolute;
 	backdrop-filter: blur(20px);
 	background-color: #0005;
-	z-index: 1;
+	z-index: 2;
 }
 
-body.fullscreen main {
-	padding: 0;
-}
+body.fullscreen main {padding: 0}
 
 body.fullscreen .canvas {
 	border-radius: 0 !important;
 	box-shadow: none;
+}
+
+body.fullscreen section#explorer {
+	height: calc(100% - var(--header-height) - var(--status-height) + 3.5px);
+	top: calc(var(--header-height) - 2px);
+	right: 0;
+	bottom: 0;
+	position: absolute;
+	backdrop-filter: blur(20px);
+	background-color: #0005;
 }
 
 body.fullscreen section#status {
@@ -24,4 +32,5 @@ body.fullscreen section#status {
 	position: absolute;
 	backdrop-filter: blur(20px);
 	background-color: #0005;
+	z-index: 1;
 }

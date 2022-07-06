@@ -1,0 +1,55 @@
+section#explorer {
+	display: flex;
+	flex-direction: column;
+	width: 0;
+	gap: 3px;
+	transition: width .2s;
+	z-index: 1;
+}
+section#explorer.visible {width: 300px}
+
+section#explorer .subsection {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border-radius: 4px;
+	box-shadow: 0 0 5px #000a;
+}
+
+section#explorer .subheader {
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--background-light);
+	color: var(--text-gray);
+	font-size: 14px;
+	font-weight: 800;
+}
+
+section#explorer .subheader button {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 3px 5px;
+}
+
+section#explorer .subheader button object {
+	height: 16px;
+	margin-right: 3px;
+	font-size: 20px;
+}
+
+section#explorer .content {
+	max-height: 0;
+	overflow: hidden;
+	background-color: var(--background);
+	color: var(--text-dark);
+	text-align: center;
+}
+section#explorer .subheader.expanded + .content {
+	max-height: 100%;
+}
+
+section#explorer span {
+	display: block;
+	padding: 20px 0;
+}

@@ -3,6 +3,7 @@
 @import url(header.css);
 @import url(canvas.css);
 @import url(no-output.css);
+@import url(explorer.css);
 @import url(status.css);
 @import url(fps.css);
 
@@ -25,6 +26,8 @@
 }
 
 :root {
+	--header-height; /* Dynamic variable */
+	--status-height; /* Dynamic variable */
 	--background: #202124;
 	--background-light: #292a2d;
 	--switched: #323439;
@@ -48,7 +51,9 @@ body, button, input {
 }
 
 main {
+	display: flex;
 	flex-grow: 1;
+	gap: 3px;
 	padding: 3px;
 	top: 0;
 	position: relative;
