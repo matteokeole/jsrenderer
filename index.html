@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<link rel="icon" href="data:;base64,=">
 		<link rel="stylesheet" href="assets/css/main.css">
+		<script type="module">
+			import GUI from "./src/modules/gui/index.js";
+
+			GUI.init();
+		</script>
 	</head>
 
 	<body>
@@ -54,69 +59,5 @@
 				<span id="fps-max">Max: 56</span>
 			</div>
 		</section>
-
-		<script>
-			let POINTER_X,
-				POINTER_Y,
-				root = document.documentElement,
-				headerHeight = header.offsetHeight,
-				statusHeight = document.querySelector("#status").offsetHeight,
-				headerTrigger = headerHeight,
-				headerTriggerOff = headerHeight * 2,
-				fullScreen = document.body.classList.contains("fullscreen"),
-				switches = document.querySelectorAll("button.switch"),
-				expands = document.querySelectorAll("button.expand"),
-				toggleFullScreen = e => {
-					e.preventDefault();
-
-					fullScreen = !fullScreen;
-
-					document.body.classList.toggle("fullscreen", fullScreen);
-					header.classList.toggle("visible", fullScreen && POINTER_Y < headerTrigger);
-				};
-
-			// Init CSS vars
-			root.style.setProperty("--header-height", `${headerHeight}px`);
-			root.style.setProperty("--status-height", `${statusHeight}px`);
-
-			for (const button of switches) {
-				let secondaryFunction;
-
-				if (button.dataset.function === "switch-explorer") secondaryFunction = button => {
-					explorer.classList.toggle("visible", button.classList.contains("switched"));
-				};
-
-				button.addEventListener("click", function() {
-					this.classList.toggle("switched");
-
-					secondaryFunction && secondaryFunction(this);
-				});
-			}
-
-			for (const button of expands) {
-				let secondaryFunction;
-
-				button.addEventListener("click", function() {
-					this.classList.toggle("expanded");
-					this.parentNode.classList.toggle("expanded", this.classList.contains("expanded"));
-
-					secondaryFunction && secondaryFunction(this);
-				});
-			}
-
-			addEventListener("keydown", e => {
-				e.code === "F10" && toggleFullScreen(e);
-			});
-
-			addEventListener("mousemove", e => {
-				POINTER_X = e.clientX;
-				POINTER_Y = e.clientY;
-
-				if (fullScreen) {
-					POINTER_Y < headerTrigger && header.classList.add("visible");
-					POINTER_Y > headerTriggerOff && header.classList.remove("visible");
-				}
-			});
-		</script>
 	</body>
 </html>

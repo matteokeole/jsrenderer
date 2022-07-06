@@ -4,6 +4,6 @@
  * @generator
  * @yields {string}
  */
-export function* generator() {
+export default function* () {
 	while (true) yield crypto.randomUUID();
 };
