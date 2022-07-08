@@ -4,6 +4,7 @@
 @import url(canvas.css);
 @import url(no-output.css);
 @import url(explorer.css);
+@import url(table.css);
 @import url(status.css);
 @import url(fps.css);
 
@@ -59,3 +60,5 @@ main {
 	position: relative;
 	transition: padding .2s;
 }
+
+object {pointer-events: none}

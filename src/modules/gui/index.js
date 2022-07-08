@@ -1,3 +1,5 @@
+import * as Lib from "../../core/lib.js";
+
 export const GUI = {
 	init: () => {
 		initCSSVars();
@@ -10,6 +12,13 @@ export const GUI = {
 
 let POINTER_X,
 	POINTER_Y,
+	SCENES = new Set(),
+	Template = {
+		sceneRow: template.content.querySelector("tr.scene"),
+	},
+	Library = {
+		table: library.querySelector("table"),
+	},
 	headerHeight = header.offsetHeight,
 	statusHeight = document.querySelector("#status").offsetHeight,
 	headerTrigger = headerHeight,
@@ -54,8 +63,21 @@ let POINTER_X,
 	initButtons = () => {
 		// Retrieve button types
 		const
+			adds = document.querySelectorAll("button.add"),
 			switches = document.querySelectorAll("button.switch"),
 			expands = document.querySelectorAll("button.expand");
+
+		for (const button of adds) {
+			let secondaryFunction;
+
+			if (button.dataset.function === "create-scene") secondaryFunction = createScene;
+
+			button.addEventListener("click", function() {
+				this.classList.toggle("switched");
+
+				secondaryFunction && secondaryFunction(this);
+			});
+		}
 
 		for (const button of switches) {
 			let secondaryFunction;
@@ -81,4 +103,19 @@ let POINTER_X,
 				secondaryFunction && secondaryFunction(this);
 			});
 		}
+	},
+	createScene = () => {
+		const scene = new Lib.Scene();
+		Lib.UUID.call(scene);
+
+		createSceneRow(scene);
+
+		SCENES.add(scene);
+	},
+	createSceneRow = scene => {
+		const row = Template.sceneRow.cloneNode(true);
+
+		row.children[2].textContent = scene.name ?? "Untitled Scene";
+
+		Library.table.appendChild(row);
 	};
