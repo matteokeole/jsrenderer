@@ -12,9 +12,9 @@ export default function(scene, camera) {
 		.multiplyMatrix4(Matrix4.createRotationMatrix(camera.rotation.y, "y")) // Y rotation
 		.multiplyMatrix4(Matrix4.createTranslationMatrix(camera.position.multiply(camera.lhcs))); // Translation
 
-	for (const light of scene.lights) {
+	/*for (const light of scene.lights) {
 		renderLight(this.gl, light);
-	}
+	}*/
 
 	for (const mesh of scene.meshes) {
 		renderMesh(this.gl, mesh, camera, viewProjectionMatrix, this.primitiveType);

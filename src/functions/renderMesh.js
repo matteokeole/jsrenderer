@@ -28,8 +28,11 @@ export const renderMesh = (gl, mesh, camera, viewProjectionMatrix, primitiveType
 
 	gl.uniformMatrix4fv(gl.uniform.transform, false, transform.data);
 
-	if (mesh.material.type === "color") gl.uniform4fv(gl.uniform.color, mesh.material.color.hex1);
-	// if (mesh.material.type === "color") console.log("ok")
+	if (mesh.material.type === "color") {
+		gl.uniform4fv(gl.uniform.color, mesh.material.color.hex1);
+	} else {
+		gl.uniform4fv(gl.uniform.color, gl.defaults.color);
+	}
 
 	if (mesh.material.type === "texture") {
 		if (mesh.material.texture.loadState === 0) loadTexture(gl, mesh.material.texture);
@@ -40,6 +43,8 @@ export const renderMesh = (gl, mesh, camera, viewProjectionMatrix, primitiveType
 			gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.uv);
 			gl.bufferData(gl.ARRAY_BUFFER, mesh.geometry.uvs, gl.STATIC_DRAW);
 		}
+	} else {
+		gl.bindTexture(gl.TEXTURE_2D, gl.defaults.texture);
 	}
 
 	gl.drawElements(primitiveType, geometry.indices.length, gl.UNSIGNED_SHORT, 0);

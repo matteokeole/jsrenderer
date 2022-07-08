@@ -9,7 +9,7 @@ export const Camera = function(fov = 60, aspect = innerWidth / innerHeight, near
 	this.position = new Vector3();
 	this.rotation = new Vector3();
 
-	this.distance = new Vector3(0, 0, 5); // For third-person view
+	this.distance = new Vector3(); // For third-person view
 
 	this.up = new Vector3(0, 1, 0);
 

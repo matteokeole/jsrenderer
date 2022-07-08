@@ -1,4 +1,4 @@
-import * as Module from "../src/module.js";
+import * as Lib from "../src/module.js";
 import "./events.js";
 import {unfreeze} from "./loop.js";
 
@@ -21,36 +21,42 @@ import {unfreeze} from "./loop.js";
  */
 export let
 	keys = new Set(),
-	renderer = new Module.Renderer(0, 0, {
+	renderer = new Lib.Renderer(0, 0, {
 		CULL_FACE: true,
 		DEPTH_TEST: true,
 	}),
-	scene = new Module.Scene(),
-	camera = new Module.Camera(90, 1, .1, 3000),
-	floor, ceiling, wall, player;
+	scene = new Lib.Scene(),
+	camera = new Lib.Camera(90, 1, .1, 3000),
+	floor, wall;
 
 // Load shader program in the renderer
 await renderer.loadProgram("assets/shaders");
 renderer.stretch();
 document.querySelector("main").appendChild(renderer.canvas);
 
-scene.background = new Module.Color(0x482f4c);
+scene.background = new Lib.Color(0x482f4c);
 
 camera.aspect = renderer.width / renderer.height;
 camera.updateProjectionMatrix();
-camera.position.y = 2.003;
+camera.position.set(0, 2.003, -2);
 
 
-player = new Module.Mesh(
-	new Module.BoxGeometry(.75, 2.003, .75),
-	new Module.Material({color: 0x000000}),
+
+floor = new Lib.Mesh(
+	new Lib.PlaneGeometry(8, 4),
+	new Lib.Material({texture: new Lib.Texture("assets/textures/tilefloor018a.jpg")}),
 );
-camera.attach(player);
+floor.position.set(2, 0, 0);
+floor.geometry.uvs = new Float32Array([
+	1.35, 0, 1.35,
+	2.7, 0, 2.7,
+]);
 
 
-wall = new Module.Mesh(
-	new Module.PlaneGeometry(4, 8),
-	new Module.Material({texture: new Module.Texture("assets/textures/plasterwall030c.jpg")}),
+
+wall = new Lib.Mesh(
+	new Lib.PlaneGeometry(4, 8),
+	new Lib.Material({texture: new Lib.Texture("assets/textures/plasterwall030c.jpg")}),
 );
 wall.position.set(2, 2, 2);
 wall.rotation.set(0, Math.PI / 2, Math.PI / 2);
@@ -60,18 +66,9 @@ wall.geometry.uvs = new Float32Array([
 ]);
 
 
-floor = new Module.Mesh(
-	new Module.PlaneGeometry(8, 4),
-	new Module.Material({texture: new Module.Texture("assets/textures/tilefloor018a.jpg")}),
-);
-floor.position.set(2, 0, 0);
-floor.geometry.uvs = new Float32Array([
-	1.35, 0, 1.35,
-	2.7, 0, 2.7,
-]);
 
+scene.add(floor, wall);
 
-scene.add(floor, wall, player);
 
 
 unfreeze();

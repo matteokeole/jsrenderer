@@ -13,6 +13,24 @@ export const Renderer = function(width, height, options) {
 		index: this.gl.createBuffer(),
 		uv: this.gl.createBuffer(),
 	};
+	this.gl.defaults = {
+		color: new Float32Array([1, 1, 1, 1]),
+		texture: this.gl.createTexture(),
+	};
+
+	// Create default white texture
+	this.gl.bindTexture(this.gl.TEXTURE_2D, this.gl.defaults.texture);
+	this.gl.texImage2D(
+		this.gl.TEXTURE_2D,
+		0,
+		this.gl.RGBA,
+		1,
+		1,
+		0,
+		this.gl.RGBA,
+		this.gl.UNSIGNED_BYTE,
+		new Uint8Array([255, 255, 255, 255]),
+	);
 
 	options = Object.entries(options);
 	for (let option of options) {

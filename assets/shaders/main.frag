@@ -13,11 +13,11 @@ uniform sampler2D u_texture;
 out vec4 fragColor;
 
 void main() {
-	vec3 normal = normalize(v_normal);
+	// vec3 normal = normalize(v_normal);
 
-	float light = dot(normal, u_reverseLightDir);
+	// float light = dot(normal, u_reverseLightDir);
 
-	fragColor = u_color + texture(u_texture, v_uv);
+	fragColor = u_color * texture(u_texture, v_uv);
 	// fragColor = u_color;
 	// fragColor.rgb *= light;
 }

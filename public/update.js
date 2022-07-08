@@ -1,6 +1,5 @@
 import {Keybind, VELOCITY} from "./config.js";
-import {keys, camera, player} from "./main.js";
-import collide from "./collide.js";
+import {keys, camera} from "./main.js";
 
 export default () => {
 	if (keys.has(Keybind.forward))	camera.moveForward(VELOCITY);
@@ -9,8 +8,6 @@ export default () => {
 	if (keys.has(Keybind.right))	camera.moveRight(VELOCITY);
 	if (keys.has(Keybind.up))		camera.moveUp(VELOCITY);
 	if (keys.has(Keybind.down))		camera.moveUp(-VELOCITY);
-
-	player.position.y = 2.003 / 2;
 
 	// collide();
 };
