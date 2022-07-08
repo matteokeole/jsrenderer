@@ -1,7 +1,6 @@
 import * as Module from "../src/module.js";
 import "./events.js";
-import loop from "./loop.js";
-import {initGUI} from "./gui/main.js";
+import {unfreeze} from "./loop.js";
 
 /**
  * Controls:
@@ -28,8 +27,6 @@ export let
 	}),
 	scene = new Module.Scene(),
 	camera = new Module.Camera(90, 1, .1, 3000),
-	scenes = new Set(),
-	meshes = new Set(),
 	floor, ceiling, wall, player;
 
 // Load shader program in the renderer
@@ -42,10 +39,9 @@ scene.background = new Module.Color(0x482f4c);
 camera.aspect = renderer.width / renderer.height;
 camera.updateProjectionMatrix();
 camera.position.y = 2.003;
-// camera.position.set(1.13, 2.003, 1.625);
 
 
-/*player = new Module.Mesh(
+player = new Module.Mesh(
 	new Module.BoxGeometry(.75, 2.003, .75),
 	new Module.Material({color: 0x000000}),
 );
@@ -72,19 +68,10 @@ floor.position.set(2, 0, 0);
 floor.geometry.uvs = new Float32Array([
 	1.35, 0, 1.35,
 	2.7, 0, 2.7,
-]);*/
+]);
 
 
-let test2d = new Module.Mesh(
-	new Module.PlaneGeometry(1),
-	new Module.Material({color: new Module.Color(0xfbcbef)}),
-);
+scene.add(floor, wall, player);
 
 
-meshes.add(test2d);
-
-scenes.add(scene);
-scene.add(test2d);
-initGUI(scenes, meshes);
-
-// loop();
+unfreeze();

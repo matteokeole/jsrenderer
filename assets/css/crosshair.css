@@ -13,8 +13,9 @@
 	width: var(--crosshair-spacing);
 	height: var(--crosshair-spacing);
 	margin: 0 auto;
-	top: calc(-50% - calc(var(--crosshair-spacing) / 2));
+	/*top: calc(-50% - calc(var(--crosshair-spacing) / 2));*/
 	position: relative;
+	z-index: 1;
 }
 #crosshair::before, #crosshair::after {
 	content: "";

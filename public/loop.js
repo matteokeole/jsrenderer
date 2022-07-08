@@ -1,4 +1,4 @@
-import {FRAMES_PER_SECOND, renderedScene} from "./gui/main.js";
+import {FRAMES_PER_SECOND} from "./config.js";
 import update from "./update.js";
 import {renderer, scene, camera} from "./main.js";
 
@@ -16,7 +16,7 @@ export default function loop() {
 		CURRENT_FRAME++;
 
 		update();
-		renderer.render(renderedScene, camera);
+		renderer.render(scene, camera);
 	}
 };
 export const
@@ -27,15 +27,12 @@ export const
 		start = performance.now();
 		then = start;
 
-		window["loop-off"].style.display = "none";
-
 		loop();
 	},
 	freeze = () => {
 		cancelAnimationFrame(request);
 
 		renderer.clear();
-		window["loop-off"].style.display = "block";
 	};
 export let
 	ELAPSED, // Elapsed time (ms) since the start of the loop

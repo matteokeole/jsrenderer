@@ -1,23 +1,4 @@
-@import url(gui/main.css);
 @import url(crosshair.css);
-
-@font-face {
-	src: url(../fonts/RadioGroteskBlack.otf) format("opentype");
-	font-family: "Radio Grotesk";
-	font-weight: 100;
-}
-
-@font-face {
-	src: url(../fonts/RadioGroteskRegular.otf) format("opentype");
-	font-family: "Radio Grotesk";
-	font-weight: 500;
-}
-
-@font-face {
-	src: url(../fonts/RadioGroteskUltralight.otf) format("opentype");
-	font-family: "Radio Grotesk";
-	font-weight: 800;
-}
 
 body {
 	height: 100vh;
@@ -25,27 +6,16 @@ body {
 	background-color: #202124;
 }
 
-body, button, input {
-	font-family: "Radio Grotesk", sans-serif;
-}
-
-button {
-	/*appearance: none;*/
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
-}
-
 main {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	height: 100%;
 }
 
-main #loop-off {
+canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
 	position: absolute;
-	color: #aaa;
-	user-select: none;
 }
-
-canvas {display: block}

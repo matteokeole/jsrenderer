@@ -10,7 +10,7 @@ export default () => {
 	if (keys.has(Keybind.up))		camera.moveUp(VELOCITY);
 	if (keys.has(Keybind.down))		camera.moveUp(-VELOCITY);
 
-	// player.position.y = 2.003 / 2;
+	player.position.y = 2.003 / 2;
 
 	// collide();
 };
