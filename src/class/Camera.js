@@ -46,8 +46,6 @@ Camera.prototype.moveForward = function(n) {
 		Math.cos(this.rotation.y),
 	);
 
-	if (direction.length() > 1) direction = direction.normalize();
-
 	this.position = this.position.add(direction.multiplyScalar(n));
 
 	for (const mesh of this.meshes) {
@@ -61,8 +59,6 @@ Camera.prototype.moveRight = function(n) {
 		0,
 		-Math.sin(this.rotation.y),
 	);
-
-	if (direction.length() > 1) direction = direction.normalize();
 
 	this.position = this.position.add(direction.multiplyScalar(n));
 
